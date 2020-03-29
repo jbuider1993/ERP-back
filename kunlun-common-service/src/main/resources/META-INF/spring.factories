@@ -1,0 +1,4 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+  com.scmp.common.config.Swagger2AutoConfiguration,\
+  com.scmp.common.config.CorsAutoConfiguration, \
+  com.scmp.common.config.ControllerAdviceAutoConfiguration

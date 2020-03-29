@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pages>
+    <page name="autoTest" url="https://ant.design/docs/react/introduce-cn">
+        <action type = "navigate" waitTime="2000"/>
+        <action type = "sendKeys" byxpath="//*[@id='search-box']/span/input" text="ABCDEFGH"/>
+        <action type = "click" byid="button" waitTime="2000"/>
+        <action type = "click" byid="reload" waitTime="2000"/>
+        <action type = "executeScript" script="alert('Selenium自动执行完成！')"/>
+    </page>
+</pages>

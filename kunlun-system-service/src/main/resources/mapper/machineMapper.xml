@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.scmp.system.dao.IMachineDao" >
+
+    <select id="getAllMachine" parameterType="MachineModel" resultType="MachineModel">
+        SELECT
+            machine.id,
+            machine.machine_name AS machineName,
+            machine.machine_ip AS machineIp,
+            machine.virtual_ip AS virtualIp,
+            info.total_cpu AS totalCPU,
+            info.total_memory AS totalMemory,
+            info.used_cpu AS usedCPU,
+            info.used_memory AS usedMemory,
+            info.create_time AS createTime
+        FROM t_machine machine
+        LEFT JOIN t_collect_machine info ON info.machine_id = machine.id
+    </select>
+
+</mapper>

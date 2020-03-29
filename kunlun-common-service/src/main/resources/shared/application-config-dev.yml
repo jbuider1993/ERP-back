@@ -1,0 +1,75 @@
+# Spring Cloud Config配置文件
+
+# Eureka配置
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8010/eureka/
+    # 抓取服务列表时间间隔
+    registry-fetch-interval-seconds: 30
+  instance:
+    # 启用ip配置 这样在注册中心列表中看见的是以ip+端口呈现的
+    prefer-ip-address: true
+    lease-renewal-interval-in-seconds: 30
+    lease-expiration-duration-in-seconds: 30
+
+# Zipkin客户端配置
+spring:
+  cloud:
+    loadbalancer:
+      #该参数用来开启重试机制，默认是关闭
+      retry:
+        enabled: true
+  zipkin:
+    sleuth:
+      sampler:
+        percentage: 1.0
+    sender:
+      type: rabbit
+    rabbitmq:
+      queue: zipkin-demo
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
+    #confirm模式
+    publisher-confirms: true
+    #return机制
+    publisher-returns: true
+
+# Feign配置
+feign.hystrix.enabled: true
+
+# hystrix熔断配置
+hystrix:
+  shareSecurityContext: true
+  command:
+    default:
+      circuitBreaker:
+        sleepWindowInMilliseconds: 360000
+        forceClosed: true
+      execution:
+        isolation:
+          thread:
+            # hystrix 超时时间最好大于Ribbon的超时时间
+            timeoutInMilliseconds: 360000
+        timeout:
+          enabled: true
+
+# Log配置
+logging:
+  config: classpath:logback-spring.xml
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: ALWAYS
+  metrics:
+    web:
+      server:
+        auto-time-requests: false

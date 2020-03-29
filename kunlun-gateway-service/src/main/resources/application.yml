@@ -1,0 +1,53 @@
+server:
+  port: 8015
+
+spring:
+  application:
+    name: scmp-gate-way
+
+shiro:
+  secret: 61D73234C4F93E03074D74D74D1E39D9
+  expireTime: 1800000
+  tokenHeader: Authorization
+  ignoreUrls: /gate-way/shiro/login, /base-cache/code/getAuthCode, /gate-way/shiro/logout
+
+zuul:
+  # 饥饿加载，防止懒加载时第一次请求超时而失败
+  eager-load:
+    enabled: true
+  #是否开启路由重试
+  retryable: true
+  host:
+    socket-timeout-millis: 300000
+    connect-timeout-millis: 300000
+  routes:
+    registry-amqp:
+      path: /registry-amqp/**
+      serviceId: scmp-registry-ampq
+    gate-way:
+      path: /gate-way/**
+      serviceId: scmp-gate-way
+    base-cache:
+      path: /base-cache/**
+      serviceId: scmp-base-cache
+    system-service:
+      path: /system-service/**
+      serviceId: scmp-system-service
+  ignored-headers: Access-Control-Allow-Credentials, Access-Control-Allow-Origin
+
+ribbon:
+  # 饥饿加载，防止懒加载时第一次请求超时而失败
+  eager-load:
+    enabled: true
+    clients: scmp-base-cache, scmp-system-service
+  eureka:
+    enabled: true
+  ReadTimeout: 300000
+  ConnectTimeout: 300000
+  SocketTimeout: 300000
+  #对当前实例的重试次数
+  MaxAutoRetries: 1
+  #切换实例的重试次数
+  MaxAutoRetriesNextServer: 1
+  #对所有操作请求都进行重试
+  OkToRetryOnAllOperations: true

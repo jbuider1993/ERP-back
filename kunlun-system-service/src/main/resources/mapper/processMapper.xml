@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.scmp.system.dao.IProcessDao" >
+
+    <select id="getAllProcess" parameterType="java.util.Map" resultType="ProcessModel">
+        SELECT
+            procdef.id_ AS id,
+            procdef.key_ AS key,
+            model.id_ AS modelId,
+            model.name_ AS modelName,
+            procdef.name_ AS processName,
+            procdef.deployment_id_ AS deploymentId,
+            actinst.proc_inst_id_ AS processInstanceId,
+            actinst.act_id_ AS currentExecuteKey,
+            actinst.act_name_ AS currentExecuteName,
+            CASE WHEN actinst.id_ IS NULL THEN '0' WHEN actinst.id_ IS NOT NULL AND actinst.end_time_ IS NULL THEN '1' WHEN actinst.id_ IS NOT NULL AND actinst.end_time_ IS NOT NULL THEN '4' ELSE '2' END AS processStatus,
+            actinst.start_time_	AS startTime,
+            actinst.end_time_ AS endTime
+        FROM act_re_procdef procdef
+        LEFT JOIN act_hi_actinst actinst ON procdef.id_ = actinst.proc_def_id_
+        LEFT JOIN act_re_model model ON procdef.deployment_id_ = model.deployment_id_
+        ORDER BY actinst.start_time_ DESC
+        OFFSET #{currentPage} LIMIT #{pageSize}
+    </select>
+
+    <select id = "getProcessCount" parameterType="java.util.Map" resultType = "java.lang.Integer">
+        SELECT
+            COUNT(procdef.id_)
+        FROM act_re_procdef procdef
+    </select>
+
+    <sql id="queryProcessCondition">
+        <if test="modelName != null and modelName != ''">
+            AND name_ LIKE CONCAT('%', #{modelName}, '%')
+        </if>
+        <if test="modelKey != null and modelKey != ''">
+            AND key_ LIKE CONCAT('%', #{modelKey}, '%')
+        </if>
+        <if test="createTime != null and createTime != ''">
+            AND create_time_ = #{createTime}
+        </if>
+    </sql>
+
+    <delete id="batchDeleteModel" parameterType="java.util.Arrays">
+        DELETE FROM act_re_model WHERE id_ IN
+        <foreach collection="array" item="item" open="(" close=")" separator=",">
+            #{item}
+        </foreach>
+    </delete>
+
+    <select id="getAllTodo" parameterType="java.util.Map" resultType="ProcessModel">
+        SELECT
+            procdef.id_ AS id,
+            procdef.key_ AS key,
+            model.id_ AS modelId,
+            model.name_ AS modelName,
+            procdef.name_ AS processName,
+            procdef.deployment_id_ AS deploymentId,
+            actinst.proc_inst_id_ AS processInstanceId,
+            actinst.act_id_ AS currentExecuteKey,
+            actinst.act_name_ AS currentExecuteName,
+            CASE WHEN actinst.id_ IS NULL THEN '0' WHEN actinst.id_ IS NOT NULL AND actinst.end_time_ IS NULL THEN '1' WHEN actinst.id_ IS NOT NULL AND actinst.end_time_ IS NOT NULL THEN '4' ELSE '2' END AS processStatus,
+            actinst.start_time_	AS startTime,
+            actinst.end_time_ AS endTime
+        FROM act_re_procdef procdef
+        LEFT JOIN act_hi_actinst actinst ON procdef.id_ = actinst.proc_def_id_
+        LEFT JOIN act_re_model model ON procdef.deployment_id_ = model.deployment_id_
+        WHERE actinst.id_ IS NOT NULL AND actinst.end_time_ IS NULL
+        ORDER BY actinst.start_time_ DESC
+        OFFSET #{currentPage} LIMIT #{pageSize}
+    </select>
+
+    <select id = "getTodoCount" parameterType="java.util.Map" resultType = "java.lang.Integer">
+        SELECT
+            COUNT(procdef.id_)
+        FROM act_re_procdef procdef
+        LEFT JOIN act_hi_actinst actinst ON procdef.id_ = actinst.proc_def_id_
+        WHERE actinst.id_ IS NOT NULL AND actinst.end_time_ IS NULL
+    </select>
+
+</mapper>

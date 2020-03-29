@@ -1,0 +1,33 @@
+# spring-config配置
+spring:
+  ##### config配置存储在config-server服务的shared文件下 #####
+#  profiles:
+#    active: dev
+  ##### config配置存储在config-server服务的shared文件下 #####
+  cloud:
+    config:
+      ##### config配置存储在config-server服务的shared文件下 #####
+#      uri: http://localhost:8800
+#      name: config-client
+#      fail-fast: true
+      ##### config配置存储在config-server服务的shared文件下 #####
+      ##### config配置存储在Git #####
+      ### 方式一 ###
+      name: application-config
+      profile: dev
+      uri: http://localhost:8010/
+      label: develop
+      ### 方式一 ###
+      ### 方式二 ###
+#      discovery:
+#        enabled: true
+#        service-id: scmp-registry-ampq
+#      label: develop
+#      name: application-config
+#      profile: dev
+      ### 方式二 ###
+      ##### config配置存储在Git #####
+    bus:
+      trace:
+        enabled: true
+      enabled: true
