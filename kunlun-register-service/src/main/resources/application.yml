@@ -25,7 +25,7 @@ eureka:
 spring:
   # 服务名配置
   application:
-    name: scmp-registry-ampq
+    name: kunlun-register-service
   zipkin:
     sleuth:
       sampler:

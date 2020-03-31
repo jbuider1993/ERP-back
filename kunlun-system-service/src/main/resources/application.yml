@@ -3,7 +3,7 @@ server:
 
 spring:
   application:
-    name: scmp-system-service
+    name: kunlun-system-service
   main:
     allow-bean-definition-overriding: true
   datasource:
@@ -104,7 +104,7 @@ spring:
 
 mybatis:
   mapper-locations: classpath:mapper/*Mapper.xml
-  type-aliases-package: com.scmp.common.model, com.scmp.system.model
+  type-aliases-package: com.kunlun.common.model, com.kunlun.system.model
   #开启驼峰命名法
   configuration:
     map-underscore-to-camel-case: true
@@ -118,7 +118,7 @@ scmp:
   # swagger配置
   swagger:
     enable: true
-    basePackage: com.scmp.system.controller
+    basePackage: com.kunlun.system.controller
     title: ${spring.application.name}服务Swagger文档
     description: 系统业务接口提供服务
     version: 1.0.0

@@ -14,8 +14,8 @@ import zipkin.server.EnableZipkinServer;
 @MapperScan("com.scmp.basedata")
 @EnableSwagger2
 @EnableCircuitBreaker
-public class BaseCacheApplication {
+public class BasedataApplication {
     public static void main(String[] args) {
-        SpringApplication.run(BaseCacheApplication.class, args);
+        SpringApplication.run(BasedataApplication.class, args);
     }
 }

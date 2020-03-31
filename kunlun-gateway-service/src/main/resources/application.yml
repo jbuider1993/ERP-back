@@ -3,13 +3,13 @@ server:
 
 spring:
   application:
-    name: scmp-gate-way
+    name: kunlun-gateway-service
 
 shiro:
   secret: 61D73234C4F93E03074D74D74D1E39D9
   expireTime: 1800000
   tokenHeader: Authorization
-  ignoreUrls: /gate-way/shiro/login, /basedata-cache/code/getAuthCode, /gate-way/shiro/logout
+  ignoreUrls: /kunlun-gateway-service/shiro/login, /kunlun-basedata-service/code/getAuthCode, /kunlun-gateway-service/shiro/logout
 
 zuul:
   # 饥饿加载，防止懒加载时第一次请求超时而失败
@@ -22,24 +22,24 @@ zuul:
     connect-timeout-millis: 300000
   routes:
     registry-amqp:
-      path: /registry-amqp/**
-      serviceId: scmp-registry-ampq
+      path: /kunlun-register-service/**
+      serviceId: kunlun-register-service
     gate-way:
-      path: /gate-way/**
-      serviceId: scmp-gate-way
+      path: /kunlun-gateway-service/**
+      serviceId: kunlun-gateway-service
     base-cache:
-      path: /basedata-cache/**
-      serviceId: scmp-basedata-cache
+      path: /kunlun-basedata-service/**
+      serviceId: kunlun-basedata-service
     system-service:
-      path: /system-service/**
-      serviceId: scmp-system-service
+      path: /kunlun-system-service/**
+      serviceId: kunlun-system-service
   ignored-headers: Access-Control-Allow-Credentials, Access-Control-Allow-Origin
 
 ribbon:
   # 饥饿加载，防止懒加载时第一次请求超时而失败
   eager-load:
     enabled: true
-    clients: scmp-basedata-cache, scmp-system-service
+    clients: kunlun-basedata-service, kunlun-system-service
   eureka:
     enabled: true
   ReadTimeout: 300000

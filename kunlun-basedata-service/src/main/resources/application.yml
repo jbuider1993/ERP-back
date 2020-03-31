@@ -6,7 +6,7 @@ server:
 spring:
   # 服务名配置
   application:
-    name: scmp-basedata-cache
+    name: kunlun-basedata-service
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource
     driver-class-name: org.postgresql.Driver
