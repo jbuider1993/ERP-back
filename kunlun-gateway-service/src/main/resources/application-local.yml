@@ -43,7 +43,7 @@ shiro:
   secret: 61D73234C4F93E03074D74D74D1E39D9
   expireTime: 1800000
   tokenHeader: Authorization
-  ignoreUrls: /gate-way/shiro/login, /base-cache/code/getAuthCode, /gate-way/shiro/logout
+  ignoreUrls: /gate-way/shiro/login, /basedata-cache/code/getAuthCode, /gate-way/shiro/logout
 
 zuul:
   # 饥饿加载，防止懒加载时第一次请求超时而失败
@@ -62,8 +62,8 @@ zuul:
       path: /gate-way/**
       serviceId: scmp-gate-way
     base-cache:
-      path: /base-cache/**
-      serviceId: scmp-base-cache
+      path: /basedata-cache/**
+      serviceId: scmp-basedata-cache
     system-service:
       path: /system-service/**
       serviceId: scmp-system-service
@@ -82,7 +82,7 @@ ribbon:
   # 饥饿加载，防止懒加载时第一次请求超时而失败
   eager-load:
     enabled: true
-    clients: scmp-base-cache, scmp-system-service
+    clients: scmp-basedata-cache, scmp-system-service
   eureka:
     enabled: true
   ReadTimeout: 300000

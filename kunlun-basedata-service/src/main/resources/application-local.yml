@@ -15,7 +15,7 @@ eureka:
 spring:
   # 服务名配置
   application:
-    name: scmp-base-cache
+    name: scmp-basedata-cache
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource
     driver-class-name: org.postgresql.Driver
@@ -112,7 +112,7 @@ zipkin:
 
 mybatis:
   mapper-locations: classpath:mapper/*.xml
-  type-aliases-package: com.scmp.base.model
+  type-aliases-package: com.scmp.basedata.model
   configuration:
     map-underscore-to-camel-case: true
 
