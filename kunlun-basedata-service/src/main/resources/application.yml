@@ -64,7 +64,7 @@ spring:
 
 mybatis:
   mapper-locations: classpath:mapper/*.xml
-  type-aliases-package: com.scmp.basedata.model
+  type-aliases-package: com.kunlun.basedata.model
   configuration:
     map-underscore-to-camel-case: true
 
@@ -81,7 +81,7 @@ scmp:
   # swagger配置
   swagger:
     enable: true
-    basePackage: com.scmp.basedata.controller
+    basePackage: com.kunlun.basedata.controller
     title: ${spring.application.name}服务Swagger文档
     description: 基础工具、公共配置、系统缓存等接口提供服务
     version: 1.0.0

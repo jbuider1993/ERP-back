@@ -4,7 +4,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.scmp.gate</groupId>
+    <groupId>com.kunlun.gateway</groupId>
     <artifactId>kunlun-gateway-service</artifactId>
     <version>1.0.0-SNAPSHOT</version>
     <packaging>jar</packaging>
@@ -98,8 +98,8 @@
         </dependency>
 
         <dependency>
-            <groupId>com.scmp.common</groupId>
-            <artifactId>scmp-common-service</artifactId>
+            <groupId>com.kunlun.common</groupId>
+            <artifactId>kunlun-common-api</artifactId>
             <version>1.0.0-SNAPSHOT</version>
         </dependency>
 

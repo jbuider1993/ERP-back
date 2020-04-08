@@ -1,3 +1,3 @@
-# scmp-common-service
+# kunlun-common-api
 
-SCMP项目公共基础模块
+昆仑管理系统公共基础模块
