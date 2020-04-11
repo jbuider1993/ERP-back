@@ -1,9 +1,9 @@
 package com.kunlun.system.controller;
 
+import com.kunlun.common.model.OperatorLogModel;
+import com.kunlun.common.model.Page;
+import com.kunlun.common.utils.ResponseUtil;
 import com.kunlun.system.service.IOperateLogService;
-import com.scmp.common.model.OperatorLogModel;
-import com.scmp.common.model.Page;
-import com.scmp.common.utils.ResponseUtil;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;

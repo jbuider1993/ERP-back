@@ -1,7 +1,7 @@
 package com.kunlun.system.service;
 
-import com.scmp.common.model.OperatorLogModel;
-import com.scmp.common.model.Page;
+import com.kunlun.common.model.OperatorLogModel;
+import com.kunlun.common.model.Page;
 
 import java.util.Map;
 

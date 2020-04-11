@@ -1,6 +1,6 @@
 package com.kunlun.gateway.config;
 
-import com.scmp.common.constant.AMQPConstant;
+import com.kunlun.common.constant.AMQPConstant;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.amqp.core.Binding;

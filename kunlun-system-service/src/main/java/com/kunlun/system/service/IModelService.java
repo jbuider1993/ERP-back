@@ -1,7 +1,7 @@
 package com.kunlun.system.service;
 
+import com.kunlun.common.model.Page;
 import com.kunlun.system.model.ModelModel;
-import com.scmp.common.model.Page;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

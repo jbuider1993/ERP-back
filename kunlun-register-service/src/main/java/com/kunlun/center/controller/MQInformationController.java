@@ -1,7 +1,7 @@
 package com.kunlun.center.controller;
 
 import com.kunlun.center.service.IMQInformationService;
-import com.scmp.common.utils.ResponseUtil;
+import com.kunlun.common.utils.ResponseUtil;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;

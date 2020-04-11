@@ -1,8 +1,8 @@
 package com.kunlun.gateway.aspect;
 
 import com.alibaba.fastjson.JSONObject;
-import com.scmp.common.annotation.OperatorLogger;
-import com.scmp.common.model.OperatorLogModel;
+import com.kunlun.common.annotation.OperatorLogger;
+import com.kunlun.common.model.OperatorLogModel;
 import com.kunlun.gateway.amqp.OperatorLogSender;
 import com.kunlun.gateway.utils.CommonUtil;
 import com.kunlun.gateway.utils.JwtTokenUtil;
@@ -50,7 +50,7 @@ public class OperatorLogAspect {
     @Value("${server.port}")
     private int port;
 
-    @Pointcut("@annotation(com.scmp.common.annotation.OperatorLogger)")
+    @Pointcut("@annotation(com.kunlun.common.annotation.OperatorLogger)")
     public void pointCut() {}
 
     @Before("pointCut()")

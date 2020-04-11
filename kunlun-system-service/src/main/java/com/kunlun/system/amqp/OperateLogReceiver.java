@@ -1,9 +1,9 @@
 package com.kunlun.system.amqp;
 
 import com.alibaba.fastjson.JSONObject;
+import com.kunlun.common.constant.AMQPConstant;
+import com.kunlun.common.model.OperatorLogModel;
 import com.rabbitmq.client.Channel;
-import com.scmp.common.constant.AMQPConstant;
-import com.scmp.common.model.OperatorLogModel;
 import com.kunlun.system.service.impl.OperateLogService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;

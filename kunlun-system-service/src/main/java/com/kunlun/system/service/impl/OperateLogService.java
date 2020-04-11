@@ -1,9 +1,9 @@
 package com.kunlun.system.service.impl;
 
+import com.kunlun.common.model.OperatorLogModel;
+import com.kunlun.common.model.Page;
 import com.kunlun.system.dao.IOperateLogDao;
 import com.kunlun.system.utils.CommonUtil;
-import com.scmp.common.model.OperatorLogModel;
-import com.scmp.common.model.Page;
 import com.kunlun.system.service.IOperateLogService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

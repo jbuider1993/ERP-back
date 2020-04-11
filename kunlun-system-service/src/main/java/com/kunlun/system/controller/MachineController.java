@@ -1,8 +1,8 @@
 package com.kunlun.system.controller;
 
+import com.kunlun.common.utils.ResponseUtil;
 import com.kunlun.system.model.MachineModel;
 import com.kunlun.system.service.IMachineService;
-import com.scmp.common.utils.ResponseUtil;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;

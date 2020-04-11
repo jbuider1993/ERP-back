@@ -1,9 +1,9 @@
 package com.kunlun.system.service.impl;
 
+import com.kunlun.common.model.Page;
 import com.kunlun.system.dao.IModelDao;
 import com.kunlun.system.model.ModelModel;
 import com.kunlun.system.utils.CommonUtil;
-import com.scmp.common.model.Page;
 import com.kunlun.system.config.dataSource.DataSourceType;
 import com.kunlun.system.config.dataSource.DbContextHolder;
 import com.kunlun.system.service.IModelService;

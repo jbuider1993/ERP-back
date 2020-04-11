@@ -1,6 +1,6 @@
 package com.kunlun.system.dao;
 
-import com.scmp.common.model.OperatorLogModel;
+import com.kunlun.common.model.OperatorLogModel;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;

@@ -1,11 +1,11 @@
 package com.kunlun.gateway.service.impl;
 
+import com.kunlun.common.annotation.OperatorLogger;
+import com.kunlun.common.model.enums.OperatorLogType;
 import com.kunlun.gateway.model.ShiroConfigModel;
 import com.kunlun.gateway.model.TokenModel;
 import com.kunlun.gateway.utils.CommonUtil;
 import com.kunlun.gateway.utils.JwtTokenUtil;
-import com.scmp.common.annotation.OperatorLogger;
-import com.scmp.common.model.enums.OperatorLogType;
 import com.kunlun.gateway.model.UserModel;
 import com.kunlun.gateway.service.ICacheTraceService;
 import com.kunlun.gateway.service.IShiroService;

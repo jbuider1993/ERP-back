@@ -1,12 +1,12 @@
 package com.kunlun.gateway.amqp;
 
+import com.kunlun.common.constant.AMQPConstant;
 import com.kunlun.gateway.utils.AMQPUtil;
 import com.rabbitmq.client.AMQP;
 import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.ConfirmListener;
 import com.rabbitmq.client.Connection;
 import com.rabbitmq.client.ReturnListener;
-import com.scmp.common.constant.AMQPConstant;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;

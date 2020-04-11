@@ -1,10 +1,10 @@
 package com.kunlun.gateway.utils;
 
+import com.kunlun.common.constant.AMQPConstant;
 import com.rabbitmq.client.BuiltinExchangeType;
 import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.Connection;
 import com.rabbitmq.client.ConnectionFactory;
-import com.scmp.common.constant.AMQPConstant;
 import com.kunlun.gateway.model.MQConfigModel;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;

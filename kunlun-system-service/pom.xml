@@ -231,7 +231,7 @@
 
     <dependency>
       <groupId>com.kunlun.common</groupId>
-      <artifactId>kunlun-common-apie</artifactId>
+      <artifactId>kunlun-common-api</artifactId>
       <version>1.0.0-SNAPSHOT</version>
     </dependency>
 

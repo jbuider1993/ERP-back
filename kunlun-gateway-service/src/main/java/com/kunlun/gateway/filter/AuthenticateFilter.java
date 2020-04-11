@@ -1,9 +1,9 @@
 package com.kunlun.gateway.filter;
 
+import com.kunlun.common.utils.ResponseUtil;
 import com.netflix.zuul.ZuulFilter;
 import com.netflix.zuul.context.RequestContext;
 import com.netflix.zuul.exception.ZuulException;
-import com.scmp.common.utils.ResponseUtil;
 import com.kunlun.gateway.model.ShiroConfigModel;
 import com.kunlun.gateway.service.ICacheTraceService;
 import com.kunlun.gateway.utils.JwtTokenUtil;

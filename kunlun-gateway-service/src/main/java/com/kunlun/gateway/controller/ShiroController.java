@@ -1,7 +1,7 @@
 package com.kunlun.gateway.controller;
 
+import com.kunlun.common.utils.ResponseUtil;
 import com.kunlun.gateway.model.TokenModel;
-import com.scmp.common.utils.ResponseUtil;
 import com.kunlun.gateway.service.IShiroService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;

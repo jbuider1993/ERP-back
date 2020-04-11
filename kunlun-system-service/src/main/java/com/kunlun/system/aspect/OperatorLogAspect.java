@@ -1,7 +1,7 @@
 package com.kunlun.system.aspect;
 
-import com.scmp.common.annotation.OperatorLogger;
-import com.scmp.common.model.OperatorLogModel;
+import com.kunlun.common.annotation.OperatorLogger;
+import com.kunlun.common.model.OperatorLogModel;
 import com.kunlun.system.service.IOperateLogService;
 import com.kunlun.system.utils.CommonUtil;
 import org.apache.logging.log4j.LogManager;
@@ -45,7 +45,7 @@ public class OperatorLogAspect {
     @Value("${server.port}")
     private int port;
 
-    @Pointcut("@annotation(com.scmp.common.annotation.OperatorLogger)")
+    @Pointcut("@annotation(com.kunlun.common.annotation.OperatorLogger)")
     public void pointCut() {}
 
     @Before("pointCut()")
