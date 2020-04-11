@@ -11,7 +11,7 @@ import zipkin.server.EnableZipkinServer;
 @SpringBootApplication
 @EnableZipkinServer
 @EnableEurekaClient
-@MapperScan("com.scmp.basedata")
+@MapperScan("com.kunlun.basedata")
 @EnableSwagger2
 @EnableCircuitBreaker
 public class BasedataApplication {

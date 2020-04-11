@@ -1,7 +1,7 @@
 package com.kunlun.basedata.controller;
 
 import com.kunlun.basedata.service.ICodeService;
-import com.scmp.common.utils.ResponseUtil;
+import com.kunlun.common.utils.ResponseUtil;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;

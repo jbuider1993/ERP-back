@@ -58,7 +58,7 @@ spring:
           search-paths: src/main/resources/shared
           #用户名和密码
           username: sjxue126@126.com
-          password: xsj890702<>
+          password: xxxxxxxxxxx
         default-label: develop
         ##### config配置存储在Git #####
     bus:

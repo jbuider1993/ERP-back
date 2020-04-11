@@ -4,7 +4,7 @@ import com.kunlun.basedata.model.UserModel;
 import com.kunlun.basedata.service.IUserService;
 import com.kunlun.basedata.utils.CommonUtil;
 import com.kunlun.basedata.dao.IUserDao;
-import com.scmp.common.model.Page;
+import com.kunlun.common.model.Page;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

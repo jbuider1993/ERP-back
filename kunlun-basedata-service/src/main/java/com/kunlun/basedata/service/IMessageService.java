@@ -1,7 +1,7 @@
 package com.kunlun.basedata.service;
 
 import com.kunlun.basedata.model.MessageRecordModel;
-import com.scmp.common.model.Page;
+import com.kunlun.common.model.Page;
 
 import java.util.List;
 

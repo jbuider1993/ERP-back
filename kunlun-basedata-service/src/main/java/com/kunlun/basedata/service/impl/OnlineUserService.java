@@ -5,7 +5,7 @@ import com.kunlun.basedata.utils.CommonUtil;
 import com.kunlun.basedata.dao.IOnlineDao;
 import com.kunlun.basedata.model.OnlineUserModel;
 import com.kunlun.basedata.service.IOnlineUserService;
-import com.scmp.common.model.Page;
+import com.kunlun.common.model.Page;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;

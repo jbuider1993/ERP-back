@@ -1,7 +1,7 @@
 package com.kunlun.basedata.service;
 
 import com.kunlun.basedata.model.IconModel;
-import com.scmp.common.model.Page;
+import com.kunlun.common.model.Page;
 
 public interface IIconService {
     public Page getAllIcon(IconModel iconModel, int currentPage, int pageSize) throws Exception;

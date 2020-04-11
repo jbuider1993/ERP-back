@@ -28,7 +28,7 @@ import javax.annotation.PostConstruct;
         })
 @EnableCaching
 @EnableSwagger2
-@MapperScan("com.scmp.system")
+@MapperScan("com.kunlun.system")
 public class SystemApplication {
     @Autowired
     private TaskService taskService;

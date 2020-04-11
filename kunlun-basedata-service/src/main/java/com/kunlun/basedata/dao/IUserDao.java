@@ -1,7 +1,7 @@
 package com.kunlun.basedata.dao;
 
 import com.kunlun.basedata.model.UserModel;
-import com.scmp.common.model.Page;
+import com.kunlun.common.model.Page;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 

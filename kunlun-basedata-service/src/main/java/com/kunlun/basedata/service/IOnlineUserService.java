@@ -1,7 +1,7 @@
 package com.kunlun.basedata.service;
 
 import com.kunlun.basedata.model.OnlineUserModel;
-import com.scmp.common.model.Page;
+import com.kunlun.common.model.Page;
 
 import javax.servlet.http.HttpServletRequest;
 

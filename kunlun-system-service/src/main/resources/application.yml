@@ -72,7 +72,7 @@ spring:
   mail:
     host: smtp.126.com
     username: sjxue126@126.com
-    password: <xsj890702>
+    password: xxxxxxxxxxx
     default-encoding: UTF-8
   flyway:
     # 是否开启flywary，默认true

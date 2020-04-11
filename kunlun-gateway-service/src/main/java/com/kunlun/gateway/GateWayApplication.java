@@ -14,7 +14,7 @@ import org.springframework.context.annotation.Bean;
 @EnableZuulProxy
 @EnableEurekaClient
 @EnableHystrix
-@EnableFeignClients(basePackages = {"com.scmp.gate"})
+@EnableFeignClients(basePackages = {"com.kunlun.gateway"})
 public class GateWayApplication {
 
     public static void main(String[] args) {

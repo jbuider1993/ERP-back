@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-@FeignClient(name = "scmp-basedata-cache")
+@FeignClient(name = "kunlun-basedata-service")
 public interface ICacheTraceService {
     @RequestMapping(value = "/redis/set", method = RequestMethod.POST)
     public Object set(@RequestParam(value = "key") String key, @RequestParam(value = "value") String value, @RequestParam(value = "expire") int expire, @RequestParam(value = "dataBase") int dataBase);
