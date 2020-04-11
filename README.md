@@ -26,10 +26,12 @@ kunlun-service 基于 SpringBoot 与 Spring Cloud 构建开发，提供后端基
 #### 使用说明
 
 1.  npm安装前端依赖库，并启动kunlun-home-web与kunlun-system-web服务；
-2.  启动注册中心kunlun-register-service；
-3.  依次启动kunlun-gateway-service、kunlun-basedata-service与kunlun-system-service服务；
-4.  访问URL：http://localhost:8000；
-5.  输入账号：admin，密码：admin及验证码。
+2.  启动PostgreSQL，执行kunlun-basedata-service与kunlun-system-service服务resources下的Sql文件；
+3.  启动RabbitMQ和Redis；
+4.  启动注册中心kunlun-register-service；
+5.  依次启动kunlun-gateway-service、kunlun-basedata-service与kunlun-system-service服务；
+6.  访问URL：http://localhost:8000；
+7.  输入账号：admin，密码：admin及验证码。
 
 
 #### 功能说明
