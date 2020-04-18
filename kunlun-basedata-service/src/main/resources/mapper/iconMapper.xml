@@ -4,7 +4,7 @@
 <mapper namespace = "com.kunlun.basedata.dao.IIconDao">
 
     <select id = "getAllIcon" parameterType="java.util.Map" resultType = "IconModel">
-        SELECT id, name, key, modified_time AS modifiedTime FROM t_icon
+        SELECT id, name, key, modified_time AS modifiedTime FROM t_display_icon
         WHERE 1 = 1
         <include refid="queryIconCondition" />
         ORDER BY modified_time DESC
@@ -12,7 +12,7 @@
     </select>
 
     <select id = "getIconsCount" parameterType="java.util.Map" resultType = "java.lang.Integer">
-        SELECT COUNT(id) FROM t_icon
+        SELECT COUNT(id) FROM t_display_icon
         WHERE 1 = 1
         <include refid="queryIconCondition" />
     </select>
@@ -30,14 +30,14 @@
     </sql>
 
     <insert id="addIcon" parameterType="IconModel">
-            INSERT INTO t_icon
+            INSERT INTO t_display_icon
               (id, name, key, create_time, modified_time)
             VALUES
               (#{id}, #{name}, #{key}, #{createTime}, #{modifiedTime})
     </insert>
 
     <update id="updateIcon" parameterType="IconModel">
-        UPDATE t_icon SET
+        UPDATE t_display_icon SET
         name = #{name}, key = #{key}
         WHERE id = #{id}
     </update>

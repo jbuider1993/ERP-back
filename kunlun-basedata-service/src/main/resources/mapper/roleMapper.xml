@@ -7,7 +7,7 @@
         SELECT
             id, role_name AS roleName, role_word AS roleWord, status, menu_ids AS menuIds,
             user_ids AS userIds, create_time AS createTime, modified_time AS modifiedTime
-        FROM t_role
+        FROM t_user_role
         WHERE 1 = 1
         <include refid="queryRoleCondition" />
         ORDER BY create_time DESC
@@ -15,7 +15,7 @@
     </select>
 
     <select id = "getRolesCount" parameterType="java.util.Map" resultType = "java.lang.Integer">
-        SELECT COUNT(id) FROM t_role
+        SELECT COUNT(id) FROM t_user_role
         WHERE 1 = 1
         <include refid="queryRoleCondition" />
     </select>
@@ -33,7 +33,7 @@
     </sql>
 
     <insert id="addRole" parameterType="RoleModel">
-        INSERT INTO t_role
+        INSERT INTO t_user_role
         (id, role_name, role_word, status, menu_ids, user_ids, create_time, modified_time)
         VALUES
         (#{id}, #{roleName}, #{roleWord}, #{status}, #{menuIds},
@@ -41,14 +41,14 @@
     </insert>
 
     <update id="updateRole" parameterType="RoleModel">
-        UPDATE t_role SET
+        UPDATE t_user_role SET
             role_name = #{roleName}, role_word = #{roleWord}, status = #{status},
             menu_ids = #{menuIds}, user_ids = #{userIds}, modified_time = #{modifiedTime}
         WHERE id = #{id}
     </update>
 
     <delete id="batchDeleteRole" parameterType="java.util.List">
-        DELETE FROM t_role WHERE id IN
+        DELETE FROM t_user_role WHERE id IN
         <foreach collection="list" item="item" open="(" close=")" separator=",">
             #{item}
         </foreach>

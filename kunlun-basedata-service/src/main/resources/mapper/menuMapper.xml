@@ -6,7 +6,7 @@
     <select id = "getAllMenu" parameterType="java.util.Map" resultType = "MenuModel">
         SELECT
 		    menu.id, menu.name, menu.key, menu.url, menu.level, icon.key AS icon, menu.forbid, menu.parent_id AS parentId, menu.long_code AS longCode
-        FROM t_menu menu
+        FROM t_display_menu menu
         LEFT JOIN t_icon icon ON menu.icon_id = icon.id
         WHERE 1 = 1
         <include refid="queryMenuCondition" />
@@ -14,7 +14,7 @@
     </select>
 
     <select id = "getMenusCount" parameterType="java.util.Map" resultType = "java.lang.Integer">
-        SELECT COUNT(id) FROM t_menu menu
+        SELECT COUNT(id) FROM t_display_menu menu
         WHERE 1 = 1
         <include refid="queryMenuCondition" />
     </select>
@@ -38,7 +38,7 @@
     </sql>
 
     <insert id="addMenu" parameterType="MenuModel">
-        INSERT INTO t_menu
+        INSERT INTO t_display_menu
             (id, name, key, url, level, icon_id, forbid, parent_id, long_code, create_time, modified_time)
         VALUES
             (#{id}, #{name}, #{key}, #{url}, #{level}, #{iconId}, #{forbid},
@@ -46,7 +46,7 @@
     </insert>
 
     <update id="editMenu" parameterType="MenuModel">
-        UPDATE t_menu SET
+        UPDATE t_display_menu SET
             name = #{name}, key = #{key}, url = #{url}, icon_id = #{iconId}, forbid = #{forbid},
             parent_id = #{parentId}, long_code = #{longCode}, modified_time = #{modifiedTime}
         WHERE id = #{id}
@@ -54,7 +54,7 @@
 
     <delete id="deleteMenu" parameterType="java.util.Arrays">
         <foreach collection="array" item="item" separator=";">
-            DELETE FROM t_menu WHERE position(#{item} IN long_code) > 0
+            DELETE FROM t_display_menu WHERE position(#{item} IN long_code) > 0
         </foreach>
     </delete>
 

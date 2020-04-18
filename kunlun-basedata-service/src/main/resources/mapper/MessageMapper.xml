@@ -14,7 +14,7 @@
             msg.content AS content,
             msg.create_time AS createTime,
             msg.modified_time AS modifiedTime
-        FROM t_message_record msg
+        FROM t_message_notice msg
         LEFT JOIN t_user u ON u.id = msg.user_id
         WHERE 1 = 1
         ORDER BY msg.create_time ASC
@@ -22,7 +22,7 @@
     </select>
 
     <select id = "getMessageCount" parameterType="java.util.Map" resultType = "java.lang.Integer">
-        SELECT COUNT(id) FROM t_message_record
+        SELECT COUNT(id) FROM t_message_notice
         WHERE 1 = 1
     </select>
 
@@ -42,7 +42,7 @@
     </sql>
 
     <insert id="addMessage" parameterType="MessageRecordModel">
-        INSERT INTO t_message_record
+        INSERT INTO t_message_notice
         (id, user_id, type, title, description, content, create_time, modified_time)
         VALUES
         (#{id}, #{userId}, #{type}, #{title}, #{description},
@@ -50,14 +50,14 @@
     </insert>
 
     <update id="updateMessage" parameterType="MessageRecordModel">
-        UPDATE t_message_record SET
+        UPDATE t_message_notice SET
             user_id = #{userId}, type = #{type}, title = #{title}, description = #{description},
             content = #{content}, modified_time = #{modifiedTime}
         WHERE id = #{id}
     </update>
 
     <delete id="batchDeleteMessage" parameterType="java.util.List">
-        DELETE FROM t_message_record WHERE id IN
+        DELETE FROM t_message_notice WHERE id IN
         <foreach collection="list" item="item" open="(" close=")" separator=",">
             #{item}
         </foreach>
