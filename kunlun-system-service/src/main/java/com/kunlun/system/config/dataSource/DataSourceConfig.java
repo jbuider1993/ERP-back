@@ -1,7 +1,10 @@
 package com.kunlun.system.config.dataSource;
 
 import com.alibaba.druid.spring.boot.autoconfigure.DruidDataSourceBuilder;
+import com.kunlun.system.config.activiti.ActitytiDataSourceConfig;
 import org.apache.ibatis.session.SqlSessionFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +24,8 @@ import java.util.Map;
 @MapperScan(basePackages = "mapper", sqlSessionFactoryRef = "sqlSessionFactory")
 public class DataSourceConfig {
 
+    private static final Logger log = LogManager.getLogger(DataSourceConfig.class);
+
     @Value("${mybatis.mapper-locations}")
     private String mapperLocations;
 
@@ -35,6 +40,7 @@ public class DataSourceConfig {
     @Bean(name = "masterDataSource")
     @ConfigurationProperties(prefix = "spring.datasource.master")
     public DataSource masterDataSource() {
+        log.info("masterDataSource 初始化...");
         return DruidDataSourceBuilder.create().build();
     }
 

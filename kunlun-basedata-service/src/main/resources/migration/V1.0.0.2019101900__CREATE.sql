@@ -8,7 +8,7 @@ CREATE TABLE IF NOT EXISTS t_system_user (
     create_time timestamp default null,
     modified_time timestamp default null
 );
-COMMENT ON TABLE t_system_user IS '用户表';
+COMMENT ON TABLE t_system_user IS '系统用户表';
 COMMENT ON COLUMN t_system_user.id IS '用户id';
 COMMENT ON COLUMN t_system_user.user_name IS '账号';
 COMMENT ON COLUMN t_system_user.password IS '密码';
@@ -28,7 +28,7 @@ CREATE TABLE IF NOT EXISTS t_user_role (
     create_time timestamp default null,
     modified_time timestamp default null
 );
-COMMENT ON TABLE t_user_role IS '用户角色表';
+COMMENT ON TABLE t_user_role IS '系统用户角色表';
 COMMENT ON COLUMN t_user_role.id IS '角色id';
 COMMENT ON COLUMN t_user_role.role_name IS '角色名称';
 COMMENT ON COLUMN t_user_role.role_word IS '角色字符';
@@ -50,7 +50,7 @@ CREATE TABLE IF NOT EXISTS t_online_user (
     login_time timestamp default null,
     last_time timestamp default null
 );
-COMMENT ON TABLE t_online_user IS '在线用户表';
+COMMENT ON TABLE t_online_user IS '系统在线用户表';
 COMMENT ON COLUMN t_online_user.id IS '用户id';
 COMMENT ON COLUMN t_online_user.login_name IS '登录账号';
 COMMENT ON COLUMN t_online_user.login_ip IS '登录主机';
@@ -75,7 +75,7 @@ CREATE TABLE IF NOT EXISTS t_display_menu (
 	create_time timestamp default null,
     modified_time timestamp default null
 );
-COMMENT ON TABLE t_display_menu IS '系统平台菜单表';
+COMMENT ON TABLE t_display_menu IS '系统显示菜单表';
 COMMENT ON COLUMN t_display_menu.id IS '表主键id';
 COMMENT ON COLUMN t_display_menu.name IS '菜单名称';
 COMMENT ON COLUMN t_display_menu.key IS '菜单key';
@@ -96,7 +96,7 @@ CREATE TABLE IF NOT EXISTS t_display_icon (
 	create_time timestamp default null,
     modified_time timestamp default null
 );
-COMMENT ON TABLE t_display_icon IS '系统平台图标表';
+COMMENT ON TABLE t_display_icon IS '系统图标表';
 COMMENT ON COLUMN t_display_icon.id IS '表主键id';
 COMMENT ON COLUMN t_display_icon.name IS '图标名称';
 COMMENT ON COLUMN t_display_icon.key IS '图标key';
@@ -104,7 +104,7 @@ COMMENT ON COLUMN t_display_icon.create_time IS '创建时间';
 COMMENT ON COLUMN t_display_icon.modified_time IS '修改时间';
 
 -- 系统通知消息表
-CREATE TABLE t_message_notice (
+CREATE TABLE IF NOT EXISTS t_message_notice (
 	id varchar(50) primary key,
 	user_id varchar(50) default null,
 	type INT default 0,

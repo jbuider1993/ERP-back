@@ -13,7 +13,7 @@
             info.used_cpu AS usedCPU,
             info.used_memory AS usedMemory,
             info.create_time AS createTime
-        FROM t_machine machine
+        FROM t_virtual_machine machine
         LEFT JOIN t_collect_machine info ON info.machine_id = machine.id
     </select>
 

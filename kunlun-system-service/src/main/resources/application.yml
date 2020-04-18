@@ -10,7 +10,7 @@ spring:
     type: com.alibaba.druid.pool.DruidDataSource
     master:
       driver-class-name: org.postgresql.Driver
-      url: jdbc:postgresql://localhost:5432/scmp_system
+      url: jdbc:postgresql://localhost:5432/kunlun_system
       username: postgres
       password: java
       #配置初始化大小/最小/最大
@@ -32,7 +32,7 @@ spring:
       max-pool-prepared-statement-per-connection-size: 20
     activiti:
       driver-class-name: org.postgresql.Driver
-      url: jdbc:postgresql://localhost:5432/scmp_activiti
+      url: jdbc:postgresql://localhost:5432/kunlun_activiti
       username: postgres
       password: java
       #配置初始化大小/最小/最大
@@ -101,6 +101,10 @@ spring:
     baseline-version: 1.0.0
     # 对执行迁移时基准版本的描述
     baseline-description: "initial flyway"
+    # 自定义flyway数据库链接
+    url: ${spring.datasource.master.url}
+    user: ${spring.datasource.master.username}
+    password: ${spring.datasource.master.password}
 
 mybatis:
   mapper-locations: classpath:mapper/*Mapper.xml
