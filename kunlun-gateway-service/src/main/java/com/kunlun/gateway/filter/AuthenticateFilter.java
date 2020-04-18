@@ -78,7 +78,7 @@ public class AuthenticateFilter extends ZuulFilter {
             } else {
                 // Token过期后直接跳转到登录页面，但目前只报404客户端异常的错误
                 HttpServletResponse response = context.getResponse();
-                response.sendRedirect("/");
+                response.sendRedirect("/timeout");
                 log.info("离开时间太长，请重新登录！");
                 return ResponseUtil.failedResponse("登录已过期，请重新登录！", "Token timeout Error");
             }
