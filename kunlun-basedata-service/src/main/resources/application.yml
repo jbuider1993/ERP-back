@@ -1,8 +1,6 @@
 # 服务端口
 server:
   port: 8020
-  servlet:
-    context-path: /basedata
 
 # spring配置
 spring:

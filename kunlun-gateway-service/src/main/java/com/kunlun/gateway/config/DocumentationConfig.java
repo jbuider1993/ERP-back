@@ -28,11 +28,11 @@ public class DocumentationConfig implements SwaggerResourcesProvider {
         log.info("===== Swagger2 Documentation Config =====");
         List<SwaggerResource> resources = new ArrayList<>();
 
-        resources.add(createResource("基础数据服务", "/kunlun-basedata-service/basedata/v2/api-docs", "2.0"));
-        resources.add(createResource("系统业务服务", "/kunlun-system-service/system/v2/api-docs", "2.0"));
+        resources.add(createResource("基础数据服务", "/kunlun-basedata-service/v2/api-docs", "2.0"));
+        resources.add(createResource("系统业务服务", "/kunlun-system-service/v2/api-docs", "2.0"));
 
 //        for (Route route : discoveryClientRouteLocator.getRoutes()) {
-//            resources.add(createResource(route.getLocation(),route.getId(), "2.0"));
+//            resources.add(createResource(route.getLocation(), route.getPrefix() + "/v2/api-docs", "2.0"));
 //        }
 
         return resources;

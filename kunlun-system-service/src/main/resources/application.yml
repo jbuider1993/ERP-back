@@ -1,7 +1,5 @@
 server:
   port: 8025
-  servlet:
-    context-path: /system
 
 spring:
   application:

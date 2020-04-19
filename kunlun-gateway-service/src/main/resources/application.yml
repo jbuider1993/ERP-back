@@ -27,7 +27,7 @@ zuul:
     gateway:
       path: /kunlun-gateway-service/**
       serviceId: kunlun-gateway-service
-    baseedata:
+    basedata:
       path: /kunlun-basedata-service/**
       serviceId: kunlun-basedata-service
     system:
