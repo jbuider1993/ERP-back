@@ -1,6 +1,8 @@
 # 服务端口
 server:
   port: 8020
+  servlet:
+    context-path: /basedata
 
 # spring配置
 spring:
@@ -77,7 +79,7 @@ online:
   address: 陕西西安
 
 # 系统自动配置项
-scmp:
+kunlun:
   # ControllerAdvice配置
   controllerAdvice:
     enable: true
@@ -87,7 +89,7 @@ scmp:
     enable: true
     basePackage: com.kunlun.basedata.controller
     title: ${spring.application.name}服务Swagger文档
-    description: 基础工具、公共配置、系统缓存等接口提供服务
+    description: 基础数据、公共工具、系统缓存等接口提供服务
     version: 1.0.0
 
   # 是否开启跨域配置

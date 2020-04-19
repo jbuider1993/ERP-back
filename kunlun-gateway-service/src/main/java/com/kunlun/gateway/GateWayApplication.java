@@ -9,11 +9,13 @@ import org.springframework.cloud.netflix.hystrix.EnableHystrix;
 import org.springframework.cloud.netflix.zuul.EnableZuulProxy;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.annotation.Bean;
+import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 @SpringBootApplication
 @EnableZuulProxy
 @EnableEurekaClient
 @EnableHystrix
+@EnableSwagger2
 @EnableFeignClients(basePackages = {"com.kunlun.gateway"})
 public class GateWayApplication {
 

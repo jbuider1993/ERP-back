@@ -17,24 +17,24 @@ import springfox.documentation.spring.web.plugins.Docket;
  * Swagger2自动配置类
  */
 @Configuration
-@ConditionalOnProperty(name = "scmp.swagger.enable", havingValue = "true")
+@ConditionalOnProperty(name = "kunlun.swagger.enable", havingValue = "true")
 public class Swagger2AutoConfiguration {
 
     private Logger log = LogManager.getLogger();
 
-    @Value("${scmp.swagger.enable}")
+    @Value("${kunlun.swagger.enable}")
     private boolean enable;
 
-    @Value("${scmp.swagger.basePackage}")
+    @Value("${kunlun.swagger.basePackage}")
     private String basePackage;
 
-    @Value("${scmp.swagger.title}")
+    @Value("${kunlun.swagger.title}")
     private String title;
 
-    @Value("${scmp.swagger.description}")
+    @Value("${kunlun.swagger.description}")
     private String description;
 
-    @Value("${scmp.swagger.version}")
+    @Value("${kunlun.swagger.version}")
     private String version;
 
     @Bean

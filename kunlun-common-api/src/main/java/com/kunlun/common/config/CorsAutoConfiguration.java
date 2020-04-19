@@ -13,7 +13,7 @@ import org.springframework.web.filter.CorsFilter;
  * 跨域请求自动配置
  */
 @Configuration
-@ConditionalOnProperty(name = "scmp.cors.enable", havingValue = "true")
+@ConditionalOnProperty(name = "kunlun.cors.enable", havingValue = "true")
 public class CorsAutoConfiguration {
 
     private Logger log = LogManager.getLogger();

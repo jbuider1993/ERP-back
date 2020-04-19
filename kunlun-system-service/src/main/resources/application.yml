@@ -1,5 +1,7 @@
 server:
   port: 8025
+  servlet:
+    context-path: /system
 
 spring:
   application:
@@ -114,7 +116,7 @@ mybatis:
     map-underscore-to-camel-case: true
 
 # 系统自动配置项
-scmp:
+kunlun:
   # ControllerAdvice配置
   controllerAdvice:
     enable: true
@@ -124,7 +126,7 @@ scmp:
     enable: true
     basePackage: com.kunlun.system.controller
     title: ${spring.application.name}服务Swagger文档
-    description: 系统业务接口提供服务
+    description: 系统业务数据接口提供服务
     version: 1.0.0
 
   # 是否开启跨域配置

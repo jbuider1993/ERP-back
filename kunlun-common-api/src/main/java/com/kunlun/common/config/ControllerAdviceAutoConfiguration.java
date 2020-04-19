@@ -23,7 +23,7 @@ import java.text.MessageFormat;
  * RestControllerAdviceI自动配置类
  */
 @RestControllerAdvice
-@ConditionalOnProperty(name = "scmp.controllerAdvice.enable", havingValue = "true")
+@ConditionalOnProperty(name = "kunlun.controllerAdvice.enable", havingValue = "true")
 public class ControllerAdviceAutoConfiguration implements ResponseBodyAdvice {
     private Logger log = LogManager.getLogger();
 
