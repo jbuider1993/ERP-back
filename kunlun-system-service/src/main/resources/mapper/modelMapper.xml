@@ -17,7 +17,7 @@
             deploy.deploy_time_ AS deployTime
         FROM act_re_model model
         LEFT JOIN act_re_deployment deploy ON model.deployment_id_ = deploy.id_
-        WHERE 1 = 1 AND model.name_ != 'new-process'
+        WHERE 1 = 1 AND model.name_ != ''
         <include refid="queryProcessCondition" />
         ORDER BY model.create_time_ DESC
         OFFSET #{currentPage} LIMIT #{pageSize}
@@ -25,7 +25,7 @@
 
     <select id = "getProcessesCount" parameterType="java.util.Map" resultType = "java.lang.Integer">
         SELECT COUNT(id_) FROM act_re_model
-        WHERE 1 = 1 AND name_ != 'new-process'
+        WHERE 1 = 1 AND name_ != ''
         <include refid="queryProcessCondition" />
     </select>
 

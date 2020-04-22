@@ -2,18 +2,15 @@ package com.kunlun.system.controller.activiti;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.kunlun.common.annotation.OperatorLogger;
 import com.kunlun.common.model.Page;
 import com.kunlun.common.model.enums.OperatorLogType;
 import com.kunlun.common.utils.ResponseUtil;
-import com.kunlun.system.model.ModelModel;
 import com.kunlun.system.model.ProcessModel;
 import com.kunlun.system.service.IModelService;
 import com.kunlun.system.service.IProcessService;
 import org.activiti.bpmn.converter.BpmnXMLConverter;
 import org.activiti.bpmn.model.BpmnModel;
-import org.activiti.editor.constants.ModelDataJsonConstants;
 import org.activiti.editor.language.json.converter.BpmnJsonConverter;
 import org.activiti.engine.ProcessEngine;
 import org.activiti.engine.RepositoryService;
@@ -29,7 +26,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @Controller
@@ -52,69 +48,7 @@ public class ActivitiProcessController {
     private IProcessService processService;
 
     /**
-     * 新建一个空模型
-     */
-    @RequestMapping("/create")
-    @OperatorLogger(type = OperatorLogType.SYSTEM, description = "创建模型")
-    public void newModel(HttpServletResponse response) {
-        try {
-            RepositoryService repositoryService = processEngine.getRepositoryService();
-            //初始化一个空模型
-            Model model = repositoryService.newModel();
-
-            //设置一些默认信息
-            String name = "new-process";
-            String description = "";
-            int revision = 1;
-            String key = "process";
-
-            ObjectNode modelNode = objectMapper.createObjectNode();
-            modelNode.put(ModelDataJsonConstants.MODEL_NAME, name);
-            modelNode.put(ModelDataJsonConstants.MODEL_DESCRIPTION, description);
-            modelNode.put(ModelDataJsonConstants.MODEL_REVISION, revision);
-
-            model.setName(name);
-            model.setKey(key);
-            model.setMetaInfo(modelNode.toString());
-
-            repositoryService.saveModel(model);
-            String id = model.getId();
-
-            //完善ModelEditorSource
-            ObjectNode editorNode = objectMapper.createObjectNode();
-            editorNode.put("id", "canvas");
-            editorNode.put("resourceId", "canvas");
-            ObjectNode stencilSetNode = objectMapper.createObjectNode();
-            stencilSetNode.put("namespace",
-                    "http://b3mn.org/stencilset/bpmn2.0#");
-            editorNode.put("stencilset", stencilSetNode);
-            repositoryService.addModelEditorSource(id,editorNode.toString().getBytes("utf-8"));
-            response.sendRedirect("/static/modeler.html?modelId="+id);
-        } catch (IOException e) {
-            log.error("", e);
-        }
-    }
-
-    /**
-     * 获取所有模型
-     */
-    @RequestMapping("/modelList")
-    @ResponseBody
-    public Object modelList(ModelModel model, int currentPage, int pageSize){
-        try {
-//            RepositoryService repositoryService = processEngine.getRepositoryService();
-//            return ResponseUtil.successResponse(repositoryService.createModelQuery().list());
-
-            Page pages = modelService.getAllProcess(model, currentPage, pageSize);
-            return ResponseUtil.successResponse(pages);
-        } catch (Exception e) {
-            log.error("ActivitiModelController modelList Error: ", e);
-            return ResponseUtil.failedResponse("查询所有模型失败！", e.getMessage());
-        }
-    }
-
-    /**
-     * 发布模型为流程定义
+     * 发布模型为流程定义，即部署流程模型
      */
     @RequestMapping("/deploy")
     @ResponseBody
@@ -134,7 +68,7 @@ public class ActivitiProcessController {
             JsonNode modelNode = new ObjectMapper().readTree(bytes);
 
             BpmnModel model = new BpmnJsonConverter().convertToBpmnModel(modelNode);
-            if(model.getProcesses().size()==0){
+            if (model.getProcesses().size() == 0) {
                 return "数据模型不符要求，请至少设计一条主线流程。";
             }
             byte[] bpmnBytes = new BpmnXMLConverter().convertToXML(model);
@@ -156,7 +90,7 @@ public class ActivitiProcessController {
     }
 
     /**
-     *  启动流程
+     * 启动定义的流程
      */
     @RequestMapping("/start")
     @ResponseBody
@@ -172,7 +106,7 @@ public class ActivitiProcessController {
     }
 
     /**
-     *  提交任务
+     * 提交已启动的流程到下一个节点进行审批
      */
     @RequestMapping("/run")
     @ResponseBody
@@ -190,9 +124,12 @@ public class ActivitiProcessController {
         }
     }
 
+    /**
+     * 获取所有已部署的流程数据
+     */
     @RequestMapping("/processList")
     @ResponseBody
-    public Object processList(ProcessModel model, int currentPage, int pageSize){
+    public Object processList(ProcessModel model, int currentPage, int pageSize) {
         try {
             Page pages = processService.getAllProcess(model, currentPage, pageSize);
             return ResponseUtil.successResponse(pages);

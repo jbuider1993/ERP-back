@@ -2,6 +2,8 @@ package com.kunlun.system.aspect;
 
 import com.kunlun.common.annotation.OperatorLogger;
 import com.kunlun.common.model.OperatorLogModel;
+import com.kunlun.system.config.dataSource.DataSourceType;
+import com.kunlun.system.config.dataSource.DbContextHolder;
 import com.kunlun.system.service.IOperateLogService;
 import com.kunlun.system.utils.CommonUtil;
 import org.apache.logging.log4j.LogManager;
@@ -99,6 +101,8 @@ public class OperatorLogAspect {
         logModel.setPort(port);
         logModel.setThreadName(Thread.currentThread().getName());
         logModel.setStatus("正常");
+
+        DbContextHolder.setDbType(DataSourceType.MASTER.getKey());
         operateLogService.insertOperateLog(logModel);
     }
 
@@ -116,6 +120,8 @@ public class OperatorLogAspect {
         logModel.setId(logId);
         logModel.setExceptionInfo(e.getMessage());
         logModel.setStatus("异常");
+
+        DbContextHolder.setDbType(DataSourceType.MASTER.getKey());
         operateLogService.updateOperateLog(logModel);
     }
 }
