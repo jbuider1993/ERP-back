@@ -117,7 +117,7 @@ mybatis:
 kunlun:
   # ControllerAdvice配置
   controllerAdvice:
-    enable: true
+    enable: false
 
   # swagger配置
   swagger:
