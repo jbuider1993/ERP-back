@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.kunlun.system.dao.IModelDao" >
 
-    <select id="getAllProcess" parameterType="java.util.Map" resultType="ModelModel">
+    <select id="getAllModels" parameterType="java.util.Map" resultType="ModelModel">
         SELECT
             model.id_ AS id,
             model.name_ AS modelName,
@@ -18,18 +18,18 @@
         FROM act_re_model model
         LEFT JOIN act_re_deployment deploy ON model.deployment_id_ = deploy.id_
         WHERE 1 = 1 AND model.name_ != ''
-        <include refid="queryProcessCondition" />
+        <include refid="queryModelsCondition" />
         ORDER BY model.create_time_ DESC
         OFFSET #{currentPage} LIMIT #{pageSize}
     </select>
 
-    <select id = "getProcessesCount" parameterType="java.util.Map" resultType = "java.lang.Integer">
+    <select id = "getModelsCount" parameterType="java.util.Map" resultType = "java.lang.Integer">
         SELECT COUNT(id_) FROM act_re_model
         WHERE 1 = 1 AND name_ != ''
-        <include refid="queryProcessCondition" />
+        <include refid="queryModelsCondition" />
     </select>
 
-    <sql id="queryProcessCondition">
+    <sql id="queryModelsCondition">
         <if test="modelName != null and modelName != ''">
             AND model.name_ LIKE CONCAT('%', #{modelName}, '%')
         </if>

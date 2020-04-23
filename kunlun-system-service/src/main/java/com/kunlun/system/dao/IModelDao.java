@@ -8,9 +8,9 @@ import java.util.Map;
 
 @Repository
 public interface IModelDao {
-    public List<Model> getAllProcess(Map<String, Object> queryMap) throws Exception;
+    public List<Model> getAllModels(Map<String, Object> queryMap) throws Exception;
 
-    public int getProcessesCount(Map<String, Object> queryMap) throws Exception;
+    public int getModelsCount(Map<String, Object> queryMap) throws Exception;
 
     public boolean batchDeleteModel(String[] processIds) throws Exception;
 }

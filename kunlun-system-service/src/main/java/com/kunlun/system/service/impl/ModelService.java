@@ -33,8 +33,8 @@ public class ModelService implements IModelService {
         Page page = new Page();
         page.setCurrentPage(currentPage);
         page.setPageSize(pageSize);
-        page.setTotal(modelDao.getProcessesCount(queryMap));
-        page.setRecords(modelDao.getAllProcess(queryMap));
+        page.setTotal(modelDao.getModelsCount(queryMap));
+        page.setRecords(modelDao.getAllModels(queryMap));
         return page;
     }
 
