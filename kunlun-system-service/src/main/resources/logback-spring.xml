@@ -11,7 +11,7 @@
     <property name="logPath" value="logs" />
     <property name="backupPath" value="backup" />
     <property name="logDate" value="%d{yyyy-MM-dd}" />
-    <property name="serviceName" value="scmp-system-service" />
+    <property name="serviceName" value="kunlun-system-service" />
 
     <!-- 彩色日志 -->
     <!-- 彩色日志依赖的渲染类 -->
@@ -171,7 +171,7 @@
         <!--<logger name="com.xuesjie" level="debug"/>-->
     <!--</springProfile>-->
 
-    <logger name="com.scmp.system.dao" level="DEBUG">
+    <logger name="com.kunlun.system.dao" level="DEBUG">
         <appender-ref ref="DEBUG_FILE" />
     </logger>
 
