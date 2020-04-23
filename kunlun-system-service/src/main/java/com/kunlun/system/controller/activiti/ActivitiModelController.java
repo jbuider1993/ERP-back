@@ -205,7 +205,7 @@ public class ActivitiModelController implements ModelDataJsonConstants {
         }
     }
 
-    @RequestMapping(value = "/batchDelete", method = RequestMethod.GET)
+    @RequestMapping(value = "/batchDelete", method = RequestMethod.POST)
     @OperatorLogger(type = OperatorLogType.SYSTEM, description = "删除模型")
     public Object batchDelete(String modelIds) {
         try {

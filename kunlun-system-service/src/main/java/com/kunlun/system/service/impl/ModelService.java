@@ -13,6 +13,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 @Service("modelService")
@@ -45,6 +47,17 @@ public class ModelService implements IModelService {
 
     @Override
     public boolean batchDeleteModel(String[] processIds) throws Exception {
-        return modelDao.batchDeleteModel(processIds);
+        DbContextHolder.setDbType(DataSourceType.ACTIVITI.getKey());
+
+        List<Map<String, String>> valueIdList = modelDao.getModelBytearrays(processIds);
+        List<String> valueIds = new ArrayList<>();
+        for (Map map : valueIdList) {
+            valueIds.add(String.valueOf(map.get("valueid")));
+            valueIds.add(String.valueOf(map.get("extravalueid")));
+        }
+
+        modelDao.batchDeleteModel(processIds);
+
+        return modelDao.batchDeleteModelBytearray(valueIds);
     }
 }

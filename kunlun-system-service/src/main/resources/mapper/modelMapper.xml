@@ -41,9 +41,27 @@
         </if>
     </sql>
 
+    <select id="getModelBytearrays" parameterType="java.util.Arrays" resultType="java.util.Map">
+        SELECT
+            editor_source_value_id_ AS valueId,
+            editor_source_extra_value_id_ AS extraValueId
+        FROM act_re_model
+        WHERE id_ IN
+        <foreach collection="array" item="item" open="(" close=")" separator=",">
+            #{item}
+        </foreach>
+    </select>
+
     <delete id="batchDeleteModel" parameterType="java.util.Arrays">
         DELETE FROM act_re_model WHERE id_ IN
         <foreach collection="array" item="item" open="(" close=")" separator=",">
+            #{item}
+        </foreach>
+    </delete>
+
+    <delete id="batchDeleteModelBytearray" parameterType="java.util.List">
+        DELETE FROM act_ge_bytearray WHERE id_ IN
+        <foreach collection="list" item="item" open="(" close=")" separator=",">
             #{item}
         </foreach>
     </delete>

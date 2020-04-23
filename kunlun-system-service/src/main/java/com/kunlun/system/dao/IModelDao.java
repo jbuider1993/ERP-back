@@ -12,5 +12,9 @@ public interface IModelDao {
 
     public int getModelsCount(Map<String, Object> queryMap) throws Exception;
 
+    public List<Map<String, String>> getModelBytearrays(String[] processIds) throws Exception;
+
     public boolean batchDeleteModel(String[] processIds) throws Exception;
+
+    public boolean batchDeleteModelBytearray(List<String> valueIds) throws Exception;
 }
