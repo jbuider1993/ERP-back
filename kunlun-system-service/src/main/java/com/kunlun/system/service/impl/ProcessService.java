@@ -11,6 +11,7 @@ import com.kunlun.system.dao.IProcessDao;
 import com.kunlun.system.model.ProcessModel;
 import com.kunlun.system.model.activiti.ActInstModel;
 import com.kunlun.system.model.activiti.ProcDefModel;
+import com.kunlun.system.model.activiti.TaskInstModel;
 import com.kunlun.system.model.enums.ProcessStatusEnum;
 import com.kunlun.system.utils.CommonUtil;
 import com.kunlun.system.config.dataSource.DataSourceType;
@@ -83,6 +84,7 @@ public class ProcessService implements IProcessService {
                 ProcessModel processModel = new ProcessModel();
                 processModel.setId(CommonUtil.generateUUID());
                 processModel.setKey(procDefModel.getKey());
+                processModel.setModelId(procDefModel.getModelId());
                 processModel.setModelName(procDefModel.getName());
                 processModel.setDeploymentId(procDefModel.getDeploymentId());
                 processModel.setProcessInstanceId(middleActInst.getProcInstId());
@@ -110,5 +112,11 @@ public class ProcessService implements IProcessService {
 
         Page page = ListPageUtil.limitPages(processModels, startIndex, pageSize);
         return page;
+    }
+
+    @Override
+    public TaskInstModel getCurrentProcessNode(String procDefId, String procInstId) throws Exception {
+        DbContextHolder.setDbType(DataSourceType.ACTIVITI.getKey());
+        return processDao.getTaskInsts(procDefId, procInstId);
     }
 }

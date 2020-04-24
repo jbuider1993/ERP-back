@@ -18,7 +18,7 @@ public class TaskInstModel {
 
     private String description;
 
-    private String asignee;
+    private String assignee;
 
     private Date startTime;
 
@@ -80,12 +80,12 @@ public class TaskInstModel {
         this.description = description;
     }
 
-    public String getAsignee() {
-        return asignee;
+    public String getAssignee() {
+        return assignee;
     }
 
-    public void setAsignee(String asignee) {
-        this.asignee = asignee;
+    public void setAssignee(String assignee) {
+        this.assignee = assignee;
     }
 
     public Date getStartTime() {

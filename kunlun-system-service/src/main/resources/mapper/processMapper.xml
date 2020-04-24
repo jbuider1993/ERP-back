@@ -41,7 +41,7 @@
         ORDER BY start_time_ ASC
     </select>
 
-    <select id="getTaskInsts" resultType="TaskInstModel">
+    <select id="getTaskInsts" parameterType="java.lang.String" resultType="TaskInstModel">
         SELECT
             id_ AS id,
             proc_inst_id_ AS procInstId,
@@ -54,6 +54,9 @@
             start_time_ AS startTime,
             end_time_ AS endTime
         FROM act_hi_taskinst
+        WHERE proc_def_id_ = #{procDefId} AND proc_inst_id_ = #{procInstId}
+        ORDER BY start_time_ DESC
+        LIMIT 1
     </select>
 
     <delete id="batchDeleteModel" parameterType="java.util.Arrays">

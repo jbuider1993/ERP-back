@@ -7,6 +7,7 @@ import com.kunlun.common.model.Page;
 import com.kunlun.common.model.enums.OperatorLogType;
 import com.kunlun.common.utils.ResponseUtil;
 import com.kunlun.system.model.ProcessModel;
+import com.kunlun.system.model.activiti.TaskInstModel;
 import com.kunlun.system.service.IModelService;
 import com.kunlun.system.service.IProcessService;
 import org.activiti.bpmn.converter.BpmnXMLConverter;
@@ -24,6 +25,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.io.IOException;
@@ -136,6 +138,18 @@ public class ActivitiProcessController {
         } catch (Exception e) {
             log.error("ActivitiModelController modelList Error: ", e);
             return ResponseUtil.failedResponse("查询所有流程失败！", e.getMessage());
+        }
+    }
+
+    @RequestMapping(value = "/getCurrentProcessNode", method = RequestMethod.GET)
+    @ResponseBody
+    public Object getCurrentProcessNode(String procDefId, String procInstId) {
+        try {
+            TaskInstModel taskInstModel = processService.getCurrentProcessNode(procDefId, procInstId);
+            return ResponseUtil.successResponse(taskInstModel);
+        } catch (Exception e) {
+            log.error("获取当前流程节点失败", e);
+            return ResponseUtil.failedResponse("获取当前流程节点失败", e.getMessage());
         }
     }
 }

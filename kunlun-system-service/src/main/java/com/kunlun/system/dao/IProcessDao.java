@@ -5,6 +5,7 @@ import com.kunlun.system.model.activiti.ActInstModel;
 import com.kunlun.system.model.activiti.ProcDefModel;
 import com.kunlun.system.model.activiti.ProcInstModel;
 import com.kunlun.system.model.activiti.TaskInstModel;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -26,5 +27,5 @@ public interface IProcessDao {
 
     public List<ActInstModel> getActInsts(Map<String, Object> queryMap) throws Exception;
 
-    public List<TaskInstModel> getTaskInsts(Map<String, Object> queryMap) throws Exception;
+    public TaskInstModel getTaskInsts(@Param("procDefId") String procDefId, @Param("procInstId") String procInstId) throws Exception;
 }
