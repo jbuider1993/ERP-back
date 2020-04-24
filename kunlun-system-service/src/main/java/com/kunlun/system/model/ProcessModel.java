@@ -22,6 +22,8 @@ public class ProcessModel {
 
     private String processInstanceId;
 
+    private String processDefineId;
+
     private String currentExecuteKey;
 
     private String currentExecuteName;
@@ -90,6 +92,14 @@ public class ProcessModel {
 
     public void setProcessInstanceId(String processInstanceId) {
         this.processInstanceId = processInstanceId;
+    }
+
+    public String getProcessDefineId() {
+        return processDefineId;
+    }
+
+    public void setProcessDefineId(String processDefineId) {
+        this.processDefineId = processDefineId;
     }
 
     public String getProcessStatus() {

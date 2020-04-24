@@ -2,6 +2,8 @@ package com.kunlun.system.service.impl;
 
 import com.kunlun.common.model.OperatorLogModel;
 import com.kunlun.common.model.Page;
+import com.kunlun.system.config.dataSource.DataSourceType;
+import com.kunlun.system.config.dataSource.DbContextHolder;
 import com.kunlun.system.dao.IOperateLogDao;
 import com.kunlun.system.utils.CommonUtil;
 import com.kunlun.system.service.IOperateLogService;
@@ -23,6 +25,8 @@ public class OperateLogService implements IOperateLogService {
     public Page getAllOperateLog(OperatorLogModel logModel, int currentPage, int pageSize) throws Exception {
         int startIndex = (currentPage - 1) * pageSize;
         Map<String, Object> queryMap = CommonUtil.packageQueryMap(logModel, startIndex, pageSize);
+
+        DbContextHolder.setDbType(DataSourceType.MASTER.getKey());
 
         List<OperatorLogModel> logList = operateLogDao.getAllOperateLog(queryMap);
         int count = operateLogDao.getOperateLogCount(queryMap);

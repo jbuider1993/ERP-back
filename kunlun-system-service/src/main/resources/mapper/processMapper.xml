@@ -2,44 +2,59 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.kunlun.system.dao.IProcessDao" >
 
-    <select id="getAllProcess" parameterType="java.util.Map" resultType="ProcessModel">
+    <select id="getProcDefs" resultType="ProcDefModel">
         SELECT
             procdef.id_ AS id,
+            procdef.name_ AS name,
             procdef.key_ AS key,
+            procdef.version_ AS version,
             model.id_ AS modelId,
-            model.name_ AS modelName,
-            procdef.name_ AS processName,
-            procdef.deployment_id_ AS deploymentId,
-            actinst.proc_inst_id_ AS processInstanceId,
-            actinst.act_id_ AS currentExecuteKey,
-            actinst.act_name_ AS currentExecuteName,
-            CASE WHEN actinst.id_ IS NULL THEN '0' WHEN actinst.id_ IS NOT NULL AND actinst.end_time_ IS NULL THEN '1' WHEN actinst.id_ IS NOT NULL AND actinst.end_time_ IS NOT NULL THEN '4' ELSE '2' END AS processStatus,
-            actinst.start_time_	AS startTime,
-            actinst.end_time_ AS endTime
+            procdef.deployment_id_ AS deploymentId
         FROM act_re_procdef procdef
-        LEFT JOIN act_hi_actinst actinst ON procdef.id_ = actinst.proc_def_id_
         LEFT JOIN act_re_model model ON procdef.deployment_id_ = model.deployment_id_
-        ORDER BY actinst.start_time_ DESC
-        OFFSET #{currentPage} LIMIT #{pageSize}
     </select>
 
-    <select id = "getProcessCount" parameterType="java.util.Map" resultType = "java.lang.Integer">
+    <select id="getProcInsts" resultType="ProcInstModel">
         SELECT
-            COUNT(procdef.id_)
-        FROM act_re_procdef procdef
+            id_ AS id,
+            proc_inst_id_ AS procInstId,
+            proc_def_id_ AS procDefId,
+            start_time_ AS startTime,
+            end_time_ AS endTime
+        FROM act_hi_procinst
     </select>
 
-    <sql id="queryProcessCondition">
-        <if test="modelName != null and modelName != ''">
-            AND name_ LIKE CONCAT('%', #{modelName}, '%')
-        </if>
-        <if test="modelKey != null and modelKey != ''">
-            AND key_ LIKE CONCAT('%', #{modelKey}, '%')
-        </if>
-        <if test="createTime != null and createTime != ''">
-            AND create_time_ = #{createTime}
-        </if>
-    </sql>
+    <select id="getActInsts" resultType="ActInstModel">
+        SELECT
+            id_ AS id,
+            proc_inst_id_ AS procInstId,
+            proc_def_id_ AS procDefId,
+            execution_id_ AS executionId,
+            act_id_ AS actId,
+            task_id_ AS taskId,
+            act_name_ AS actName,
+            act_type_ AS actType,
+            assignee_ AS assignee,
+            start_time_ AS startTime,
+            end_time_ AS endTime
+        FROM act_hi_actinst
+        ORDER BY start_time_ ASC
+    </select>
+
+    <select id="getTaskInsts" resultType="TaskInstModel">
+        SELECT
+            id_ AS id,
+            proc_inst_id_ AS procInstId,
+            proc_def_id_ AS procDefId,
+            task_def_key_ AS taskDefKey,
+            execution_id_ AS executionId,
+            name_ AS name,
+            description_ AS description,
+            assignee_ AS assignee,
+            start_time_ AS startTime,
+            end_time_ AS endTime
+        FROM act_hi_taskinst
+    </select>
 
     <delete id="batchDeleteModel" parameterType="java.util.Arrays">
         DELETE FROM act_re_model WHERE id_ IN
