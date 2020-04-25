@@ -10,7 +10,7 @@ import java.util.Map;
 
 @Repository
 public interface IUserDao {
-    public List<Page> getAllUser(Map<String, Object> queryMap) throws Exception;
+    public List<UserModel> getAllUser(Map<String, Object> queryMap) throws Exception;
 
     public int getUsersCount(Map<String, Object> queryMap) throws Exception;
 

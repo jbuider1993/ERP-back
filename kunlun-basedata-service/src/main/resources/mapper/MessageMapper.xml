@@ -15,7 +15,7 @@
             msg.create_time AS createTime,
             msg.modified_time AS modifiedTime
         FROM t_message_notice msg
-        LEFT JOIN t_user u ON u.id = msg.user_id
+        LEFT JOIN t_system_user u ON u.id = msg.user_id
         WHERE 1 = 1
         ORDER BY msg.create_time ASC
         LIMIT #{pageSize}

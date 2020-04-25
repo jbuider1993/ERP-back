@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.Arrays;
 import java.util.List;
 
@@ -77,5 +79,16 @@ public class UserController {
             log.error("UserController getUserInfo Error: ", e);
             return ResponseUtil.failedResponse("查询用户失败！", e.getMessage());
         }
+    }
+
+    @RequestMapping(value = "/downloadUsers", method = RequestMethod.GET)
+    public Object downloadUsers(HttpServletRequest request, HttpServletResponse response) {
+        try {
+            userService.downloadUsers(request, response);
+        } catch (Exception e) {
+            log.error("OperatorLogController exportOperateLog Error: ", e);
+            return ResponseUtil.failedResponse("导出操作日志失败！", e.getMessage());
+        }
+        return null;
     }
 }
