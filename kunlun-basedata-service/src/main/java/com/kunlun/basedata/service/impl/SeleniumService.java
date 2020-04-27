@@ -1,8 +1,12 @@
 package com.kunlun.basedata.service.impl;
 
+import com.kunlun.basedata.model.IconModel;
 import com.kunlun.basedata.model.selenium.PageAction;
 import com.kunlun.basedata.model.selenium.PageModel;
+import com.kunlun.basedata.service.IIconService;
 import com.kunlun.basedata.service.ISeleniumService;
+import com.kunlun.basedata.utils.CommonUtil;
+import org.apache.commons.collections4.ListUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.dom4j.Attribute;
@@ -10,14 +14,18 @@ import org.dom4j.Document;
 import org.dom4j.Element;
 import org.dom4j.io.SAXReader;
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.ObjectUtils;
 
+import javax.servlet.http.HttpServletRequest;
 import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 import java.util.concurrent.TimeUnit;
 
 @Service
@@ -32,26 +40,68 @@ public class SeleniumService implements ISeleniumService {
 
     private static final String FILE_NAME = "pageConfig.xml";
 
-    private static final String DRIVER_NAME = "chromedriver.exe";
+    private static final String CHROME_NAME = "Chrome";
+
+    private static final String DRIVER_NAME_PREFIX = "chromedriver-";
+
+    private static final String DRIVER_NAME_SUFFIX = ".exe";
 
     @Value("${spring.application.name}")
     private String serviceName;
 
-    public void executeStart() throws Exception {
-        // 加载chrome驱动
-        loadChromeDriver();
+    @Autowired
+    private IIconService iconService;
+
+    public void executeStart(HttpServletRequest request) throws Exception {
+        log.info("===== SeleniumService executeStart =====");
+
+        // 加载chrome浏览器驱动
+        loadChromeDriver(request);
 
         // 用Dom4j解析xml文件
-        List<PageModel> pages = praseXml();
+        List<PageModel> pages = prasePageXml();
 
         // 执行selenium
-        executeAction(pages);
+        Set<String> iconSet = executeAction(pages);
+
+        // 处理抓取到的icon
+        List<IconModel> iconModels = new ArrayList<>();
+        for (String icon : iconSet) {
+            IconModel model = new IconModel();
+            model.setId(CommonUtil.generateUUID());
+            model.setKey(icon);
+            model.setName(icon);
+            model.setCreateTime(new Date());
+            model.setModifiedTime(new Date());
+            iconModels.add(model);
+        }
+        List<List<IconModel>> results = ListUtils.partition(iconModels, 500);
+        iconService.deleteAllIcon();
+        for (List<IconModel> list : results) {
+            iconService.insertBatch(list);
+        }
+    }
+
+    private void loadChromeDriver(HttpServletRequest request) {
+        // 获取项目路径
+        String filePath = getFilePath(DRIVER_NAME_PREFIX);
+
+        // 获取chrome浏览器版本
+        String userAgent = request.getHeader("User-Agent");
+        String browserInfo = (userAgent.substring(userAgent.indexOf(CHROME_NAME)).split(" ")[0]).replace("/", "-");
+        String chromeVersion = browserInfo.split("-")[1];
+        String version = chromeVersion.substring(0, chromeVersion.indexOf("."));
+        filePath += version + DRIVER_NAME_SUFFIX;
+
+        // 设置chrome浏览器驱动到系统变量
+        System.setProperty("webdriver.chrome.driver", filePath);
+        log.info("ChromeDriver filePath ===>>>> " + filePath);
     }
 
     private String getFilePath(String fileName) {
         String classPath = System.getProperty("user.dir");
         StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append(classPath.substring(0, classPath.lastIndexOf("\\")));
+        stringBuilder.append(classPath);
         stringBuilder.append("\\");
         stringBuilder.append(serviceName);
         stringBuilder.append("\\src\\main\\resources\\");
@@ -61,33 +111,26 @@ public class SeleniumService implements ISeleniumService {
         return stringBuilder.toString();
     }
 
-    private void loadChromeDriver() {
-        String filePath = getFilePath(DRIVER_NAME);
-        System.setProperty("webdriver.chrome.driver", filePath);
-    }
-
-    private List<PageModel> praseXml() {
+    private List<PageModel> prasePageXml() {
         String filePath = getFilePath(FILE_NAME);
-        List<PageModel> pages = new ArrayList<PageModel>();
+        List<PageModel> pages = new ArrayList<>();
+        log.info("pageConfig filePath ===>>> " + filePath);
 
         try {
             File file = new File(filePath);
-
             SAXReader saxReader = new SAXReader();
             Document document = saxReader.read(file);
             Element element = document.getRootElement();
 
             List nodes = element.elements("page");
             for (Object pageObj : nodes) {
-                Element pageElement = (Element)pageObj;
+                Element pageElement = (Element) pageObj;
                 Attribute name = pageElement.attribute("name");
                 Attribute url = pageElement.attribute("url");
-
-                List<PageAction> pageActions = new ArrayList<PageAction>();
+                List<PageAction> pageActions = new ArrayList<>();
                 List actions = ((Element) pageObj).elements("action");
                 for (Object actionObj : actions) {
                     PageAction pageAction = new PageAction();
-
                     Element actionElement = (Element) actionObj;
                     Attribute type = actionElement.attribute("type");
                     if ("navigate".equals(type.getValue())) {
@@ -96,21 +139,32 @@ public class SeleniumService implements ISeleniumService {
                     } else if ("sendKeys".equals(type.getValue())) {
                         Attribute byid = actionElement.attribute("byxpath");
                         Attribute text = actionElement.attribute("text");
-
                         pageAction.setType(type.getValue());
                         pageAction.setByxpath(byid.getValue());
                         pageAction.setText(text.getValue());
                         pageActions.add(pageAction);
+                    } else if ("click".equals(type.getValue())) {
+                        Attribute byxpath = actionElement.attribute("byxpath");
+                        Attribute waitTime = actionElement.attribute("waitTime");
+                        pageAction.setType(type.getValue());
+                        pageAction.setByxpath(byxpath.getValue());
+                        pageAction.setWaitTime(waitTime.getValue());
+                        pageActions.add(pageAction);
+                    } else if ("get".equals(type.getValue())) {
+                        Attribute byxpath = actionElement.attribute("byxpath");
+                        Attribute waitTime = actionElement.attribute("waitTime");
+                        pageAction.setType(type.getValue());
+                        pageAction.setByxpath(byxpath.getValue());
+                        pageAction.setWaitTime(waitTime.getValue());
+                        pageActions.add(pageAction);
                     } else if ("executeScript".equals(type.getValue())) {
                         Attribute script = actionElement.attribute("script");
-
                         pageAction.setType(type.getValue());
                         pageAction.setScript(script.getValue());
                         pageActions.add(pageAction);
                     } else {
                         Attribute byid = actionElement.attribute("byid");
                         Attribute waitTime = actionElement.attribute("waitTime");
-
                         pageAction.setType(type.getValue());
                         pageAction.setByid(byid.getValue());
                         pageAction.setWaitTime(waitTime.getValue());
@@ -125,39 +179,54 @@ public class SeleniumService implements ISeleniumService {
                 pages.add(page);
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            log.error("SeleniumService prasePageXml Error: ", e);
         }
         return pages;
     }
 
-    private void executeAction(List<PageModel> pages) {
-        String url = null;
-        List<PageAction> actions = null;
-        ChromeDriver chromeDriver = null;
+    private Set<String> executeAction(List<PageModel> pages) {
+        Set<String> iconSets = new HashSet<>();
         try {
-            url = pages.get(0).getUrl();
-            actions = pages.get(0).getActions();
-            chromeDriver = new ChromeDriver();
-            chromeDriver.manage().window().maximize();
-            Thread.sleep(2000);
-            //chromeDriver.manage().window().setSize(new Dimension(500, 500));
+            // 设置为 headless 模式 （无头浏览器）或使用phantomjs.exe，但后者对使用ES6的页面支持不好
+            ChromeOptions chromeOptions = new ChromeOptions();
+            chromeOptions.addArguments("--headless");
+            ChromeDriver chromeDriver = new ChromeDriver(chromeOptions);
 
+            String url = pages.get(0).getUrl();
+            List<PageAction> actions = pages.get(0).getActions();
             for (PageAction action : actions) {
                 if ("navigate".equals(action.getType())) {
                     chromeDriver.get(url);
                 } else if ("sendKeys".equals(action.getType())) {
                     chromeDriver.findElement(By.id(action.getByid())).sendKeys(action.getText());
+                } else if ("click".equals(action.getType())) {
+                    long waitTime = Long.parseLong(action.getWaitTime());
+                    chromeDriver.manage().timeouts().implicitlyWait(waitTime, TimeUnit.SECONDS);
+                    chromeDriver.findElement(By.xpath(action.getByxpath())).click();
+                } else if ("get".equals(action.getType())) {
+                    long waitTime = Long.parseLong(action.getWaitTime());
+                    chromeDriver.manage().timeouts().implicitlyWait(waitTime, TimeUnit.SECONDS);
+                    List<WebElement> iElementList = chromeDriver.findElements(By.tagName("i"));
+                    for (WebElement element : iElementList) {
+                        String className = element.getAttribute("class");
+                        if (!ObjectUtils.isEmpty(className) && !"add-btn".equals(className)) {
+                            iconSets.add(className);
+                        }
+                    }
+                    System.out.println();
                 } else if ("executeScript".equals(action.getType())) {
                     chromeDriver.executeScript(action.getScript());
                 } else {
                     long waitTime = Long.parseLong(action.getWaitTime());
                     chromeDriver.manage().timeouts().implicitlyWait(waitTime, TimeUnit.SECONDS);
-                    Thread.sleep(waitTime);
                     chromeDriver.findElement(By.id(action.getByid())).click();
                 }
             }
-        } catch (InterruptedException e) {
-            e.printStackTrace();
+            chromeDriver.close();
+            chromeDriver.quit();
+        } catch (Exception e) {
+            log.error("SeleniumService executeAction Error: ", e);
         }
+        return iconSets;
     }
 }

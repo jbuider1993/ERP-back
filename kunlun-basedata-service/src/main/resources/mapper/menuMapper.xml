@@ -7,7 +7,7 @@
         SELECT
 		    menu.id, menu.name, menu.key, menu.url, menu.level, icon.key AS icon, menu.forbid, menu.parent_id AS parentId, menu.long_code AS longCode
         FROM t_display_menu menu
-        LEFT JOIN t_icon icon ON menu.icon_id = icon.id
+        LEFT JOIN t_display_icon icon ON menu.icon_id = icon.id
         WHERE 1 = 1
         <include refid="queryMenuCondition" />
         ORDER BY menu.create_time ASC

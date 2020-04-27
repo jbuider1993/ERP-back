@@ -15,4 +15,8 @@ public interface IIconDao {
     public void addIcon(IconModel iconModel) throws Exception;
 
     public void updateIcon(IconModel iconModel) throws Exception;
+
+    public void insertBatch(List<IconModel> iconModels) throws Exception;
+
+    public void deleteAllIcon() throws Exception;
 }

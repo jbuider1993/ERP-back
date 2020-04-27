@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Map;
 
 @Service
@@ -39,5 +40,15 @@ public class IconService implements IIconService {
     @Override
     public void updateIcon(IconModel iconModel) throws Exception {
         iconDao.updateIcon(iconModel);
+    }
+
+    @Override
+    public void insertBatch(List<IconModel> iconModels) throws Exception {
+        iconDao.insertBatch(iconModels);
+    }
+
+    @Override
+    public void deleteAllIcon() throws Exception {
+        iconDao.deleteAllIcon();
     }
 }

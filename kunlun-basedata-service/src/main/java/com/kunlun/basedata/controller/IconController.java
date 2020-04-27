@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletRequest;
+
 @RestController
 @RequestMapping(value = "/icon")
 public class IconController {
@@ -57,13 +59,13 @@ public class IconController {
         }
     }
 
-    @RequestMapping(value = "/fetchIconsFromAntd", method = RequestMethod.GET)
-    public Object fetchIconsFromAntd() {
+    @RequestMapping(value = "/fetchIcons", method = RequestMethod.GET)
+    public Object fetchIcons(HttpServletRequest request) {
         try {
-            seleniumService.executeStart();
+            seleniumService.executeStart(request);
             return ResponseUtil.successResponse("success");
         } catch (Exception e) {
-            log.error("IconController fetchIconsFromAntd Error: ", e);
+            log.error("IconController fetchIcons Error: ", e);
             return ResponseUtil.failedResponse("获取图标失败！", e.getMessage());
         }
     }
