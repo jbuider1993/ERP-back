@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 @RestController
 @RequestMapping(value = "/icon")
@@ -68,5 +69,16 @@ public class IconController {
             log.error("IconController fetchIcons Error: ", e);
             return ResponseUtil.failedResponse("获取图标失败！", e.getMessage());
         }
+    }
+
+    @RequestMapping(value = "/onExportIcons", method = RequestMethod.GET)
+    public Object onExportIcons(HttpServletRequest request, HttpServletResponse response) {
+        try {
+            iconService.onExportIcons(request, response);
+        } catch (Exception e) {
+            log.error("IconController fetchIcons Error: ", e);
+            return ResponseUtil.failedResponse("导出图标失败！", e.getMessage());
+        }
+        return null;
     }
 }

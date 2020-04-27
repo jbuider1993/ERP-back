@@ -4,7 +4,7 @@
 <mapper namespace = "com.kunlun.basedata.dao.IIconDao">
 
     <select id = "getAllIcon" parameterType="java.util.Map" resultType = "IconModel">
-        SELECT id, name, key, modified_time AS modifiedTime FROM t_display_icon
+        SELECT id, name, key, create_time AS createTime, modified_time AS modifiedTime FROM t_display_icon
         WHERE 1 = 1
         <include refid="queryIconCondition" />
         ORDER BY modified_time DESC
@@ -30,19 +30,19 @@
     </sql>
 
     <insert id="addIcon" parameterType="IconModel">
-            INSERT INTO t_display_icon
-              (id, name, key, create_time, modified_time)
-            VALUES
-              (#{id}, #{name}, #{key}, #{createTime}, #{modifiedTime})
+        INSERT INTO t_display_icon
+          (id, name, key, create_time, modified_time)
+        VALUES
+          (#{id}, #{name}, #{key}, #{createTime}, #{modifiedTime})
     </insert>
 
     <insert id="insertBatch" parameterType="java.util.List">
-            INSERT INTO t_display_icon
-              (id, name, key, create_time, modified_time)
-            VALUES
-            <foreach collection="list" index="index" item="item" separator=",">
-                (#{item.id}, #{item.name}, #{item.key}, #{item.createTime}, #{item.modifiedTime})
-            </foreach>
+        INSERT INTO t_display_icon
+          (id, name, key, create_time, modified_time)
+        VALUES
+        <foreach collection="list" index="index" item="item" separator=",">
+            (#{item.id}, #{item.name}, #{item.key}, #{item.createTime}, #{item.modifiedTime})
+        </foreach>
     </insert>
 
     <update id="updateIcon" parameterType="IconModel">

@@ -68,7 +68,6 @@ public class SeleniumService implements ISeleniumService {
         List<IconModel> iconModels = new ArrayList<>();
         for (String icon : iconSet) {
             String iconName = icon;
-            System.out.println(icon);
             if (icon.startsWith("ri-") && (icon.endsWith("-fill") || icon.endsWith("-line"))) {
                 iconName = icon.substring(3, icon.length() - 5);
             } else if (icon.startsWith("ri-") && !icon.endsWith("-fill") && !icon.endsWith("-line")) {

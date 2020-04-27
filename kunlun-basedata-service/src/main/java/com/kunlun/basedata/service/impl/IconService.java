@@ -4,11 +4,15 @@ import com.kunlun.basedata.model.IconModel;
 import com.kunlun.basedata.service.IIconService;
 import com.kunlun.basedata.utils.CommonUtil;
 import com.kunlun.basedata.dao.IIconDao;
+import com.kunlun.common.model.OperatorLogModel;
 import com.kunlun.common.model.Page;
+import com.kunlun.common.utils.ExcelUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 import java.util.Map;
 
@@ -50,5 +54,13 @@ public class IconService implements IIconService {
     @Override
     public void deleteAllIcon() throws Exception {
         iconDao.deleteAllIcon();
+    }
+
+    @Override
+    public void onExportIcons(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        Map<String, Object> queryMap = CommonUtil.packageQueryMap(new IconModel(), 0, 99999);
+        List<IconModel> iconModels = iconDao.getAllIcon(queryMap);
+        String[] headerNames = new String[]{"图标名称", "图标key", "抓取时间", "更新时间"};
+        ExcelUtil.exportExcel(request, response, iconModels, IconModel.class, "操作日志", headerNames);
     }
 }
