@@ -15,13 +15,13 @@ public class MenuModel {
 
     private String url;
 
-    private String level;
-
-    private String iconId;
-
     private String icon;
 
-    private boolean forbid;
+    private String level;
+
+    private boolean show;
+
+    private boolean headerToken;
 
     private String parent;
 
@@ -43,20 +43,28 @@ public class MenuModel {
         this.parent = parent;
     }
 
-    public String getIconId() {
-        return iconId;
+    public String getLevel() {
+        return level;
     }
 
-    public void setIconId(String iconId) {
-        this.iconId = iconId;
+    public void setLevel(String level) {
+        this.level = level;
     }
 
-    public boolean isForbid() {
-        return forbid;
+    public boolean isShow() {
+        return show;
     }
 
-    public void setForbid(boolean forbid) {
-        this.forbid = forbid;
+    public void setShow(boolean show) {
+        this.show = show;
+    }
+
+    public boolean isHeaderToken() {
+        return headerToken;
+    }
+
+    public void setHeaderToken(boolean headerToken) {
+        this.headerToken = headerToken;
     }
 
     public String getId() {
@@ -81,14 +89,6 @@ public class MenuModel {
 
     public void setUrl(String url) {
         this.url = url;
-    }
-
-    public String getLevel() {
-        return level;
-    }
-
-    public void setLevel(String level) {
-        this.level = level;
     }
 
     public String getIcon() {
