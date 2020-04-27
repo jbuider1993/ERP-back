@@ -67,10 +67,18 @@ public class SeleniumService implements ISeleniumService {
         // 处理抓取到的icon
         List<IconModel> iconModels = new ArrayList<>();
         for (String icon : iconSet) {
+            String iconName = icon;
+            System.out.println(icon);
+            if (icon.startsWith("ri-") && (icon.endsWith("-fill") || icon.endsWith("-line"))) {
+                iconName = icon.substring(3, icon.length() - 5);
+            } else if (icon.startsWith("ri-") && !icon.endsWith("-fill") && !icon.endsWith("-line")) {
+                iconName = icon.substring(3, icon.length());
+            }
+
             IconModel model = new IconModel();
             model.setId(CommonUtil.generateUUID());
             model.setKey(icon);
-            model.setName(icon);
+            model.setName(iconName);
             model.setCreateTime(new Date());
             model.setModifiedTime(new Date());
             iconModels.add(model);
