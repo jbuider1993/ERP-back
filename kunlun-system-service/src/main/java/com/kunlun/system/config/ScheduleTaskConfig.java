@@ -1,5 +1,7 @@
 package com.kunlun.system.config;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.SchedulingConfigurer;
 import org.springframework.scheduling.config.ScheduledTaskRegistrar;
@@ -17,8 +19,12 @@ import java.util.concurrent.Executors;
  */
 @Configuration
 public class ScheduleTaskConfig implements SchedulingConfigurer {
+
+    private Logger log = LogManager.getLogger();
+
     @Override
     public void configureTasks(ScheduledTaskRegistrar scheduledTaskRegistrar) {
         scheduledTaskRegistrar.setScheduler(Executors.newScheduledThreadPool(5));
+        log.info("===== 设置Spring定时任务多线程运行 =====");
     }
 }

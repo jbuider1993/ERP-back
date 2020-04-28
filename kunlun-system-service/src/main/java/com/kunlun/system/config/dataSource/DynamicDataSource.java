@@ -1,5 +1,7 @@
 package com.kunlun.system.config.dataSource;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.jdbc.datasource.lookup.AbstractRoutingDataSource;
 
 /**
@@ -12,10 +14,12 @@ import org.springframework.jdbc.datasource.lookup.AbstractRoutingDataSource;
  */
 public class DynamicDataSource extends AbstractRoutingDataSource {
 
+    private Logger log = LogManager.getLogger();
+
     @Override
     protected Object determineCurrentLookupKey() {
         String dataBaseType = DbContextHolder.getDbType();
-        System.out.println(String.format("========== 当前数据源： %s", dataBaseType) + " ==========");
+        log.info(String.format("========== 当前数据源： %s", dataBaseType) + " ==========");
         return dataBaseType;
     }
 }

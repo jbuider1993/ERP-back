@@ -17,8 +17,6 @@ public class MenuModel {
 
     private String icon;
 
-    private String level;
-
     private boolean show;
 
     private boolean headerToken;
@@ -41,14 +39,6 @@ public class MenuModel {
 
     public void setParent(String parent) {
         this.parent = parent;
-    }
-
-    public String getLevel() {
-        return level;
-    }
-
-    public void setLevel(String level) {
-        this.level = level;
     }
 
     public boolean isShow() {

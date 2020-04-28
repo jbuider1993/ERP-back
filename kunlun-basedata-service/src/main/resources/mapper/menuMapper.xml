@@ -5,7 +5,7 @@
 
     <select id = "getAllMenu" parameterType="java.util.Map" resultType = "MenuModel">
         SELECT
-		    menu.id, menu.name, menu.key, menu.url, menu.icon, menu.level, menu.show, menu.parent_id AS parentId, menu.long_code AS longCode
+		    menu.id, menu.name, menu.key, menu.url, menu.icon, menu.show, menu.parent_id AS parentId, menu.long_code AS longCode
         FROM t_display_menu menu
         WHERE 1 = 1
         <include refid="queryMenuCondition" />
@@ -35,15 +35,15 @@
 
     <insert id="addMenu" parameterType="MenuModel">
         INSERT INTO t_display_menu
-            (id, name, key, url, icon, level, show, parent_id, long_code, create_time, modified_time)
+            (id, name, key, url, icon, show, parent_id, long_code, create_time, modified_time)
         VALUES
-            (#{id}, #{name}, #{key}, #{url}, #{icon}, #{level}, #{show},
+            (#{id}, #{name}, #{key}, #{url}, #{icon}, #{show},
             #{parentId}, #{longCode}, #{createTime}, #{modifiedTime})
     </insert>
 
     <update id="editMenu" parameterType="MenuModel">
         UPDATE t_display_menu SET
-            name = #{name}, key = #{key}, url = #{url}, icon = #{icon}, level = #{level}, show = #{show},
+            name = #{name}, key = #{key}, url = #{url}, icon = #{icon}, show = #{show},
             parent_id = #{parentId}, long_code = #{longCode}, modified_time = #{modifiedTime}
         WHERE id = #{id}
     </update>
