@@ -76,11 +76,11 @@ public class AuthenticateFilter extends ZuulFilter {
                 log.info("update token ===>>> " + shiroToken);
                 cacheTraceService.set(token, shiroToken, shiroConfig.getExpireTime(), 1);
             } else {
-                // Token过期后直接跳转到登录页面，但目前只报404客户端异常的错误
+                // Token过期后，前台提示用户，并阻止向下游服务继续调用
                 HttpServletResponse response = context.getResponse();
                 response.sendRedirect("/timeout");
+                context.setSendZuulResponse(false);
                 log.info("离开时间太长，请重新登录！");
-                return ResponseUtil.failedResponse("登录已过期，请重新登录！", "Token timeout Error");
             }
         } catch (Exception e) {
             log.error("AuthenticateFilter run Error: ", e);

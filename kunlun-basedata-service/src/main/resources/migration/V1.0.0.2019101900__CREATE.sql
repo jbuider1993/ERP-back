@@ -3,6 +3,7 @@ CREATE TABLE IF NOT EXISTS t_system_user (
     id varchar(50) primary key,
     user_name varchar(50) default null,
     password varchar(50) default null,
+    sex varchar(4) default '男',
     phone_number varchar(15) default null,
     email varchar(50) default null,
     create_time timestamp default null,
@@ -12,6 +13,7 @@ COMMENT ON TABLE t_system_user IS '系统用户表';
 COMMENT ON COLUMN t_system_user.id IS '用户id';
 COMMENT ON COLUMN t_system_user.user_name IS '账号';
 COMMENT ON COLUMN t_system_user.password IS '密码';
+COMMENT ON COLUMN t_system_user.sex IS '性别';
 COMMENT ON COLUMN t_system_user.phone_number IS '手机号';
 COMMENT ON COLUMN t_system_user.email IS '邮箱';
 COMMENT ON COLUMN t_system_user.create_time IS '创建时间';
@@ -67,9 +69,9 @@ CREATE TABLE IF NOT EXISTS t_display_menu (
 	name VARCHAR(50) DEFAULT NULL,
 	key VARCHAR(30) DEFAULT NULL,
 	url VARCHAR(255) DEFAULT NULL,
-	level VARCHAR(20) DEFAULT 0,
-	icon_id VARCHAR(50) DEFAULT NULL,
-	forbid VARCHAR(10) DEFAULT NULL,
+	icon VARCHAR(50) DEFAULT NULL,
+	show BOOLEAN DEFAULT true,
+	carry_token BOOLEAN DEFAULT true,
 	parent_id VARCHAR(50) DEFAULT NULL,
 	long_code VARCHAR(255) DEFAULT NULL,
 	create_time timestamp default null,
@@ -80,9 +82,9 @@ COMMENT ON COLUMN t_display_menu.id IS '表主键id';
 COMMENT ON COLUMN t_display_menu.name IS '菜单名称';
 COMMENT ON COLUMN t_display_menu.key IS '菜单key';
 COMMENT ON COLUMN t_display_menu.url IS '菜单url';
-COMMENT ON COLUMN t_display_menu.level IS '菜单级别';
-COMMENT ON COLUMN t_display_menu.icon_id IS '图标id';
-COMMENT ON COLUMN t_display_menu.forbid IS '是否禁用';
+COMMENT ON COLUMN t_display_menu.icon IS '图标';
+COMMENT ON COLUMN t_display_menu.show IS '是否显示';
+COMMENT ON COLUMN t_display_menu.carry_token IS '是否携带Token';
 COMMENT ON COLUMN t_display_menu.parent_id IS '上一级id';
 COMMENT ON COLUMN t_display_menu.long_code IS '根到当前级id组合';
 COMMENT ON COLUMN t_display_menu.create_time IS '创建时间';

@@ -5,7 +5,7 @@
 
     <select id = "getAllUser" parameterType="java.util.Map" resultType = "UserModel">
         SELECT
-            id, user_name AS userName, password, phone_number AS phoneNumber, email,
+            id, user_name AS userName, password, sex, phone_number AS phoneNumber, email,
             create_time AS createTime, modified_time AS modifiedTime
         FROM t_system_user
         WHERE 1 = 1
@@ -37,15 +37,15 @@
 
     <insert id="addUser" parameterType="UserModel">
         INSERT INTO t_system_user
-        (id, user_name, password, phone_number, email, create_time, modified_time)
+        (id, user_name, password, sex, phone_number, email, create_time, modified_time)
         VALUES
-        (#{id}, #{userName}, #{password}, #{phoneNumber},
+        (#{id}, #{userName}, #{password}, #{sex}, #{phoneNumber},
         #{email}, #{createTime}, #{modifiedTime})
     </insert>
 
     <update id="updateUser" parameterType="UserModel">
         UPDATE t_system_user SET
-            user_name = #{userName}, password = #{password}, phone_number = #{phoneNumber},
+            user_name = #{userName}, password = #{password}, sex=#{sex}, phone_number = #{phoneNumber},
             email = #{email}, modified_time = #{modifiedTime}
         WHERE id = #{id}
     </update>
@@ -59,7 +59,7 @@
 
     <select id = "getUserByUserName" parameterType="java.lang.String" resultType = "UserModel">
         SELECT
-            id, user_name AS userName, password, phone_number AS phoneNumber, email,
+            id, user_name AS userName, password, sex, phone_number AS phoneNumber, email,
             create_time AS createTime, modified_time AS modifiedTime
         FROM t_system_user WHERE user_name = #{userName}
     </select>
