@@ -19,7 +19,7 @@ public class MenuModel {
 
     private boolean show;
 
-    private boolean headerToken;
+    private boolean carryToken;
 
     private String parent;
 
@@ -41,7 +41,7 @@ public class MenuModel {
         this.parent = parent;
     }
 
-    public boolean isShow() {
+    public boolean getShow() {
         return show;
     }
 
@@ -49,12 +49,12 @@ public class MenuModel {
         this.show = show;
     }
 
-    public boolean isHeaderToken() {
-        return headerToken;
+    public boolean getCarryToken() {
+        return carryToken;
     }
 
-    public void setHeaderToken(boolean headerToken) {
-        this.headerToken = headerToken;
+    public void setCarryToken(boolean carryToken) {
+        this.carryToken = carryToken;
     }
 
     public String getId() {

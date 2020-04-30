@@ -5,10 +5,12 @@ import com.kunlun.basedata.utils.CommonUtil;
 import com.kunlun.basedata.dao.IMenuDao;
 import com.kunlun.basedata.model.MenuModel;
 import com.kunlun.common.model.Page;
+import com.kunlun.common.utils.JsonUtil;
 import com.kunlun.common.utils.ListPageUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.ObjectUtils;
 import org.springframework.util.StringUtils;
 
 import java.util.Date;
@@ -81,17 +83,33 @@ public class MenuService implements IMenuService {
         // 设置菜单
         List<MenuModel> list = menuDao.getAllMenu(new HashMap<>());
         List<MenuModel> rootMenus = list.stream().filter(obj -> StringUtils.isEmpty(obj.getParentId())).collect(Collectors.toList());
+        List<MenuModel> mainMenu = JsonUtil.copyArray(rootMenus, MenuModel.class);
         Map<String, Object> resultMap = new HashMap<String, Object>();
-        resultMap.put("main", rootMenus);
+        resultMap.put("main", mainMenu);
+        List<MenuModel> menuList = JsonUtil.copyArray(list, MenuModel.class);
+        resultMap.put("list", menuList);
 
-        // 设置目录
-        List<MenuModel> menus = getAllMenu(new MenuModel(), 0, 99999).getRecords();
-        Map<String, List<MenuModel>> childMap = new HashMap<String, List<MenuModel>>();
-        for (MenuModel menu : menus) {
-            List<MenuModel> children = menu.getChildren();
-            childMap.put(menu.getKey(), children);
+        // 组装成Tree，并设置目录
+        packageTreeMenu(list, rootMenus);
+        Map<String, List<MenuModel>> siderMenu = new HashMap<>();
+        for (MenuModel model : rootMenus) {
+            if (!ObjectUtils.isEmpty(model.getChildren()) && model.getChildren().size() > 0) {
+                siderMenu.put(model.getKey(), model.getChildren());
+            }
         }
-        resultMap.put("sider", childMap);
+        resultMap.put("sider", siderMenu);
         return resultMap;
+    }
+
+    private void packageTreeMenu(List<MenuModel> list, List<MenuModel> rootMenus) {
+        for (MenuModel model : rootMenus) {
+           List<MenuModel> childrens = list.stream().filter(obj -> !ObjectUtils.isEmpty(obj.getParentId()) && obj.getParentId().equals(model.getId())).collect(Collectors.toList());
+           boolean isChild = !ObjectUtils.isEmpty(childrens) && childrens.size() > 0;
+           model.setChildren(isChild ? childrens : null);
+
+           if (isChild) {
+               packageTreeMenu(list, childrens);
+           }
+        }
     }
 }
