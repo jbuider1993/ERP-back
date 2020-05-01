@@ -104,24 +104,3 @@ COMMENT ON COLUMN t_display_icon.name IS '图标名称';
 COMMENT ON COLUMN t_display_icon.key IS '图标key';
 COMMENT ON COLUMN t_display_icon.create_time IS '创建时间';
 COMMENT ON COLUMN t_display_icon.modified_time IS '修改时间';
-
--- 系统通知消息表
-CREATE TABLE IF NOT EXISTS t_message_notice (
-	id varchar(50) primary key,
-	user_id varchar(50) default null,
-	type INT default 0,
-    title varchar(255) default null,
-    description varchar(10000) default null,
-	content varchar(50000) default null,
-	create_time timestamp default null,
-	modified_time timestamp default null
-);
-COMMENT ON TABLE t_message_notice IS '系统通知消息表';
-COMMENT ON COLUMN t_message_notice.id IS '消息id';
-COMMENT ON COLUMN t_message_notice.user_id IS '用户Id';
-COMMENT ON COLUMN t_message_notice.type IS '消息类型：1——通知；2——消息';
-COMMENT ON COLUMN t_message_notice.title IS '消息标题';
-COMMENT ON COLUMN t_message_notice.description IS '消息摘要';
-COMMENT ON COLUMN t_message_notice.content IS '消息内容';
-COMMENT ON COLUMN t_message_notice.create_time IS '创建时间';
-COMMENT ON COLUMN t_message_notice.modified_time IS '修改时间';

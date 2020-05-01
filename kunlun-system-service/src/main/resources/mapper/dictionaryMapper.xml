@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.kunlun.system.dao.IDictionaryDao" >
+
+    <select id="getAllDict" parameterType="java.util.Map" resultType="DictionaryModel">
+        SELECT
+            log.id AS id,
+            log.ip AS ip,
+            log.user_name AS userName,
+            log.operator_type AS operatorType,
+            log.operate_description AS operateDescription,
+            log.request_url AS requestUrl,
+            log.protocal AS protocal,
+            log.params AS params,
+            log.clz_name AS clzName,
+            log.method_name AS methodName,
+            log.exception_info AS exceptionInfo,
+            log.style AS style,
+            log.service_name AS serviceName,
+            log.port AS port,
+            log.thread_name AS threadName,
+            log.status AS status,
+            log.operate_time AS operateTime
+        FROM t_operator_log log
+        ORDER BY log.operate_time DESC
+        OFFSET #{currentPage} LIMIT #{pageSize}
+    </select>
+
+    <select id = "getOperateLogCount" parameterType="java.util.Map" resultType = "java.lang.Integer">
+        SELECT
+            COUNT(log.id)
+        FROM t_operator_log log
+    </select>
+
+    <sql id="queryLogCondition">
+        <if test="modelName != null and modelName != ''">
+            AND name_ LIKE CONCAT('%', #{modelName}, '%')
+        </if>
+        <if test="modelKey != null and modelKey != ''">
+            AND key_ LIKE CONCAT('%', #{modelKey}, '%')
+        </if>
+        <if test="createTime != null and createTime != ''">
+            AND create_time_ = #{createTime}
+        </if>
+    </sql>
+
+    <insert id="insertOperateLog" parameterType="OperatorLogModel">
+        INSERT INTO t_operator_log
+        (id, ip, user_name, operator_type, operate_description, request_url, protocal, params, clz_name, method_name,
+        exception_info, style, service_name, port, thread_name, operate_time, status)
+        VALUES (
+          #{id}, #{ip}, #{userName}, #{operatorType}, #{operateDescription}, #{requestUrl}, #{protocal}, #{params}, #{clzName},
+          #{methodName}, #{exceptionInfo}, #{style}, #{serviceName}, #{port}, #{threadName}, #{operateTime}, #{status}
+        )
+    </insert>
+
+    <update id="updateOperateLog" parameterType="OperatorLogModel">
+        UPDATE t_operator_log SET exception_info = #{exceptionInfo}, status = #{status} WHERE id = #{id}
+    </update>
+
+</mapper>
