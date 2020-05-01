@@ -12,6 +12,8 @@ public class DictionarySubModel {
 
     private String description;
 
+    private String dictId;
+
     private Date createTime;
 
     private Date modifiedTime;
@@ -46,6 +48,14 @@ public class DictionarySubModel {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getDictId() {
+        return dictId;
+    }
+
+    public void setDictId(String dictId) {
+        this.dictId = dictId;
     }
 
     public Date getCreateTime() {

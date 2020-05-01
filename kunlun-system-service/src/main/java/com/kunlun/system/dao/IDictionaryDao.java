@@ -1,6 +1,7 @@
 package com.kunlun.system.dao;
 
-import com.kunlun.common.model.OperatorLogModel;
+import com.kunlun.system.model.DictionaryModel;
+import com.kunlun.system.model.DictionarySubModel;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -8,11 +9,11 @@ import java.util.Map;
 
 @Repository
 public interface IDictionaryDao {
-    public List<OperatorLogModel> getAllOperateLog(Map<String, Object> queryMap) throws Exception;
+    public List<DictionaryModel> getAllDictionary(Map<String, Object> queryMap) throws Exception;
 
-    public int getOperateLogCount(Map<String, Object> queryMap) throws Exception;
+    public int getDictionaryCount(Map<String, Object> queryMap) throws Exception;
 
-    public void insertOperateLog(OperatorLogModel logModel) throws Exception;
+    public List<DictionarySubModel> getAllDictionarySub(Map<String, Object> queryMap) throws Exception;
 
-    public void updateOperateLog(OperatorLogModel logModel) throws Exception;
+    public int getDictionarySubCount(Map<String, Object> queryMap) throws Exception;
 }
