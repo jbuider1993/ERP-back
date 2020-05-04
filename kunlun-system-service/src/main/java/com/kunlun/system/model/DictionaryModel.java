@@ -10,6 +10,8 @@ public class DictionaryModel {
 
     private String dictCode;
 
+    private String status;
+
     private String description;
 
     private Date createTime;
@@ -30,6 +32,14 @@ public class DictionaryModel {
 
     public void setDictName(String dictName) {
         this.dictName = dictName;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     public String getDictCode() {

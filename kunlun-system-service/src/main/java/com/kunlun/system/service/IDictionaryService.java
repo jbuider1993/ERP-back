@@ -5,7 +5,19 @@ import com.kunlun.system.model.DictionaryModel;
 import com.kunlun.system.model.DictionarySubModel;
 
 public interface IDictionaryService {
-    public Page<DictionaryModel> getAllDictionary(DictionaryModel dictionaryModel, int currentPage, int pageSize) throws Exception;
+    public Page<DictionaryModel> getAllDictionaryItem(DictionaryModel dictionaryModel, int currentPage, int pageSize) throws Exception;
 
-    public Page<DictionarySubModel> getAllDictionarySub(DictionarySubModel dictionaryModel, int currentPage, int pageSize) throws Exception;
+    public Page<DictionarySubModel> getAllDictionaryValue(DictionarySubModel dictionaryModel, int currentPage, int pageSize) throws Exception;
+
+    public void insertDictionaryItem(DictionaryModel dictionaryModel) throws Exception;
+
+    public void insertDictionaryValue(DictionarySubModel dictionaryModel) throws Exception;
+
+    public void updateDictionaryItem(DictionaryModel dictionaryModel) throws Exception;
+
+    public void updateDictionaryValue(DictionarySubModel dictionaryModel) throws Exception;
+
+    public void deleteDictionaryItem(DictionaryModel dictionaryModel) throws Exception;
+
+    public void deleteDictionaryValue(DictionarySubModel dictionaryModel) throws Exception;
 }

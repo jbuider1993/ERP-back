@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.kunlun.system.dao.IDictionaryDao" >
 
-    <select id="getAllDictionary" parameterType="java.util.Map" resultType="DictionaryModel">
+    <select id="getAllDictionaryItem" parameterType="java.util.Map" resultType="DictionaryModel">
         SELECT
             id,
             dict_name AS dictName,
@@ -11,7 +11,7 @@
             description,
             create_time AS createTime,
             modified_time AS modifiedTime
-        FROM t_system_dictionary
+        FROM t_dictionary_item
         ORDER BY create_time DESC
         OFFSET #{currentPage} LIMIT #{pageSize}
     </select>
@@ -19,10 +19,10 @@
     <select id = "getDictionaryCount" parameterType="java.util.Map" resultType = "java.lang.Integer">
         SELECT
             COUNT(id)
-        FROM t_system_dictionary
+        FROM t_dictionary_item
     </select>
 
-    <select id = "getAllDictionarySub" parameterType="java.util.Map" resultType = "DictionarySubModel">
+    <select id = "getAllDictionaryValue" parameterType="java.util.Map" resultType = "DictionarySubModel">
         SELECT
             id,
             dict_sub_name AS dictSubName,
@@ -31,41 +31,54 @@
             description,
             dict_id AS dictId,
             create_time AS createTime
-        FROM t_system_dictionary_sub
+        FROM t_dictionary_value
         WHERE dict_id = #{dictId}
     </select>
 
-    <select id = "getDictionarySubCount" parameterType="java.util.Map" resultType = "java.lang.Integer">
+    <select id = "getDictionarySubCount" parameterType="DictionaryModel">
         SELECT
             COUNT(id)
-        FROM t_system_dictionary_sub
+        FROM t_dictionary_value
         WHERE dict_id = #{dictId}
     </select>
 
-    <sql id="queryLogCondition">
-        <if test="modelName != null and modelName != ''">
-            AND name_ LIKE CONCAT('%', #{modelName}, '%')
-        </if>
-        <if test="modelKey != null and modelKey != ''">
-            AND key_ LIKE CONCAT('%', #{modelKey}, '%')
-        </if>
-        <if test="createTime != null and createTime != ''">
-            AND create_time_ = #{createTime}
-        </if>
-    </sql>
-
-    <insert id="insertOperateLog" parameterType="OperatorLogModel">
-        INSERT INTO t_operator_log
-        (id, ip, user_name, operator_type, operate_description, request_url, protocal, params, clz_name, method_name,
-        exception_info, style, service_name, port, thread_name, operate_time, status)
-        VALUES (
-          #{id}, #{ip}, #{userName}, #{operatorType}, #{operateDescription}, #{requestUrl}, #{protocal}, #{params}, #{clzName},
-          #{methodName}, #{exceptionInfo}, #{style}, #{serviceName}, #{port}, #{threadName}, #{operateTime}, #{status}
+    <insert id="insertDictionaryItem" parameterType="DictionaryModel">
+        INSERT INTO t_dictionary_item (
+            id, dict_name, dict_code, status, description, create_time, modified_time
+        ) VALUES (
+            #{id}, #{dictName}, #{dictCode}, #{status}, #{description}, #{createTime}, #{modifiedTime}
         )
     </insert>
 
-    <update id="updateOperateLog" parameterType="OperatorLogModel">
-        UPDATE t_operator_log SET exception_info = #{exceptionInfo}, status = #{status} WHERE id = #{id}
+    <insert id="insertDictionaryValue" parameterType="DictionarySubModel">
+        INSERT INTO t_dictionary_value (
+            id, dict_sub_code, dict_value, description, dict_id, create_time, modified_time
+        ) VALUES (
+            #{id}, #{dictSubCode}, #{dictValue}, #{description}, #{dictId}, #{createTime}, #{modifiedTime}
+        )
+    </insert>
+
+    <update id="updateDictionaryItem" parameterType="DictionaryModel">
+        UPDATE t_dictionary_item SET
+            dict_name = #{dictSubName}, dict_code = #{dictCode}, status = #{status}, description = #{description},
+            create_time = #{createTime}, modified_time = #{modifiedTime}
+        WHERE id = #{id};
     </update>
+
+    <update id="updateDictionaryValue" parameterType="DictionarySubModel">
+        UPDATE t_dictionary_value SET
+            dict_sub_code = #{dictSubCode}, dict_value = #{dictValue},
+            description = #{description}, modified_time = #{modifiedTime}
+        WHERE id = #{id};
+    </update>
+
+    <delete id="deleteDictionaryItem" parameterType="DictionaryModel">
+        DELETE FROM t_dictionary_item WHERE id = #{id};
+        DELETE FROM t_dictionary_value WHERE dict_id = #{id};
+    </delete>
+
+    <delete id="deleteDictionaryValue" parameterType="DictionarySubModel">
+        DELETE FROM t_dictionary_value WHERE id = #{id};
+    </delete>
 
 </mapper>

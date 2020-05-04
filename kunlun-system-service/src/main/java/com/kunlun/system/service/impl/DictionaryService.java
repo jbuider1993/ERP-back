@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -21,12 +22,12 @@ public class DictionaryService implements IDictionaryService {
     private IDictionaryDao dictionaryDao;
 
     @Override
-    public Page<DictionaryModel> getAllDictionary(DictionaryModel dictionaryModel, int currentPage, int pageSize) throws Exception {
+    public Page<DictionaryModel> getAllDictionaryItem(DictionaryModel dictionaryModel, int currentPage, int pageSize) throws Exception {
         int startIndex = (currentPage - 1) * pageSize;
         Map<String, Object> queryMap = CommonUtil.packageQueryMap(dictionaryModel, startIndex, pageSize);
 
         int count = dictionaryDao.getDictionaryCount(queryMap);
-        List<DictionaryModel> dictionaryList = dictionaryDao.getAllDictionary(queryMap);
+        List<DictionaryModel> dictionaryList = dictionaryDao.getAllDictionaryItem(queryMap);
 
         Page<DictionaryModel> page = new Page<>();
         page.setCurrentPage(currentPage);
@@ -37,12 +38,12 @@ public class DictionaryService implements IDictionaryService {
     }
 
     @Override
-    public Page<DictionarySubModel> getAllDictionarySub(DictionarySubModel dictionaryModel, int currentPage, int pageSize) throws Exception {
+    public Page<DictionarySubModel> getAllDictionaryValue(DictionarySubModel dictionaryModel, int currentPage, int pageSize) throws Exception {
         int startIndex = (currentPage - 1) * pageSize;
         Map<String, Object> queryMap = CommonUtil.packageQueryMap(dictionaryModel, startIndex, pageSize);
 
         int count = dictionaryDao.getDictionarySubCount(queryMap);
-        List<DictionarySubModel> dictionaryList = dictionaryDao.getAllDictionarySub(queryMap);
+        List<DictionarySubModel> dictionaryList = dictionaryDao.getAllDictionaryValue(queryMap);
 
         Page<DictionarySubModel> page = new Page<>();
         page.setCurrentPage(currentPage);
@@ -50,5 +51,43 @@ public class DictionaryService implements IDictionaryService {
         page.setTotal(count);
         page.setRecords(dictionaryList);
         return page;
+    }
+
+    @Override
+    public void insertDictionaryItem(DictionaryModel dictionaryModel) throws Exception {
+        dictionaryModel.setId(CommonUtil.generateUUID());
+        dictionaryModel.setCreateTime(new Date());
+        dictionaryModel.setModifiedTime(new Date());
+        dictionaryDao.insertDictionaryItem(dictionaryModel);
+    }
+
+    @Override
+    public void insertDictionaryValue(DictionarySubModel dictionaryModel) throws Exception {
+        dictionaryModel.setId(CommonUtil.generateUUID());
+        dictionaryModel.setCreateTime(new Date());
+        dictionaryModel.setModifiedTime(new Date());
+        dictionaryDao.insertDictionaryValue(dictionaryModel);
+    }
+
+    @Override
+    public void updateDictionaryItem(DictionaryModel dictionaryModel) throws Exception {
+        dictionaryModel.setModifiedTime(new Date());
+        dictionaryDao.updateDictionaryItem(dictionaryModel);
+    }
+
+    @Override
+    public void updateDictionaryValue(DictionarySubModel dictionaryModel) throws Exception {
+        dictionaryModel.setModifiedTime(new Date());
+        dictionaryDao.updateDictionaryValue(dictionaryModel);
+    }
+
+    @Override
+    public void deleteDictionaryItem(DictionaryModel dictionaryModel) throws Exception {
+        dictionaryDao.deleteDictionaryItem(dictionaryModel);
+    }
+
+    @Override
+    public void deleteDictionaryValue(DictionarySubModel dictionaryModel) throws Exception {
+        dictionaryDao.updateDictionaryValue(dictionaryModel);
     }
 }

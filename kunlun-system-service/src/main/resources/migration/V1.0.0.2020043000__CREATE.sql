@@ -19,8 +19,8 @@ COMMENT ON COLUMN t_message_notice.content IS '消息内容';
 COMMENT ON COLUMN t_message_notice.create_time IS '创建时间';
 COMMENT ON COLUMN t_message_notice.modified_time IS '修改时间';
 
--- 系统数据字典主表
-CREATE TABLE IF NOT EXISTS t_system_dictionary (
+-- 系统字典数据项表
+CREATE TABLE IF NOT EXISTS t_dictionary_item (
 	id varchar(50) primary key,
 	dict_name varchar(50) default null,
 	dict_code varchar(50) default 0,
@@ -29,17 +29,17 @@ CREATE TABLE IF NOT EXISTS t_system_dictionary (
 	create_time timestamp default null,
 	modified_time timestamp default null
 );
-COMMENT ON TABLE t_system_dictionary IS '系统数据字典主表';
-COMMENT ON COLUMN t_system_dictionary.id IS '字典主表id';
-COMMENT ON COLUMN t_system_dictionary.dict_name IS '字典名称';
-COMMENT ON COLUMN t_system_dictionary.dict_code IS '字典编码';
-COMMENT ON COLUMN t_system_dictionary.status IS '字典状态';
-COMMENT ON COLUMN t_system_dictionary.description IS '备注描述';
-COMMENT ON COLUMN t_system_dictionary.create_time IS '创建时间';
-COMMENT ON COLUMN t_system_dictionary.modified_time IS '修改时间';
+COMMENT ON TABLE t_dictionary_item IS '系统字典数据项表';
+COMMENT ON COLUMN t_dictionary_item.id IS '字典项表id';
+COMMENT ON COLUMN t_dictionary_item.dict_name IS '字典名称';
+COMMENT ON COLUMN t_dictionary_item.dict_code IS '字典编码';
+COMMENT ON COLUMN t_dictionary_item.status IS '字典状态';
+COMMENT ON COLUMN t_dictionary_item.description IS '备注描述';
+COMMENT ON COLUMN t_dictionary_item.create_time IS '创建时间';
+COMMENT ON COLUMN t_dictionary_item.modified_time IS '修改时间';
 
--- 系统数据字典子表
-CREATE TABLE IF NOT EXISTS t_system_dictionary_sub (
+-- 系统字典数据值表
+CREATE TABLE IF NOT EXISTS t_dictionary_value (
 	id varchar(50) primary key,
 	dict_sub_name varchar(50) default null,
 	dict_sub_code varchar(50) default null,
@@ -49,11 +49,11 @@ CREATE TABLE IF NOT EXISTS t_system_dictionary_sub (
 	create_time timestamp default null,
 	modified_time timestamp default null
 );
-COMMENT ON TABLE t_system_dictionary_sub IS '系统数据字典子表';
-COMMENT ON COLUMN t_system_dictionary_sub.id IS '数据字典子表id';
-COMMENT ON COLUMN t_system_dictionary_sub.dict_sub_code IS '编码';
-COMMENT ON COLUMN t_system_dictionary_sub.dict_value IS '字典值';
-COMMENT ON COLUMN t_system_dictionary_sub.description IS '备注描述';
-COMMENT ON COLUMN t_system_dictionary_sub.dict_id IS '字典主表Id';
-COMMENT ON COLUMN t_system_dictionary_sub.create_time IS '创建时间';
-COMMENT ON COLUMN t_system_dictionary_sub.modified_time IS '修改时间';
+COMMENT ON TABLE t_dictionary_value IS '系统字典数据值表';
+COMMENT ON COLUMN t_dictionary_value.id IS '字典值表id';
+COMMENT ON COLUMN t_dictionary_value.dict_sub_code IS '编码';
+COMMENT ON COLUMN t_dictionary_value.dict_value IS '字典值';
+COMMENT ON COLUMN t_dictionary_value.description IS '备注描述';
+COMMENT ON COLUMN t_dictionary_value.dict_id IS '字典主表Id';
+COMMENT ON COLUMN t_dictionary_value.create_time IS '创建时间';
+COMMENT ON COLUMN t_dictionary_value.modified_time IS '修改时间';
