@@ -43,7 +43,7 @@ CREATE TABLE IF NOT EXISTS t_dictionary_value (
 	id varchar(50) primary key,
 	dict_sub_name varchar(50) default null,
 	dict_sub_code varchar(50) default null,
-	dict_value INT default 0,
+	dict_value varchar(50) default 0,
     description varchar(10000) default null,
     dict_id varchar(50) default null,
 	create_time timestamp default null,

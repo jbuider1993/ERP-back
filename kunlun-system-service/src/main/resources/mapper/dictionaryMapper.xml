@@ -35,7 +35,7 @@
         WHERE dict_id = #{dictId}
     </select>
 
-    <select id = "getDictionarySubCount" parameterType="DictionaryModel">
+    <select id = "getDictionarySubCount" parameterType="java.util.Map" resultType = "java.lang.Integer">
         SELECT
             COUNT(id)
         FROM t_dictionary_value
