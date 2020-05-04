@@ -88,9 +88,9 @@ public class DictionaryController {
     }
 
     @RequestMapping(value = "/deleteDictionaryItem", method = RequestMethod.GET)
-    public Object deleteDictionaryItem(DictionaryModel dictionaryModel) {
+    public Object deleteDictionaryItem(String ids) {
         try {
-            dictionaryService.deleteDictionaryItem(dictionaryModel);
+            dictionaryService.deleteDictionaryItem(ids);
             return ResponseUtil.successResponse("删除字典项数据成功！");
         } catch (Exception e) {
             log.error("DictionaryController deleteDictionaryItem Error: ", e);
@@ -99,9 +99,9 @@ public class DictionaryController {
     }
 
     @RequestMapping(value = "/deleteDictionaryValue", method = RequestMethod.GET)
-    public Object deleteDictionaryValue(DictionarySubModel dictionaryModel) {
+    public Object deleteDictionaryValue(String ids) {
         try {
-            dictionaryService.deleteDictionaryValue(dictionaryModel);
+            dictionaryService.deleteDictionaryValue(ids);
             return ResponseUtil.successResponse("删除字典值数据成功！");
         } catch (Exception e) {
             log.error("DictionaryController deleteDictionaryValue Error: ", e);

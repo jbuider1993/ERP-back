@@ -73,12 +73,12 @@
     </update>
 
     <delete id="deleteDictionaryItem" parameterType="DictionaryModel">
-        DELETE FROM t_dictionary_item WHERE id = #{id};
-        DELETE FROM t_dictionary_value WHERE dict_id = #{id};
+        DELETE FROM t_dictionary_item WHERE id IN (#{id});
+        DELETE FROM t_dictionary_value WHERE dict_id IN (#{id});
     </delete>
 
     <delete id="deleteDictionaryValue" parameterType="DictionarySubModel">
-        DELETE FROM t_dictionary_value WHERE id = #{id};
+        DELETE FROM t_dictionary_value WHERE id IN (#{id});
     </delete>
 
 </mapper>

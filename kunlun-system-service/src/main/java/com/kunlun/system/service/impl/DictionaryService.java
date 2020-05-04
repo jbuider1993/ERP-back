@@ -82,12 +82,12 @@ public class DictionaryService implements IDictionaryService {
     }
 
     @Override
-    public void deleteDictionaryItem(DictionaryModel dictionaryModel) throws Exception {
-        dictionaryDao.deleteDictionaryItem(dictionaryModel);
+    public void deleteDictionaryItem(String ids) throws Exception {
+        dictionaryDao.deleteDictionaryItem(ids);
     }
 
     @Override
-    public void deleteDictionaryValue(DictionarySubModel dictionaryModel) throws Exception {
-        dictionaryDao.updateDictionaryValue(dictionaryModel);
+    public void deleteDictionaryValue(String ids) throws Exception {
+        dictionaryDao.deleteDictionaryValue(ids);
     }
 }

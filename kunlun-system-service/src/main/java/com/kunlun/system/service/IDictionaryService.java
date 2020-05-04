@@ -17,7 +17,7 @@ public interface IDictionaryService {
 
     public void updateDictionaryValue(DictionarySubModel dictionaryModel) throws Exception;
 
-    public void deleteDictionaryItem(DictionaryModel dictionaryModel) throws Exception;
+    public void deleteDictionaryItem(String ids) throws Exception;
 
-    public void deleteDictionaryValue(DictionarySubModel dictionaryModel) throws Exception;
+    public void deleteDictionaryValue(String ids) throws Exception;
 }
