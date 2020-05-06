@@ -2,7 +2,7 @@ package com.kunlun.system.model;
 
 import java.util.Date;
 
-public class DictionaryModel {
+public class DictionaryItemModel {
 
     private String id;
 

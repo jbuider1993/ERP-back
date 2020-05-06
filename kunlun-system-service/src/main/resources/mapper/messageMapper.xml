@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace = "com.kunlun.basedata.dao.IMessageDao">
+<mapper namespace = "com.kunlun.system.dao.IMessageDao">
 
-    <select id = "getAllMessges" parameterType="java.util.Map" resultType = "MessageRecordModel">
+    <select id = "getAllMessges" parameterType="java.util.Map" resultType = "MessageNoticeModel">
         SELECT
             msg.id AS id,
             msg.user_id AS userId,
-            u.user_name AS userName,
             msg.type AS type,
             msg.title AS title,
             msg.description AS description,
@@ -15,7 +14,6 @@
             msg.create_time AS createTime,
             msg.modified_time AS modifiedTime
         FROM t_message_notice msg
-        LEFT JOIN t_system_user u ON u.id = msg.user_id
         WHERE 1 = 1
         ORDER BY msg.create_time ASC
         LIMIT #{pageSize}
@@ -41,7 +39,7 @@
         </if>
     </sql>
 
-    <insert id="addMessage" parameterType="MessageRecordModel">
+    <insert id="addMessage" parameterType="MessageNoticeModel">
         INSERT INTO t_message_notice
         (id, user_id, type, title, description, content, create_time, modified_time)
         VALUES
@@ -49,7 +47,7 @@
         #{content}, #{createTime}, #{modifiedTime})
     </insert>
 
-    <update id="updateMessage" parameterType="MessageRecordModel">
+    <update id="updateMessage" parameterType="MessageNoticeModel">
         UPDATE t_message_notice SET
             user_id = #{userId}, type = #{type}, title = #{title}, description = #{description},
             content = #{content}, modified_time = #{modifiedTime}

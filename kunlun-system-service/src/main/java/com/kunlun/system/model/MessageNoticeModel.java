@@ -1,11 +1,11 @@
-package com.kunlun.basedata.model;
+package com.kunlun.system.model;
 
 import java.util.Date;
 
 /**
  * 通知消息模型
  */
-public class MessageRecordModel {
+public class MessageNoticeModel {
     private String id;
 
     private String userId;

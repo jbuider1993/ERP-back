@@ -1,10 +1,10 @@
-package com.kunlun.basedata.service.impl;
+package com.kunlun.system.service.impl;
 
-import com.kunlun.basedata.dao.IMessageDao;
-import com.kunlun.basedata.model.MessageRecordModel;
-import com.kunlun.basedata.service.IMessageService;
-import com.kunlun.basedata.utils.CommonUtil;
 import com.kunlun.common.model.Page;
+import com.kunlun.system.dao.IMessageDao;
+import com.kunlun.system.model.MessageNoticeModel;
+import com.kunlun.system.service.IMessageService;
+import com.kunlun.system.utils.CommonUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,16 +15,16 @@ import java.util.Map;
 
 @Service("messageService")
 @Transactional
-public class MessageServiceImpl implements IMessageService {
+public class MessageService implements IMessageService {
 
     @Autowired
     private IMessageDao messageDao;
 
     @Override
-    public Page getAllMessages(MessageRecordModel messageModel, int currentPage, int pageSize) throws Exception {
+    public Page getAllMessages(MessageNoticeModel messageModel, int currentPage, int pageSize) throws Exception {
         int startIndex = (currentPage - 1) * pageSize;
         Map<String, Object> queryMap = CommonUtil.packageQueryMap(messageModel, startIndex, pageSize);
-        List<MessageRecordModel> list = messageDao.getAllMessges(queryMap);
+        List<MessageNoticeModel> list = messageDao.getAllMessges(queryMap);
         int count = messageDao.getMessageCount(queryMap);
 
         Page page = new Page(startIndex, pageSize, count, list);
@@ -32,7 +32,7 @@ public class MessageServiceImpl implements IMessageService {
     }
 
     @Override
-    public void addMessage(MessageRecordModel messageModel) throws Exception {
+    public void addMessage(MessageNoticeModel messageModel) throws Exception {
         messageModel.setId(CommonUtil.generateUUID());
         messageModel.setUserId("1111111111111111111");
         messageModel.setCreateTime(new Date());
@@ -41,7 +41,7 @@ public class MessageServiceImpl implements IMessageService {
     }
 
     @Override
-    public void updateMessage(MessageRecordModel messageModel) throws Exception {
+    public void updateMessage(MessageNoticeModel messageModel) throws Exception {
         messageModel.setModifiedTime(new Date());
         messageDao.updateMessage(messageModel);
     }

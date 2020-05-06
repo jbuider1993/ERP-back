@@ -2,8 +2,8 @@ package com.kunlun.system.service.impl;
 
 import com.kunlun.common.model.Page;
 import com.kunlun.system.dao.IDictionaryDao;
-import com.kunlun.system.model.DictionaryModel;
-import com.kunlun.system.model.DictionarySubModel;
+import com.kunlun.system.model.DictionaryItemModel;
+import com.kunlun.system.model.DictionaryValueModel;
 import com.kunlun.system.service.IDictionaryService;
 import com.kunlun.system.utils.CommonUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,14 +22,14 @@ public class DictionaryService implements IDictionaryService {
     private IDictionaryDao dictionaryDao;
 
     @Override
-    public Page<DictionaryModel> getAllDictionaryItem(DictionaryModel dictionaryModel, int currentPage, int pageSize) throws Exception {
+    public Page<DictionaryItemModel> getAllDictionaryItem(DictionaryItemModel dictionaryItemModel, int currentPage, int pageSize) throws Exception {
         int startIndex = (currentPage - 1) * pageSize;
-        Map<String, Object> queryMap = CommonUtil.packageQueryMap(dictionaryModel, startIndex, pageSize);
+        Map<String, Object> queryMap = CommonUtil.packageQueryMap(dictionaryItemModel, startIndex, pageSize);
 
         int count = dictionaryDao.getDictionaryCount(queryMap);
-        List<DictionaryModel> dictionaryList = dictionaryDao.getAllDictionaryItem(queryMap);
+        List<DictionaryItemModel> dictionaryList = dictionaryDao.getAllDictionaryItem(queryMap);
 
-        Page<DictionaryModel> page = new Page<>();
+        Page<DictionaryItemModel> page = new Page<>();
         page.setCurrentPage(currentPage);
         page.setPageSize(pageSize);
         page.setTotal(count);
@@ -38,14 +38,14 @@ public class DictionaryService implements IDictionaryService {
     }
 
     @Override
-    public Page<DictionarySubModel> getAllDictionaryValue(DictionarySubModel dictionaryModel, int currentPage, int pageSize) throws Exception {
+    public Page<DictionaryValueModel> getAllDictionaryValue(DictionaryValueModel dictionaryModel, int currentPage, int pageSize) throws Exception {
         int startIndex = (currentPage - 1) * pageSize;
         Map<String, Object> queryMap = CommonUtil.packageQueryMap(dictionaryModel, startIndex, pageSize);
 
         int count = dictionaryDao.getDictionarySubCount(queryMap);
-        List<DictionarySubModel> dictionaryList = dictionaryDao.getAllDictionaryValue(queryMap);
+        List<DictionaryValueModel> dictionaryList = dictionaryDao.getAllDictionaryValue(queryMap);
 
-        Page<DictionarySubModel> page = new Page<>();
+        Page<DictionaryValueModel> page = new Page<>();
         page.setCurrentPage(currentPage);
         page.setPageSize(pageSize);
         page.setTotal(count);
@@ -54,15 +54,15 @@ public class DictionaryService implements IDictionaryService {
     }
 
     @Override
-    public void insertDictionaryItem(DictionaryModel dictionaryModel) throws Exception {
-        dictionaryModel.setId(CommonUtil.generateUUID());
-        dictionaryModel.setCreateTime(new Date());
-        dictionaryModel.setModifiedTime(new Date());
-        dictionaryDao.insertDictionaryItem(dictionaryModel);
+    public void insertDictionaryItem(DictionaryItemModel dictionaryItemModel) throws Exception {
+        dictionaryItemModel.setId(CommonUtil.generateUUID());
+        dictionaryItemModel.setCreateTime(new Date());
+        dictionaryItemModel.setModifiedTime(new Date());
+        dictionaryDao.insertDictionaryItem(dictionaryItemModel);
     }
 
     @Override
-    public void insertDictionaryValue(DictionarySubModel dictionaryModel) throws Exception {
+    public void insertDictionaryValue(DictionaryValueModel dictionaryModel) throws Exception {
         dictionaryModel.setId(CommonUtil.generateUUID());
         dictionaryModel.setCreateTime(new Date());
         dictionaryModel.setModifiedTime(new Date());
@@ -70,13 +70,13 @@ public class DictionaryService implements IDictionaryService {
     }
 
     @Override
-    public void updateDictionaryItem(DictionaryModel dictionaryModel) throws Exception {
-        dictionaryModel.setModifiedTime(new Date());
-        dictionaryDao.updateDictionaryItem(dictionaryModel);
+    public void updateDictionaryItem(DictionaryItemModel dictionaryItemModel) throws Exception {
+        dictionaryItemModel.setModifiedTime(new Date());
+        dictionaryDao.updateDictionaryItem(dictionaryItemModel);
     }
 
     @Override
-    public void updateDictionaryValue(DictionarySubModel dictionaryModel) throws Exception {
+    public void updateDictionaryValue(DictionaryValueModel dictionaryModel) throws Exception {
         dictionaryModel.setModifiedTime(new Date());
         dictionaryDao.updateDictionaryValue(dictionaryModel);
     }

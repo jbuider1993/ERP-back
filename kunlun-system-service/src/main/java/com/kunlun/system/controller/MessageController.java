@@ -1,9 +1,9 @@
-package com.kunlun.basedata.controller;
+package com.kunlun.system.controller;
 
-import com.kunlun.basedata.model.MessageRecordModel;
-import com.kunlun.basedata.service.IMessageService;
 import com.kunlun.common.model.Page;
 import com.kunlun.common.utils.ResponseUtil;
+import com.kunlun.system.model.MessageNoticeModel;
+import com.kunlun.system.service.IMessageService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +26,7 @@ public class MessageController {
     private IMessageService messageService;
 
     @RequestMapping(value = "/getAllMessages", method = RequestMethod.GET)
-    public Object getAllMessages(MessageRecordModel messageModel, int currentPage, int pageSize) {
+    public Object getAllMessages(MessageNoticeModel messageModel, int currentPage, int pageSize) {
         try {
             Page users = messageService.getAllMessages(messageModel, currentPage, pageSize);
             return ResponseUtil.successResponse(users);
@@ -37,7 +37,7 @@ public class MessageController {
     }
 
     @RequestMapping(value = "/addMessage", method = RequestMethod.POST)
-    public Object addMessage(MessageRecordModel messageModel) {
+    public Object addMessage(MessageNoticeModel messageModel) {
         try {
             messageService.addMessage(messageModel);
             return ResponseUtil.successResponse(messageModel);
@@ -48,7 +48,7 @@ public class MessageController {
     }
 
     @RequestMapping(value = "/updateMessage", method = RequestMethod.POST)
-    public Object updateMessage(MessageRecordModel messageModel) {
+    public Object updateMessage(MessageNoticeModel messageModel) {
         try {
             messageService.updateMessage(messageModel);
             return ResponseUtil.successResponse("success");

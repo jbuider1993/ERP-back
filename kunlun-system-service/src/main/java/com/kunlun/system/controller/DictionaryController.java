@@ -2,8 +2,8 @@ package com.kunlun.system.controller;
 
 import com.kunlun.common.model.Page;
 import com.kunlun.common.utils.ResponseUtil;
-import com.kunlun.system.model.DictionaryModel;
-import com.kunlun.system.model.DictionarySubModel;
+import com.kunlun.system.model.DictionaryItemModel;
+import com.kunlun.system.model.DictionaryValueModel;
 import com.kunlun.system.service.IDictionaryService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -22,9 +22,9 @@ public class DictionaryController {
     private IDictionaryService dictionaryService;
 
     @RequestMapping(value = "/getAllDictionaryItem", method = RequestMethod.GET)
-    public Object getAllDictionaryItem(DictionaryModel dictionaryModel, int currentPage, int pageSize) {
+    public Object getAllDictionaryItem(DictionaryItemModel dictionaryItemModel, int currentPage, int pageSize) {
         try {
-            Page<DictionaryModel> pages = dictionaryService.getAllDictionaryItem(dictionaryModel, currentPage, pageSize);
+            Page<DictionaryItemModel> pages = dictionaryService.getAllDictionaryItem(dictionaryItemModel, currentPage, pageSize);
             return ResponseUtil.successResponse(pages);
         } catch (Exception e) {
             log.error("DictionaryController getAllDictionaryItem Error: ", e);
@@ -33,9 +33,9 @@ public class DictionaryController {
     }
 
     @RequestMapping(value = "/getAllDictionaryValue", method = RequestMethod.GET)
-    public Object getAllDictionaryValue(DictionarySubModel dictionaryModel, int currentPage, int pageSize) {
+    public Object getAllDictionaryValue(DictionaryValueModel dictionaryModel, int currentPage, int pageSize) {
         try {
-            Page<DictionarySubModel> pages = dictionaryService.getAllDictionaryValue(dictionaryModel, currentPage, pageSize);
+            Page<DictionaryValueModel> pages = dictionaryService.getAllDictionaryValue(dictionaryModel, currentPage, pageSize);
             return ResponseUtil.successResponse(pages);
         } catch (Exception e) {
             log.error("DictionaryController getAllDictionaryValue Error: ", e);
@@ -44,9 +44,9 @@ public class DictionaryController {
     }
 
     @RequestMapping(value = "/insertDictionaryItem", method = RequestMethod.POST)
-    public Object insertDictionaryItem(DictionaryModel dictionaryModel) {
+    public Object insertDictionaryItem(DictionaryItemModel dictionaryItemModel) {
         try {
-            dictionaryService.insertDictionaryItem(dictionaryModel);
+            dictionaryService.insertDictionaryItem(dictionaryItemModel);
             return ResponseUtil.successResponse("插入字典项数据成功！");
         } catch (Exception e) {
             log.error("DictionaryController insertDictionaryItem Error: ", e);
@@ -55,7 +55,7 @@ public class DictionaryController {
     }
 
     @RequestMapping(value = "/insertDictionaryValue", method = RequestMethod.POST)
-    public Object insertDictionaryValue(DictionarySubModel dictionaryModel) {
+    public Object insertDictionaryValue(DictionaryValueModel dictionaryModel) {
         try {
             dictionaryService.insertDictionaryValue(dictionaryModel);
             return ResponseUtil.successResponse("插入字典值数据成功！");
@@ -66,9 +66,9 @@ public class DictionaryController {
     }
 
     @RequestMapping(value = "/updateDictionaryItem", method = RequestMethod.POST)
-    public Object updateDictionaryItem(DictionaryModel dictionaryModel) {
+    public Object updateDictionaryItem(DictionaryItemModel dictionaryItemModel) {
         try {
-            dictionaryService.updateDictionaryItem(dictionaryModel);
+            dictionaryService.updateDictionaryItem(dictionaryItemModel);
             return ResponseUtil.successResponse("更新字典项数据成功！");
         } catch (Exception e) {
             log.error("DictionaryController updateDictionaryItem Error: ", e);
@@ -77,7 +77,7 @@ public class DictionaryController {
     }
 
     @RequestMapping(value = "/updateDictionaryValue", method = RequestMethod.POST)
-    public Object updateDictionaryValue(DictionarySubModel dictionaryModel) {
+    public Object updateDictionaryValue(DictionaryValueModel dictionaryModel) {
         try {
             dictionaryService.updateDictionaryValue(dictionaryModel);
             return ResponseUtil.successResponse("更新字典值数据成功！");
