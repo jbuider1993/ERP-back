@@ -1,6 +1,8 @@
 package com.kunlun.system.service.impl;
 
 import com.kunlun.common.model.Page;
+import com.kunlun.system.config.dataSource.DataSourceType;
+import com.kunlun.system.config.dataSource.DbContextHolder;
 import com.kunlun.system.dao.IMessageDao;
 import com.kunlun.system.model.MessageNoticeModel;
 import com.kunlun.system.service.IMessageService;
@@ -22,6 +24,8 @@ public class MessageService implements IMessageService {
 
     @Override
     public Page getAllMessages(MessageNoticeModel messageModel, int currentPage, int pageSize) throws Exception {
+        DbContextHolder.setDbType(DataSourceType.MASTER.getKey());
+
         int startIndex = (currentPage - 1) * pageSize;
         Map<String, Object> queryMap = CommonUtil.packageQueryMap(messageModel, startIndex, pageSize);
         List<MessageNoticeModel> list = messageDao.getAllMessges(queryMap);
