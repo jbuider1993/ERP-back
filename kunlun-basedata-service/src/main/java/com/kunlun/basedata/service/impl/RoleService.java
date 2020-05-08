@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -33,6 +34,9 @@ public class RoleService implements IRoleService {
 
     @Override
     public void addRole(RoleModel roleMode) throws Exception {
+        roleMode.setId(CommonUtil.generateUUID());
+        roleMode.setCreateTime(new Date());
+        roleMode.setModifiedTime(new Date());
         roleDao.addRole(roleMode);
     }
 
