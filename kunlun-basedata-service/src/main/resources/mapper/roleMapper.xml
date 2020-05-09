@@ -47,11 +47,31 @@
         WHERE id = #{id}
     </update>
 
-    <delete id="batchDeleteRole" parameterType="java.util.List">
+    <update id="updateMenuLimit" parameterType="RoleModel">
+        UPDATE t_user_role SET
+            menu_ids = #{menuIds}, modified_time = #{modifiedTime}
+        WHERE id = #{id}
+    </update>
+
+    <update id="updateAllotUser" parameterType="RoleModel">
+        UPDATE t_user_role SET
+            user_ids = #{userIds}, modified_time = #{modifiedTime}
+        WHERE id = #{id}
+    </update>
+
+    <delete id="deleteRole" parameterType="java.util.List">
         DELETE FROM t_user_role WHERE id IN
         <foreach collection="list" item="item" open="(" close=")" separator=",">
             #{item}
         </foreach>
     </delete>
+
+    <select id = "getRoleById" parameterType="java.lang.String" resultType = "RoleModel">
+        SELECT
+            id, role_name AS roleName, role_word AS roleWord, status, menu_ids AS menuIds,
+            user_ids AS userIds, create_time AS createTime, modified_time AS modifiedTime
+        FROM t_user_role
+        WHERE id = #{id}
+    </select>
 
 </mapper>

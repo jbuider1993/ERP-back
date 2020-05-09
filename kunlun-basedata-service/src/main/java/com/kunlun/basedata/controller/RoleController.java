@@ -56,11 +56,33 @@ public class RoleController {
         }
     }
 
+    @RequestMapping(value = "/updateMenuLimit", method = RequestMethod.POST)
+    public Object updateMenuLimit(RoleModel roleModel) {
+        try {
+            roleService.updateMenuLimit(roleModel);
+            return ResponseUtil.successResponse("success");
+        } catch (Exception e) {
+            log.error("RoleController updateRole Error: ", e);
+            return ResponseUtil.failedResponse("修改角色失败！", e.getMessage());
+        }
+    }
+
+    @RequestMapping(value = "/updateAllotUser", method = RequestMethod.POST)
+    public Object updateAllotUser(RoleModel roleModel) {
+        try {
+            RoleModel result = roleService.updateAllotUser(roleModel);
+            return ResponseUtil.successResponse(result);
+        } catch (Exception e) {
+            log.error("RoleController updateRole Error: ", e);
+            return ResponseUtil.failedResponse("修改角色失败！", e.getMessage());
+        }
+    }
+
     @RequestMapping(value = "/batchDeleteRole", method = RequestMethod.POST)
     public Object batchDeleteRole(String ids) {
         try {
             List<String> idList = Arrays.asList(ids.split(","));
-            roleService.batchDeleteRole(idList);
+            roleService.deleteRole(idList);
             return ResponseUtil.successResponse("success");
         } catch (Exception e) {
             log.error("RoleController batchDeleteRole Error: ", e);

@@ -16,5 +16,11 @@ public interface IRoleDao {
 
     public void updateRole(RoleModel roleModel) throws Exception;
 
-    public void batchDeleteRole(List<String> ids) throws Exception;
+    public void updateMenuLimit(RoleModel roleModel) throws Exception;
+
+    public void updateAllotUser(RoleModel roleModel) throws Exception;
+
+    public void deleteRole(List<String> ids) throws Exception;
+
+    public RoleModel getRoleById(String id) throws Exception;
 }

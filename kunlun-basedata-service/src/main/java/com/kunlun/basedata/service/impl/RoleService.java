@@ -46,7 +46,18 @@ public class RoleService implements IRoleService {
     }
 
     @Override
-    public void batchDeleteRole(List<String> ids) throws Exception {
-        roleDao.batchDeleteRole(ids);
+    public void updateMenuLimit(RoleModel roleModel) throws Exception {
+        roleDao.updateMenuLimit(roleModel);
+    }
+
+    @Override
+    public RoleModel updateAllotUser(RoleModel roleModel) throws Exception {
+        roleDao.updateAllotUser(roleModel);
+        return roleDao.getRoleById(roleModel.getId());
+    }
+
+    @Override
+    public void deleteRole(List<String> ids) throws Exception {
+        roleDao.deleteRole(ids);
     }
 }
