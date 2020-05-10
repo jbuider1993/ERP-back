@@ -12,9 +12,13 @@ public interface IRoleService {
 
     public void updateRole(RoleModel roleMode) throws Exception;
 
-    public void updateMenuLimit(RoleModel roleModel) throws Exception;
+    public RoleModel updateMenuLimit(RoleModel roleModel) throws Exception;
 
     public RoleModel updateAllotUser(RoleModel roleModel) throws Exception;
 
     public void deleteRole(List<String> ids) throws Exception;
+
+    public RoleModel getRoleById(String id) throws Exception;
+
+    public RoleModel getRoleByUserId(String userId) throws Exception;
 }

@@ -68,9 +68,9 @@ public class MenuController {
     }
 
     @RequestMapping(value = "/getAppMenu", method = RequestMethod.GET)
-    public Object getAppMenu() {
+    public Object getAppMenu(String userId) {
         try {
-            Map<String, Object> menus = menuService.getAppMenu();
+            Map<String, Object> menus = menuService.getAppMenu(userId);
             return ResponseUtil.successResponse(menus);
         } catch (Exception e) {
             log.error("MenuController getAllMenu Error: ", e);

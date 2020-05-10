@@ -1,6 +1,8 @@
 package com.kunlun.basedata.service.impl;
 
+import com.kunlun.basedata.model.RoleModel;
 import com.kunlun.basedata.service.IMenuService;
+import com.kunlun.basedata.service.IRoleService;
 import com.kunlun.basedata.utils.CommonUtil;
 import com.kunlun.basedata.dao.IMenuDao;
 import com.kunlun.basedata.model.MenuModel;
@@ -25,6 +27,9 @@ public class MenuService implements IMenuService {
 
     @Autowired
     private IMenuDao menuDao;
+
+    @Autowired
+    private IRoleService roleService;
 
     @Override
     public Page getAllMenu(MenuModel menuModel, int currentPage, int pageSize) throws Exception {
@@ -70,7 +75,7 @@ public class MenuService implements IMenuService {
     @Override
     public void editMenu(MenuModel menuModel) throws Exception {
         menuModel.setModifiedTime(new Date());
-//        menuDao.editMenu(menuModel);
+        menuDao.editMenu(menuModel);
     }
 
     @Override
@@ -79,9 +84,16 @@ public class MenuService implements IMenuService {
     }
 
     @Override
-    public Map<String, Object> getAppMenu() throws Exception {
+    public Map<String, Object> getAppMenu(String userId) throws Exception {
+        Map<String, Object> queryMap = new HashMap<>();
+        if (!ObjectUtils.isEmpty(userId)) {
+            RoleModel roleModel = roleService.getRoleByUserId(userId);
+            String[] menuKeyArray = roleModel.getMenuIds().split(",");
+            queryMap.put("menuKeys", menuKeyArray);
+        }
+
         // 设置菜单
-        List<MenuModel> list = menuDao.getAllMenu(new HashMap<>());
+        List<MenuModel> list = menuDao.getAllMenu(queryMap);
         List<MenuModel> rootMenus = list.stream().filter(obj -> StringUtils.isEmpty(obj.getParentId())).collect(Collectors.toList());
         List<MenuModel> mainMenu = JsonUtil.copyArray(rootMenus, MenuModel.class);
         Map<String, Object> resultMap = new HashMap<String, Object>();

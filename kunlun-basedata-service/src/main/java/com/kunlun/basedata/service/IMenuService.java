@@ -14,5 +14,5 @@ public interface IMenuService {
 
     public void deleteMenu(String[] ids) throws Exception;
 
-    public Map<String, Object> getAppMenu() throws Exception;
+    public Map<String, Object> getAppMenu(String userId) throws Exception;
 }

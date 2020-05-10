@@ -74,4 +74,18 @@
         WHERE id = #{id}
     </select>
 
+    <select id = "getRoleByUserId" parameterType="java.lang.String" resultType = "RoleModel">
+        SELECT
+            id,
+            role_name AS roleName,
+            role_word AS roleWord,
+            status,
+            menu_ids AS menuIds,
+            user_ids AS userIds,
+            create_time AS createTime,
+            modified_time AS modifiedTime
+        FROM t_user_role
+        WHERE POSITION(#{userId} IN user_ids) > 0
+    </select>
+
 </mapper>

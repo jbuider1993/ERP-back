@@ -5,7 +5,9 @@
 
     <select id = "getAllMenu" parameterType="java.util.Map" resultType = "MenuModel">
         SELECT
-		    menu.id, menu.name, menu.key, menu.url, menu.icon, menu.show, menu.carry_token AS carryToken, menu.parent_id AS parentId, menu.long_code AS longCode
+		    menu.id, menu.name, menu.key, menu.url, menu.icon, menu.show,
+		    menu.carry_token AS carryToken, menu.parent_id AS parentId, menu.long_code AS longCode,
+		    menu.create_time AS createTime, menu.modified_time AS modifiedTime
         FROM t_display_menu menu
         WHERE 1 = 1
         <include refid="queryMenuCondition" />
@@ -19,6 +21,12 @@
     </select>
 
     <sql id="queryMenuCondition">
+        <if test="menuKeys != null and menuKeys != ''">
+            AND menu.key IN (
+            <foreach collection="menuKeys" item="item" separator=",">
+                #{item}
+            </foreach>)
+        </if>
         <if test="name != null and name != ''">
             AND menu.name LIKE CONCAT('%', #{name}, '%')
         </if>

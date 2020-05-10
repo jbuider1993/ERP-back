@@ -41,17 +41,21 @@ public class RoleService implements IRoleService {
     }
 
     @Override
-    public void updateRole(RoleModel roleMode) throws Exception {
-        roleDao.updateRole(roleMode);
+    public void updateRole(RoleModel roleModel) throws Exception {
+        roleModel.setModifiedTime(new Date());
+        roleDao.updateRole(roleModel);
     }
 
     @Override
-    public void updateMenuLimit(RoleModel roleModel) throws Exception {
+    public RoleModel updateMenuLimit(RoleModel roleModel) throws Exception {
+        roleModel.setModifiedTime(new Date());
         roleDao.updateMenuLimit(roleModel);
+        return roleDao.getRoleById(roleModel.getId());
     }
 
     @Override
     public RoleModel updateAllotUser(RoleModel roleModel) throws Exception {
+        roleModel.setModifiedTime(new Date());
         roleDao.updateAllotUser(roleModel);
         return roleDao.getRoleById(roleModel.getId());
     }
@@ -59,5 +63,15 @@ public class RoleService implements IRoleService {
     @Override
     public void deleteRole(List<String> ids) throws Exception {
         roleDao.deleteRole(ids);
+    }
+
+    @Override
+    public RoleModel getRoleById(String id) throws Exception {
+        return roleDao.getRoleById(id);
+    }
+
+    @Override
+    public RoleModel getRoleByUserId(String userId) throws Exception {
+        return roleDao.getRoleByUserId(userId);
     }
 }

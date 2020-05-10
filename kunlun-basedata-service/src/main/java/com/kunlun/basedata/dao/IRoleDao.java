@@ -23,4 +23,6 @@ public interface IRoleDao {
     public void deleteRole(List<String> ids) throws Exception;
 
     public RoleModel getRoleById(String id) throws Exception;
+
+    public RoleModel getRoleByUserId(String userId) throws Exception;
 }
