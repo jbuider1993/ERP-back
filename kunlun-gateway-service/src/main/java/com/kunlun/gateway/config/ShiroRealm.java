@@ -1,6 +1,6 @@
 package com.kunlun.gateway.config;
 
-import com.kunlun.gateway.service.ICacheTraceService;
+import com.kunlun.gateway.service.IBasedataService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.shiro.authc.AuthenticationException;
@@ -22,7 +22,7 @@ public class ShiroRealm extends AuthorizingRealm {
     private Logger log = LogManager.getLogger();
 
     @Autowired
-    private ICacheTraceService cacheTraceService;
+    private IBasedataService cacheTraceService;
 
     /**
      * 用户授权，验证某个已认证的用户或其角色是否拥有某个操作权限

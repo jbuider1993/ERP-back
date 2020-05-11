@@ -1,12 +1,13 @@
 package com.kunlun.gateway.service;
 
+import com.kunlun.gateway.service.hystrix.DefaultFallback;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-@FeignClient(name = "kunlun-basedata-service")
-public interface ICacheTraceService {
+@FeignClient(name = "kunlun-basedata-service", fallback = DefaultFallback.class)
+public interface IBasedataService {
     @RequestMapping(value = "/redis/set", method = RequestMethod.POST)
     public Object set(@RequestParam(value = "key") String key, @RequestParam(value = "value") String value, @RequestParam(value = "expire") int expire, @RequestParam(value = "dataBase") int dataBase);
 

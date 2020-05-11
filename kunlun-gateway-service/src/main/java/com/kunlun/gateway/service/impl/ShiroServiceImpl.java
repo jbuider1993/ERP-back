@@ -7,7 +7,7 @@ import com.kunlun.gateway.model.TokenModel;
 import com.kunlun.gateway.utils.CommonUtil;
 import com.kunlun.gateway.utils.JwtTokenUtil;
 import com.kunlun.gateway.model.UserModel;
-import com.kunlun.gateway.service.ICacheTraceService;
+import com.kunlun.gateway.service.IBasedataService;
 import com.kunlun.gateway.service.IShiroService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -27,7 +27,7 @@ public class ShiroServiceImpl implements IShiroService {
     private ShiroConfigModel shiroConfig;
 
     @Autowired
-    private ICacheTraceService cacheTraceService;
+    private IBasedataService cacheTraceService;
 
     @OperatorLogger(type = OperatorLogType.LOGIN, description = "用户登录系统")
     @Override

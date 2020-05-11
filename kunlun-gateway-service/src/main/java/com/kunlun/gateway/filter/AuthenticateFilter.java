@@ -1,11 +1,10 @@
 package com.kunlun.gateway.filter;
 
-import com.kunlun.common.utils.ResponseUtil;
 import com.netflix.zuul.ZuulFilter;
 import com.netflix.zuul.context.RequestContext;
 import com.netflix.zuul.exception.ZuulException;
 import com.kunlun.gateway.model.ShiroConfigModel;
-import com.kunlun.gateway.service.ICacheTraceService;
+import com.kunlun.gateway.service.IBasedataService;
 import com.kunlun.gateway.utils.JwtTokenUtil;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -23,7 +22,7 @@ public class AuthenticateFilter extends ZuulFilter {
     private ShiroConfigModel shiroConfig;
 
     @Autowired
-    private ICacheTraceService cacheTraceService;
+    private IBasedataService basedataService;
 
     @Override
     public String filterType() {
@@ -65,7 +64,7 @@ public class AuthenticateFilter extends ZuulFilter {
             String token = request.getHeader(shiroConfig.getTokenHeader());
             String userName = JwtTokenUtil.getTokenInfo(token, "userName");
             String password = JwtTokenUtil.getTokenInfo(token, "password");
-            Map<String, Object> map = (Map<String, Object>) cacheTraceService.get(token, 1);
+            Map<String, Object> map = (Map<String, Object>) basedataService.get(token, 1);
             String refreshedToken = (String) map.get("data");
             boolean jwt = JwtTokenUtil.verify(refreshedToken, userName, password, shiroConfig.getSecret());
             if (jwt) {
@@ -74,7 +73,7 @@ public class AuthenticateFilter extends ZuulFilter {
                 log.info("token ===>>> " + token);
                 String shiroToken = JwtTokenUtil.sign(userName, password, shiroConfig.getSecret(), shiroConfig.getExpireTime());
                 log.info("update token ===>>> " + shiroToken);
-                cacheTraceService.set(token, shiroToken, shiroConfig.getExpireTime(), 1);
+                basedataService.set(token, shiroToken, shiroConfig.getExpireTime(), 1);
             } else {
                 // Token过期后，前台提示用户，并阻止向下游服务继续调用
                 HttpServletResponse response = context.getResponse();
