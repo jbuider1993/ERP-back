@@ -66,6 +66,32 @@ spring:
     user: ${spring.datasource.username}
     password: ${spring.datasource.password}
 
+zipkin:
+  # zipkin采样频率设置
+  sleuth:
+    enabled: false
+    sampler:
+      percentage: 1.0
+  storage:
+    type: elasticsearch
+    StorageComponent: elasticsearch
+    elasticsearch:
+      cluster: elasticsearch
+      max-requests: 30
+      index: zipkin-es
+      index-shards: 3
+      index-replicas: 1
+      hosts: localhost:9200
+  sender:
+    type: rabbit
+  collector:
+    #rabbitmq配置
+    rabbitmq:
+      addresses: localhost:5672
+      username: guest
+      password: guest
+      queue: zipkin-demo
+
 mybatis:
   mapper-locations: classpath:mapper/*.xml
   type-aliases-package: com.kunlun.basedata.model

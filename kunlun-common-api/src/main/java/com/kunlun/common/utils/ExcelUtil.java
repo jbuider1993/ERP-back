@@ -17,7 +17,7 @@ import java.util.List;
 
 public class ExcelUtil {
 
-    private static final int HEADER_HEIGHT = 30;
+    private static final int HEADER_HEIGHT = 25;
 
     private static final int CELL_HEIGHT = 20;
 
@@ -107,7 +107,7 @@ public class ExcelUtil {
         XSSFFont CellFont = workbook.createFont();
         CellFont.setFontName("宋体_GB2312");
         CellFont.setBoldweight(XSSFFont.BOLDWEIGHT_NORMAL);
-        CellFont.setFontHeightInPoints((short) 12);
+        CellFont.setFontHeightInPoints((short) 11);
         cellStyle.setFont(CellFont);
     }
 
@@ -126,7 +126,7 @@ public class ExcelUtil {
         XSSFFont headerFont = workbook.createFont();
         headerFont.setFontName("宋体_GB2312");
         headerFont.setBoldweight(XSSFFont.BOLDWEIGHT_NORMAL);
-        headerFont.setFontHeightInPoints((short) 15);
+        headerFont.setFontHeightInPoints((short) 12);
         headerStyle.setFont(headerFont);
     }
 
