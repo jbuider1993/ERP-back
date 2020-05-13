@@ -88,8 +88,10 @@ public class MenuService implements IMenuService {
         Map<String, Object> queryMap = new HashMap<>();
         if (!ObjectUtils.isEmpty(userId)) {
             RoleModel roleModel = roleService.getRoleByUserId(userId);
-            String[] menuKeyArray = roleModel.getMenuIds().split(",");
-            queryMap.put("menuKeys", menuKeyArray);
+            if (!ObjectUtils.isEmpty(roleModel)) {
+                String[] menuKeyArray = roleModel.getMenuIds().split(",");
+                queryMap.put("menuKeys", menuKeyArray);
+            }
         }
 
         // 设置菜单
