@@ -39,7 +39,9 @@ spring:
     publisher-returns: true
 
 # Feign配置
-feign.hystrix.enabled: true
+feign:
+  hystrix:
+    enabled: true
 
 # hystrix熔断配置
 hystrix:
@@ -65,7 +67,7 @@ management:
   endpoints:
     web:
       exposure:
-        include: "*,hystrix.stream"
+        include: "*"
   endpoint:
     health:
       show-details: ALWAYS

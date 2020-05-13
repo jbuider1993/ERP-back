@@ -35,6 +35,14 @@ zuul:
       serviceId: kunlun-system-service
   ignored-headers: Access-Control-Allow-Credentials, Access-Control-Allow-Origin
 
+turbine:
+  # 配置 Eureka 中的 serviceId 列表，指定要监控的服务
+  app-config: kunlun-gateway-service, kunlun-basedata-service, kunlun-system-service
+  aggregator:
+    cluster-config: default
+  # 指定集群名称
+  cluster-name-expression: "'default'"
+
 ribbon:
   # 饥饿加载，防止懒加载时第一次请求超时而失败
   eager-load:

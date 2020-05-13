@@ -1,7 +1,7 @@
-package com.kunlun.gateway.controller;
+package com.kunlun.system.controller;
 
 import com.kunlun.common.utils.ResponseUtil;
-import com.kunlun.gateway.service.IBasedataService;
+import com.kunlun.system.service.IBasedataService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
