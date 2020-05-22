@@ -64,16 +64,19 @@ public class AuthenticateFilter extends ZuulFilter {
             String token = request.getHeader(shiroConfig.getTokenHeader());
             String userName = JwtTokenUtil.getTokenInfo(token, "userName");
             String password = JwtTokenUtil.getTokenInfo(token, "password");
-            Map<String, Object> map = (Map<String, Object>) basedataService.get(token, 1);
+            String loginTime = JwtTokenUtil.getTokenInfo(token, "loginTime");
+            String redisKey = userName + "_" + loginTime;
+            Map<String, Object> map = (Map<String, Object>) basedataService.get(redisKey, 1);
             String refreshedToken = (String) map.get("data");
             boolean jwt = JwtTokenUtil.verify(refreshedToken, userName, password, shiroConfig.getSecret());
             if (jwt) {
                 // 用户在线操作，Token续期
                 // 此处不能刷新即续期token，否则新的token无法传递到前台，无法保持全局一致；此处不能校验token是否有效，因刷新或续期token无法处理
                 log.info("token ===>>> " + token);
-                String shiroToken = JwtTokenUtil.sign(userName, password, shiroConfig.getSecret(), shiroConfig.getExpireTime());
+                String shiroToken = JwtTokenUtil.sign(userName, password, loginTime, shiroConfig.getSecret(), shiroConfig.getExpireTime());
                 log.info("update token ===>>> " + shiroToken);
-                basedataService.set(token, shiroToken, shiroConfig.getExpireTime(), 1);
+                System.out.println("handleLogin loginTime ===>>> " + loginTime);
+                basedataService.set(redisKey, shiroToken, shiroConfig.getExpireTime(), 1);
             } else {
                 // Token过期后，前台提示用户，并阻止向下游服务继续调用
                 HttpServletResponse response = context.getResponse();

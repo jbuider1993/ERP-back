@@ -36,8 +36,8 @@ public class OnlineUserController {
     @RequestMapping(value = "/addOnlineUser", method = RequestMethod.POST)
     public Object addOnlineUser(HttpServletRequest request, String userName) {
         try {
-            onlineUserService.addOnlineUser(request, userName);
-            return ResponseUtil.successResponse("success");
+            OnlineUserModel onlineUserModel = onlineUserService.addOnlineUser(request, userName);
+            return ResponseUtil.successResponse(onlineUserModel);
         } catch (Exception e) {
             log.error("OnlineUserController addOnlineUser Error: ", e);
             return ResponseUtil.failedResponse("新增在线用户失败！", e.getMessage());

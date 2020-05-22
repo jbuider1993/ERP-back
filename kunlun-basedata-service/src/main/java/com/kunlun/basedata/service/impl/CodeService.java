@@ -43,6 +43,8 @@ public class CodeService implements ICodeService {
 
     private Random random = new Random();
 
+    private Integer[][] colorSequence = {{0, 0, 0}, {255, 97, 0}, {65, 105, 225}, {56, 94, 15}, {0, 201, 87}, {255, 0, 0}, {255, 0, 255}, {0, 0, 255}, {0, 255, 0}};
+
     /**
      * 随机字符字典
      */
@@ -108,7 +110,6 @@ public class CodeService implements ICodeService {
 
         // randomCode用于保存随机产生的验证码，以便用户登录后进行验证。
         StringBuffer randomCode = new StringBuffer();
-        int red = 0, green = 0, blue = 0;
 
         // 随机产生codeCount数字的验证码。
         for (int i = 0; i < codeCount; i++) {
@@ -116,11 +117,12 @@ public class CodeService implements ICodeService {
             String code = String.valueOf(codeSequence[random.nextInt(54)]);
 
             // 产生随机的颜色分量来构造颜色值，这样输出的每位数字的颜色值都将不同。
-            red = random.nextInt(255);
-            green = random.nextInt(255);
-            blue = random.nextInt(255);
-
-            // 用随机产生的颜色将验证码绘制到图像中。
+            // 用随机产生的颜色将验证码绘制到图像中
+            int index = random.nextInt(9);
+            Integer[] colorArray = colorSequence[index];
+            int red = colorArray[0];
+            int green = colorArray[1];
+            int blue = colorArray[2];
             gd.setColor(new Color(red, green, blue));
             gd.drawString(code, i * xx + (i + 1) * 6, codeY);
 

@@ -49,11 +49,17 @@
         VALUES
             (#{id}, #{loginName}, #{loginIp}, #{loginAddress}, #{usedBrowser},
             #{usedWindow}, #{online}, #{loginTime}, #{lastTime})
-        ON CONFLICT (login_name) DO
-        UPDATE SET
-            login_ip = #{loginIp}, login_address = #{loginAddress}, used_browser = #{usedBrowser},
-            used_window = #{usedWindow}, online = #{online}, login_time = #{loginTime}
     </insert>
+
+<!--    INSERT INTO t_online_user-->
+<!--    (id, login_name, login_ip, login_address, used_browser, used_window, online, login_time, last_time)-->
+<!--    VALUES-->
+<!--    (#{id}, #{loginName}, #{loginIp}, #{loginAddress}, #{usedBrowser},-->
+<!--    #{usedWindow}, #{online}, #{loginTime}, #{lastTime})-->
+<!--    ON CONFLICT (login_name) DO-->
+<!--    UPDATE SET-->
+<!--    login_ip = #{loginIp}, login_address = #{loginAddress}, used_browser = #{usedBrowser},-->
+<!--    used_window = #{usedWindow}, online = #{online}, login_time = #{loginTime}-->
 
     <update id="updateOnlineUser" parameterType="OnlineUserModel">
         UPDATE t_online_user SET

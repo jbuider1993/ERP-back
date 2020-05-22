@@ -42,7 +42,7 @@ public class OnlineUserService implements IOnlineUserService {
     }
 
     @Override
-    public void addOnlineUser(HttpServletRequest request, String userName) throws Exception {
+    public OnlineUserModel addOnlineUser(HttpServletRequest request, String userName) throws Exception {
         // 获取登录IP地址、登录所在城市及经纬度坐标
         String ipAddr = AddressUtil.getIpAddr(request);
         if (!AddressUtil.verifyIP(ipAddr)) {
@@ -69,6 +69,7 @@ public class OnlineUserService implements IOnlineUserService {
         model.setLoginTime(new Date());
         model.setLastTime(new Date());
         onlineDao.addOnlineUser(model);
+        return model;
     }
 
     @Override

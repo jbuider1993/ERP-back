@@ -64,11 +64,11 @@ public class JwtTokenUtil {
      * @param userName 用户名
      * @return 加密的token
      */
-    public static String sign(String userName, String password, String secret, Integer expireTime) {
+    public static String sign(String userName, String password, String loginTime, String secret, Integer expireTime) {
         Date date = new Date(System.currentTimeMillis() + expireTime);
         Algorithm algorithm = Algorithm.HMAC256(secret);
 
         // 附带username、password及过期时长信息
-        return JWT.create().withClaim("userName", userName).withClaim("password", password).withExpiresAt(date).sign(algorithm);
+        return JWT.create().withClaim("userName", userName).withClaim("password", password).withClaim("loginTime", loginTime).withExpiresAt(date).sign(algorithm);
     }
 }
