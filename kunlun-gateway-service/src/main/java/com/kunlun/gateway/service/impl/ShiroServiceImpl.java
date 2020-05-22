@@ -32,8 +32,9 @@ public class ShiroServiceImpl implements IShiroService {
     @Override
     public TokenModel handleLogin(String userName, String password) throws Exception {
         // 处理在线用户
+        System.out.println("===== ShiroServiceImpl handleLogin =====");
         Object onlineUserObj = basedataService.addOnlineUser(userName);
-        System.out.println(String.format("===== %s =====", userName));
+        System.out.println(String.format("===== handleLogin addOnlineUser %s =====", userName));
 
         // 登录用户基本信息
         Object userObj = basedataService.getUserByUserName(userName);
@@ -49,16 +50,16 @@ public class ShiroServiceImpl implements IShiroService {
         userModel.setModifiedTime(dateFormat.parse(((LinkedHashMap)obj).get("modifiedTime").toString().replace("T", " ")));
 
         // 生成Token
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd hh-mm-ss");
+        SimpleDateFormat format = new SimpleDateFormat("YYYY-MM-dd-HH-mm-ss");
         Object onlineObj = ((LinkedHashMap)onlineUserObj).get("data");
         Date loginTime = dateFormat.parse(((LinkedHashMap)onlineObj).get("loginTime").toString().replace("T", " "));
         String loginTimeKey = format.format(loginTime);
-        System.out.println("handleLogin loginTimeKey ===>>> " + loginTimeKey);
         String shiroToken = JwtTokenUtil.sign(userName, password, loginTimeKey, shiroConfig.getSecret(), shiroConfig.getExpireTime());
         TokenModel tokenModel = new TokenModel(shiroToken, userModel);
 
         // 缓存token到redis
         String redisKey = userName + "_" + loginTimeKey;
+        System.out.println(String.format("===== handleLogin redisKey %s =====", redisKey));
         basedataService.set(redisKey, shiroToken, shiroConfig.getExpireTime(), 1);
         return tokenModel;
     }

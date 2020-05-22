@@ -33,6 +33,7 @@ public class ShiroController {
             subject.login(token);
 
             // 处理登录用户
+            System.out.println("===== ShiroController login =====");
             TokenModel tokenModel = shiroService.handleLogin(userName, password);
             return ResponseUtil.successResponse(tokenModel);
         } catch (Exception e) {

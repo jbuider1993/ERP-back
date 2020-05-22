@@ -75,7 +75,7 @@ public class AuthenticateFilter extends ZuulFilter {
                 log.info("token ===>>> " + token);
                 String shiroToken = JwtTokenUtil.sign(userName, password, loginTime, shiroConfig.getSecret(), shiroConfig.getExpireTime());
                 log.info("update token ===>>> " + shiroToken);
-                System.out.println("handleLogin loginTime ===>>> " + loginTime);
+                System.out.println(String.format("===== AuthenticateFilter redisKey %s =====", redisKey));
                 basedataService.set(redisKey, shiroToken, shiroConfig.getExpireTime(), 1);
             } else {
                 // Token过期后，前台提示用户，并阻止向下游服务继续调用

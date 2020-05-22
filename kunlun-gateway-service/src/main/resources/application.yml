@@ -18,8 +18,10 @@ zuul:
   #是否开启路由重试
   retryable: true
   host:
-    socket-timeout-millis: 300000
-    connect-timeout-millis: 300000
+    max-total-connections: 200
+    max-per-route-connections: 20
+    socket-timeout-millis: 10000
+    connect-timeout-millis: 10000
   routes:
     register:
       path: /kunlun-register-service/**
@@ -50,13 +52,13 @@ ribbon:
     clients: kunlun-basedata-service, kunlun-system-service
   eureka:
     enabled: true
-  ReadTimeout: 300000
-  ConnectTimeout: 300000
-  SocketTimeout: 300000
+  ReadTimeout: 10000
+  ConnectTimeout: 10000
+  SocketTimeout: 10000
   #对当前实例的重试次数
   MaxAutoRetries: 1
   #切换实例的重试次数
-  MaxAutoRetriesNextServer: 1
+#  MaxAutoRetriesNextServer: 1
   #对所有操作请求都进行重试
   OkToRetryOnAllOperations: true
 
