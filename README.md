@@ -7,11 +7,46 @@
 </p>
 
 #### 系统介绍
-昆仑管理系统基于前后端分离架构，通过Apache Shiro与Jwt组件，用token进行数据交互认证，可快速开发并独立进行Docker容器化部署。
+昆仑管理系统是一套基于前后端分离架构的后台管理系统。kunlun-web 基于React + Umi(乌米) + Ant Design (蚂蚁金服) 构建开发，提供前端解决方案；kunlun-service 基于 SpringBoot 与 Spring Cloud 构建开发，提供后端基于微服务架构的解决方案。系统通过Apache Shiro与Jwt组件，用token进行数据交互认证，可快速开发并独立进行Docker容器化部署。
 
-kunlun-web 基于React + Umi(乌米) + Ant Design (蚂蚁金服) 构建开发，提供前端解决方案，其中kunlun-home-web为前端框架，主要负责登录页面、业务菜单、消息待办、主题皮肤等信息的展示；kunlun-system-web为前端业务服务，主要用于展示各个菜单的业务功能页面，如首页信息、人员管理、用户地图、流程管理、操作日志、事项日程、服务资源管理、菜单管理等。
-
-kunlun-service 基于 SpringBoot 与 Spring Cloud 构建开发，提供后端基于微服务架构的解决方案，其中kunlun-common-api为公共模块，提供公共基础模型、工具、自动配置等，kunlun-register-service为服务治理模块，提供服务注册、服务发现、服务心跳检测及高级消息队列等，kunlun-gateway-service为服务网关模块，提供服务路由及分布式服务配置中心等，kunlun-basedata-service为基础数据模块，提供基础数据支持，如菜单、角色、权限等，并提供分布式缓存功能等，kunlun-system-service为业务服务模块，提供业务功能支持服务。
+系统模块主要功能（kunlun-web包括kunlun-home-web和kunlun-system-web，kunlun-service包括：kunlun-common-api、kunlun-register-service、kunlun-gateway-service、kunlun-basedata-service和kunlun-system-service）：
+<table>
+    <tr>
+        <td>kunlun-common-api</td>
+        <td>公共模块</td>
+        <td>提供公共基础模型、工具、自动配置、统一异常处理、统一Swagger配置及操作日志AOP等等</td>
+    </tr>
+    <tr>
+        <td>kunlun-register-service</td>
+        <td>服务治理</td>
+        <td>服务注册、服务发现、服务心跳检测、高级消息队列(RabbitMQ)及分布式配置中心等</td>
+    </tr>
+    <tr>
+        <td>kunlun-gateway-service</td>
+        <td>网关服务</td>
+        <td>服务路由、登录用户校验、鉴权及生成Token、Hystrix的turbine模式配置及Swagger路由配置等</td>
+    </tr>
+    <tr>
+        <td>kunlun-basedata-service</td>
+        <td>基础数据</td>
+        <td>提供基础数据支持，如菜单、角色、权限等，并提供基于Redis的分布式缓存功能、基于ElasticSearch + RabbitMQ的服务调用追踪、资源爬取等</td>
+    </tr>
+    <tr>
+        <td>kunlun-system-service</td>
+        <td>业务服务</td>
+        <td>业务功能支持服务，提供业务数据、动态数据源、脚本自动执行及基于RabbitMQ的异步操作日志生成功能</td>
+    </tr>
+    <tr>
+        <td>kunlun-home-web</td>
+        <td>前端框架</td>
+        <td>提供登录页面、业务菜单、消息待办、主题皮肤、登录人信息及项目布局等</td>
+    </tr>
+    <tr>
+        <td>kunlun-system-web</td>
+        <td>前端业务</td>
+        <td>展示系统业务数据及功能页面，如首页信息、人员管理、用户地图、流程管理、操作日志、事项日程、服务资源管理、菜单管理等</td>
+    </tr>
+</table>
 
 
 #### 软件架构
