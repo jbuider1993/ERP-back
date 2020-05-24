@@ -1,5 +1,7 @@
 package com.kunlun.basedata.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import java.util.Date;
 
 public class UserModel {
@@ -9,7 +11,9 @@ public class UserModel {
     private String sex;
     private String phoneNumber;
     private String email;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date createTime;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date modifiedTime;
 
     public String getId() {

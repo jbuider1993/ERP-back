@@ -3,6 +3,7 @@ package com.kunlun.gateway.controller;
 import com.kunlun.common.utils.ResponseUtil;
 import com.kunlun.gateway.model.TokenModel;
 import com.kunlun.gateway.service.IShiroService;
+import com.netflix.zuul.context.RequestContext;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.shiro.SecurityUtils;
@@ -25,7 +26,7 @@ public class ShiroController {
     private IShiroService shiroService;
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)
-    public Object login(HttpServletRequest request, String userName, String password, String code) {
+    public Object login(HttpServletRequest request, String userName, String password) {
         try {
             // url过滤及认证
             Subject subject = SecurityUtils.getSubject();
@@ -33,7 +34,6 @@ public class ShiroController {
             subject.login(token);
 
             // 处理登录用户
-            System.out.println("===== ShiroController login =====");
             TokenModel tokenModel = shiroService.handleLogin(userName, password);
             return ResponseUtil.successResponse(tokenModel);
         } catch (Exception e) {
@@ -43,7 +43,7 @@ public class ShiroController {
     }
 
     @RequestMapping(value = "/logout", method = RequestMethod.GET)
-    public Object logout(HttpServletRequest request, String userName, String password) {
+    public Object logout(HttpServletRequest request, String userName) {
         try {
             Subject subject = SecurityUtils.getSubject();
             subject.logout();

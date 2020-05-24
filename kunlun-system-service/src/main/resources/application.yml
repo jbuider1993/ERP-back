@@ -72,7 +72,7 @@ spring:
   mail:
     host: smtp.126.com
     username: sjxue126@126.com
-    password: xxxxxxxxxxx
+    password: xxxxxxxxxx
     default-encoding: UTF-8
   flyway:
     # 是否开启flywary，默认true
@@ -105,6 +105,23 @@ spring:
     url: ${spring.datasource.master.url}
     user: ${spring.datasource.master.username}
     password: ${spring.datasource.master.password}
+
+ribbon:
+  # 饥饿加载，防止懒加载时第一次请求超时而失败
+  eager-load:
+    enabled: true
+    clients: kunlun-basedata-service
+  eureka:
+    enabled: true
+  ReadTimeout: 10000
+  ConnectTimeout: 10000
+  SocketTimeout: 10000
+  #对当前实例的重试次数
+  MaxAutoRetries: 1
+  #切换实例的重试次数
+  #  MaxAutoRetriesNextServer: 1
+  #对所有操作请求都进行重试
+  OkToRetryOnAllOperations: true
 
 mybatis:
   mapper-locations: classpath:mapper/*Mapper.xml

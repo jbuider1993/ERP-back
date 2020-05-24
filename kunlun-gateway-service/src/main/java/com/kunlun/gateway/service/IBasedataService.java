@@ -15,6 +15,9 @@ public interface IBasedataService {
     @RequestMapping(value = "/redis/get", method = RequestMethod.GET)
     public Object get(@RequestParam(value = "key") String key, @RequestParam(value = "dataBase") int dataBase);
 
+    @RequestMapping(value = "/redis/del", method = RequestMethod.POST)
+    public Object del(@RequestParam(value = "key") String key, @RequestParam(value = "dataBase") int dataBase);
+
     @RequestMapping(value = "/user/getUserInfo", method = RequestMethod.GET)
     public Object getUserByUserName(@RequestParam(value = "userName") String userName);
 
@@ -22,5 +25,5 @@ public interface IBasedataService {
     public Object addOnlineUser(@RequestParam(value = "userName") String userName);
 
     @RequestMapping(value = "/onlineUser/updateOnlineUser", method = RequestMethod.POST)
-    public Object updateOnlineUser(@RequestParam(value = "userName") String userName);
+    public Object updateOnlineUser(@RequestParam(value = "userName") String userName, @RequestParam(value = "loginTime") String loginTime);
 }

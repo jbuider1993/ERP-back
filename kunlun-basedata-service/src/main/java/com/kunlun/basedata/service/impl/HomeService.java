@@ -23,18 +23,21 @@ public class HomeService implements IHomeService {
 
     @Override
     public HomeCountModel getUserCount() throws Exception {
-        // 注册用户数
-        int userCount = userDao.getUsersCount(new HashMap<>());
+        // 总访问量
+        HashMap<String, Object> newMap = new HashMap<>();
+        int userCount = onlineDao.getOnlinesCount(newMap);
 
         // 在线用户数
         Map<String, Object> queryMap = new HashMap<>();
         queryMap.put("online", "true");
         int onlineCount = onlineDao.getOnlinesCount(queryMap);
 
-        // 用户数统计返回
+        // 最近一个月内访问量
+        int leastMonthCount = onlineDao.getCountLeastMonth(newMap);
         HomeCountModel countModel = new HomeCountModel();
         countModel.setUserCount(userCount);
         countModel.setOnlineCount(onlineCount);
+        countModel.setLeastCount(leastMonthCount);
         return countModel;
     }
 }

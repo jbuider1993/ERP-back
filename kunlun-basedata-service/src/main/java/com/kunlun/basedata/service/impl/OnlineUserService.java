@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpServletRequest;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Map;
 
@@ -19,11 +20,7 @@ import java.util.Map;
 @Transactional
 public class OnlineUserService implements IOnlineUserService {
 
-    @Value("${online.ip}")
-    private String ip;
-
-    @Value("${online.address}")
-    private String address;
+    private SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss:SSS");
 
     @Autowired
     private IOnlineDao onlineDao;
@@ -45,26 +42,21 @@ public class OnlineUserService implements IOnlineUserService {
     public OnlineUserModel addOnlineUser(HttpServletRequest request, String userName) throws Exception {
         // 获取登录IP地址、登录所在城市及经纬度坐标
         String ipAddr = AddressUtil.getIpAddr(request);
-        if (!AddressUtil.verifyIP(ipAddr)) {
-            ipAddr = ip;
-        }
-
-        // 校验IP及地址
         String addr = AddressUtil.getRealAddressByIP(ipAddr);
-        if (!AddressUtil.verifyAddress(addr)) {
-            addr = address;
-        }
+
         Map<String, String> addressMap = AddressUtil.getAddressInfoByAmap(addr);
+        String browserInfo = CommonUtil.getRequestBrowserInfo(request);
+        String systemInfo = CommonUtil.getRequestSystemInfo(request);
 
         // 处理在线用户
         OnlineUserModel model = new OnlineUserModel();
         model.setId(CommonUtil.generateUUID());
         model.setLoginName(userName);
-        model.setLoginIp(ip);
-        model.setLoginAddress(address);
+        model.setLoginIp(ipAddr);
+        model.setLoginAddress(addr);
         model.setLocation(addressMap.get("address"));
-        model.setUsedBrowser(CommonUtil.getRequestBrowserInfo(request));
-        model.setUsedWindow(CommonUtil.getRequestSystemInfo(request));
+        model.setUsedBrowser(browserInfo);
+        model.setUsedWindow(systemInfo);
         model.setOnline(true);
         model.setLoginTime(new Date());
         model.setLastTime(new Date());
@@ -73,12 +65,16 @@ public class OnlineUserService implements IOnlineUserService {
     }
 
     @Override
-    public void updateOnlineUser(String userName) throws Exception {
-        // 处理在线用户
+    public void updateOnlineUser(String userName, String loginTime) throws Exception {
+        String time = dateFormat.format(new Date());
+        Date date = dateFormat.parse(time);
+        SimpleDateFormat format = new SimpleDateFormat("yyyyMMddHHmmssSSS");
+
         OnlineUserModel model = new OnlineUserModel();
         model.setLoginName(userName);
         model.setOnline(false);
-        model.setLastTime(new Date());
+        model.setLastTime(date);
+        model.setLoginTime(format.parse(loginTime));
         onlineDao.updateOnlineUser(model);
     }
 }

@@ -12,6 +12,8 @@ public interface IOnlineDao {
 
     public int getOnlinesCount(Map<String, Object> queryMap) throws Exception;
 
+    public int getCountLeastMonth(Map<String, Object> queryMap) throws Exception;
+
     public void addOnlineUser(OnlineUserModel onlineUserModel) throws Exception;
 
     public void updateOnlineUser(OnlineUserModel onlineUserModel) throws Exception;

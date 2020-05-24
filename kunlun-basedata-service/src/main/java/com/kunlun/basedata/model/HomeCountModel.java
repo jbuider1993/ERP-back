@@ -7,6 +7,8 @@ public class HomeCountModel {
 
     private int onlineCount;
 
+    private int leastCount;
+
     public String getId() {
         return id;
     }
@@ -29,5 +31,13 @@ public class HomeCountModel {
 
     public void setOnlineCount(int onlineCount) {
         this.onlineCount = onlineCount;
+    }
+
+    public int getLeastCount() {
+        return leastCount;
+    }
+
+    public void setLeastCount(int leastCount) {
+        this.leastCount = leastCount;
     }
 }

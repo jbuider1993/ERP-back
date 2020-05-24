@@ -40,6 +40,17 @@ public class RedisController {
         }
     }
 
+    @RequestMapping(value = "/del", method = RequestMethod.POST)
+    public Object del(String key, int dataBase) {
+        try {
+            jedisService.del(key, dataBase);
+            return ResponseUtil.successResponse("success");
+        } catch (Exception e) {
+            log.error("RedisController del Error: ", e);
+            return ResponseUtil.failedResponse("删除redis的Key失败！", e.getMessage());
+        }
+    }
+
     @RequestMapping(value = "/hSet", method = RequestMethod.POST)
     public Object hSet(String key, String value, String hash, int expire, int dataBase) {
         try {

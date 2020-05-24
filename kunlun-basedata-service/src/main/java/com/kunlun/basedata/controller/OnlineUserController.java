@@ -45,9 +45,9 @@ public class OnlineUserController {
     }
 
     @RequestMapping(value = "/updateOnlineUser", method = RequestMethod.POST)
-    public Object updateOnlineUser(String userName) {
+    public Object updateOnlineUser(String userName, String loginTime) {
         try {
-            onlineUserService.updateOnlineUser(userName);
+            onlineUserService.updateOnlineUser(userName, loginTime);
             return ResponseUtil.successResponse("success");
         } catch (Exception e) {
             log.error("OnlineUserController updateOnlineUser Error: ", e);

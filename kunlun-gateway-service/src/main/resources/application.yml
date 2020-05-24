@@ -26,15 +26,24 @@ zuul:
     register:
       path: /kunlun-register-service/**
       serviceId: kunlun-register-service
+      # 不过滤Header中的Authorization或Token
+      sensitive-headers:
+      custom-sensitive-headers: true
     gateway:
       path: /kunlun-gateway-service/**
       serviceId: kunlun-gateway-service
+      sensitive-headers:
+      custom-sensitive-headers: true
     basedata:
       path: /kunlun-basedata-service/**
       serviceId: kunlun-basedata-service
+      sensitive-headers:
+      custom-sensitive-headers: true
     system:
       path: /kunlun-system-service/**
       serviceId: kunlun-system-service
+      sensitive-headers:
+      custom-sensitive-headers: true
   ignored-headers: Access-Control-Allow-Credentials, Access-Control-Allow-Origin
 
 turbine:

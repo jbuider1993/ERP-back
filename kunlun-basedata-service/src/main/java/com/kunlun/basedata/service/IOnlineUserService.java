@@ -10,5 +10,5 @@ public interface IOnlineUserService {
 
     public OnlineUserModel addOnlineUser(HttpServletRequest request, String userName) throws Exception;
 
-    public void updateOnlineUser(String userName) throws Exception;
+    public void updateOnlineUser(String userName, String loginTime) throws Exception;
 }

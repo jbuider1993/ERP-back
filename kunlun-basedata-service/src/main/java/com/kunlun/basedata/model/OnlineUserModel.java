@@ -1,5 +1,8 @@
 package com.kunlun.basedata.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.util.Date;
 
 public class OnlineUserModel {
@@ -11,7 +14,11 @@ public class OnlineUserModel {
     private String usedBrowser;
     private String usedWindow;
     private boolean online;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss:SSS", timezone = "GMT+8")
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss:SSS")
     private Date loginTime;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss:SSS", timezone = "GMT+8")
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss:SSS")
     private Date lastTime;
 
     public String getId() {
