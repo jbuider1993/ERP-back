@@ -9,7 +9,7 @@
 #### 系统介绍
 昆仑管理系统是一套基于前后端分离架构的后台管理系统。kunlun-web 基于React + Umi(乌米) + Ant Design (蚂蚁金服) 构建开发，提供前端解决方案；kunlun-service 基于 SpringBoot 与 Spring Cloud 构建开发，提供后端基于微服务架构的解决方案。系统通过Apache Shiro与Jwt组件，用token进行数据交互认证，可快速开发并独立进行Docker容器化部署。
 
-项目模块主要功能（kunlun-web包括kunlun-home-web和kunlun-system-web，kunlun-service包括：kunlun-common-api、kunlun-register-service、kunlun-gateway-service、kunlun-basedata-service和kunlun-system-service）：
+系统模块主要功能（kunlun-web包括kunlun-home-web和kunlun-system-web，kunlun-service包括：kunlun-common-api、kunlun-register-service、kunlun-gateway-service、kunlun-basedata-service和kunlun-system-service）：
 <table>
     <tr>
         <td>kunlun-common-api</td>
