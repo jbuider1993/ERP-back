@@ -27,7 +27,7 @@ public class CodeService implements ICodeService {
     private static int width = 100;
 
     // 定义图片的height
-    private static int height = 30;
+    private static int height = 33;
 
     // 定义图片上显示验证码的个数
     private static int codeCount = 4;
