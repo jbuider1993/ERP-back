@@ -15,7 +15,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Map;
 
-public class AuthenticateFilter extends ZuulFilter {
+/**
+ * zuul过滤器
+ */
+public class GateWayFilter extends ZuulFilter {
     private Logger log = LogManager.getLogger();
 
     @Autowired
@@ -46,7 +49,7 @@ public class AuthenticateFilter extends ZuulFilter {
 
     @Override
     public Object run() throws ZuulException {
-        log.info("Start AuthenticateFilter run!");
+        log.info("Start GateWayFilter run!");
 
         try {
             // 获取请求的上下文类
@@ -84,7 +87,7 @@ public class AuthenticateFilter extends ZuulFilter {
                 log.info("离开时间太长，请重新登录！");
             }
         } catch (Exception e) {
-            log.error("AuthenticateFilter run Error: ", e);
+            log.error("GateWayFilter run Error: ", e);
         }
         return null;
     }

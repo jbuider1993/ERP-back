@@ -22,7 +22,7 @@ public class ShiroRealm extends AuthorizingRealm {
     private Logger log = LogManager.getLogger();
 
     @Autowired
-    private IBasedataService cacheTraceService;
+    private IBasedataService basedataService;
 
     /**
      * 用户授权，验证某个已认证的用户或其角色是否拥有某个操作权限
@@ -54,7 +54,7 @@ public class ShiroRealm extends AuthorizingRealm {
             // 获取用户、密码
             String userName = authToken.getPrincipal().toString();
             String password = new String((char[])authToken.getCredentials());
-            Object obj = cacheTraceService.getUserByUserName(userName);
+            Object obj = basedataService.getUserByUserName(userName);
             Map map = (Map) ((LinkedHashMap)obj).get("data");
             if (ObjectUtils.isEmpty(map)) {
                 throw new AuthenticationException("用户不存在！");

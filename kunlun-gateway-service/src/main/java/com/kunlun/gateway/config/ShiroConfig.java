@@ -1,12 +1,13 @@
 package com.kunlun.gateway.config;
 
-import com.kunlun.gateway.filter.JwtFilter;
+import com.kunlun.gateway.filter.ShiroFilter;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
 import org.apache.shiro.mgt.DefaultSessionStorageEvaluator;
 import org.apache.shiro.mgt.DefaultSubjectDAO;
 import org.apache.shiro.mgt.SecurityManager;
+import org.apache.shiro.mgt.SessionsSecurityManager;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
 import org.springframework.context.annotation.Bean;
@@ -27,26 +28,26 @@ public class ShiroConfig {
         ShiroFilterFactoryBean factoryBean = new ShiroFilterFactoryBean();
         factoryBean.setSecurityManager(manager);
 
-        // 添加自己的过滤器并且取名为jwt
+        // 添加自己的过滤器并且取名为shiro
         Map<String, Filter> filterMap = new HashMap<String, Filter>(1);
-        filterMap.put("jwt", new JwtFilter());
+        filterMap.put("shiro", new ShiroFilter());
         factoryBean.setFilters(filterMap);
 
         // 自定义url规则，即添加自定义拦截器
         Map<String, String> filterRuleMap = new HashMap<>();
 
-        // 访问 /unauthorized/** 不通过JWTFilter，其中anon是Filter，还有authc表示需要认证过滤
+        // 访问 /unauthorized/** 不通过ShiroFilter，其中anon是Filter，还有authc表示需要认证过滤
         filterRuleMap.put("/unauthorized/**", "anon");
 
-        // 所有请求通过我们自己的JWT Filter
-        filterRuleMap.put("/**", "jwt");
+        // 所有请求通过我们自己的ShiroFilter
+        filterRuleMap.put("/**", "shiro");
 
         factoryBean.setFilterChainDefinitionMap(filterRuleMap);
         return factoryBean;
     }
 
     @Bean
-    public SecurityManager securityManager() {
+    public SessionsSecurityManager securityManager() {
         log.info("Start ShiroConfig securityManager!");
         DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
         securityManager.setRealm(customRealm());

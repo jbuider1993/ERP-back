@@ -1,9 +1,15 @@
 package com.kunlun.gateway.filter;
 
+import com.kunlun.gateway.model.ShiroConfigModel;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.shiro.web.filter.authc.BasicHttpAuthenticationFilter;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Bean;
+import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
+import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.servlet.ServletRequest;
@@ -12,9 +18,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * jwt过滤器，认证token
+ * shiro过滤器，认证token
  */
-public class JwtFilter extends BasicHttpAuthenticationFilter {
+public class ShiroFilter extends BasicHttpAuthenticationFilter {
 
     private Logger log = LogManager.getLogger();
 
@@ -23,18 +29,18 @@ public class JwtFilter extends BasicHttpAuthenticationFilter {
      */
     @Override
     protected boolean isAccessAllowed(ServletRequest request, ServletResponse response, Object mappedValue) {
-        log.info("Start JwtFilter isAccessAllowed");
+        log.info("Start ShiroFilter isAccessAllowed");
         try {
             return executeLogin(request, response);
         } catch (Exception e) {
-            log.error("JwtFilter isAccessAllowed Error: ", e);
+            log.error("ShiroFilter isAccessAllowed Error: ", e);
             return false;
         }
     }
 
     @Override
     protected boolean executeLogin(ServletRequest request, ServletResponse response) throws Exception {
-        log.info("Start JwtFilter executeLogin");
+        log.info("Start ShiroFilter executeLogin");
         return true;
     }
 
@@ -43,7 +49,7 @@ public class JwtFilter extends BasicHttpAuthenticationFilter {
      */
     @Override
     protected boolean preHandle(ServletRequest request, ServletResponse response) throws Exception {
-        log.info("Start JwtFilter preHandle, config Header!");
+        log.info("Start ShiroFilter preHandle, config Header!");
         HttpServletRequest httpServletRequest = (HttpServletRequest) request;
         HttpServletResponse httpServletResponse = (HttpServletResponse) response;
         httpServletResponse.setHeader("Access-control-Allow-Origin", httpServletRequest.getHeader("Origin"));
