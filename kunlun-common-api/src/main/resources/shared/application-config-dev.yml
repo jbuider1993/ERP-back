@@ -21,6 +21,7 @@ spring:
       retry:
         enabled: true
   zipkin:
+    enabled: true
     sleuth:
       sampler:
         percentage: 1.0

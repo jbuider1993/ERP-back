@@ -67,11 +67,21 @@ spring:
     password: ${spring.datasource.password}
 
 zipkin:
+  enabled: true
+  sender:
+    type: rabbit
   # zipkin采样频率设置
   sleuth:
-    enabled: false
+    enabled: true
     sampler:
       percentage: 1.0
+  collector:
+    #rabbitmq配置
+    rabbitmq:
+      addresses: localhost:5672
+      username: guest
+      password: guest
+      queue: zipkin-demo
   storage:
     type: elasticsearch
     StorageComponent: elasticsearch
@@ -82,15 +92,6 @@ zipkin:
       index-shards: 3
       index-replicas: 1
       hosts: localhost:9200
-  sender:
-    type: rabbit
-  collector:
-    #rabbitmq配置
-    rabbitmq:
-      addresses: localhost:5672
-      username: guest
-      password: guest
-      queue: zipkin-demo
 
 mybatis:
   mapper-locations: classpath:mapper/*.xml
