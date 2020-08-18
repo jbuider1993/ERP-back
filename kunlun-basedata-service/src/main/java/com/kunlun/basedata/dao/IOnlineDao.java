@@ -1,6 +1,7 @@
 package com.kunlun.basedata.dao;
 
 import com.kunlun.basedata.model.OnlineUserModel;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -17,4 +18,8 @@ public interface IOnlineDao {
     public void addOnlineUser(OnlineUserModel onlineUserModel) throws Exception;
 
     public void updateOnlineUser(OnlineUserModel onlineUserModel) throws Exception;
+
+    public List<OnlineUserModel> queryAllOnlineUser() throws Exception;
+
+    public void updateOnlineStatus(List<String> onlineUserIds) throws Exception;
 }

@@ -10,6 +10,8 @@ public interface IRedisService {
 
     public Object del(String key, int dataBase) throws Exception;
 
+    public Object keys(String pattern, int dataBase) throws Exception;
+
     public void hSet(String key, String value, String hash, int expire, int dataBase) throws Exception;
 
     public Object hGet(String key, String hash, int dataBase) throws Exception;

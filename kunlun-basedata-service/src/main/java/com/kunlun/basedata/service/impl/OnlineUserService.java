@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.servlet.http.HttpServletRequest;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 @Service
@@ -76,5 +77,15 @@ public class OnlineUserService implements IOnlineUserService {
         model.setLastTime(date);
         model.setLoginTime(format.parse(loginTime));
         onlineDao.updateOnlineUser(model);
+    }
+
+    @Override
+    public List<OnlineUserModel> queryAllOnlineUser() throws Exception {
+        return onlineDao.queryAllOnlineUser();
+    }
+
+    @Override
+    public void updateOnlineStatus(List<String> onlineUserIds) throws Exception {
+        onlineDao.updateOnlineStatus(onlineUserIds);
     }
 }

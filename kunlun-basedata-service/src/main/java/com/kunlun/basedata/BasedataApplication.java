@@ -1,6 +1,9 @@
 package com.kunlun.basedata;
 
+import com.kunlun.basedata.task.TaskService;
 import org.mybatis.spring.annotation.MapperScan;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.circuitbreaker.EnableCircuitBreaker;
@@ -16,8 +19,17 @@ import zipkin.server.EnableZipkinServer;
 @EnableSwagger2
 @EnableCircuitBreaker
 @EnableTurbine
-public class BasedataApplication {
+public class BasedataApplication implements CommandLineRunner {
+
+    @Autowired
+    private TaskService taskService;
+
     public static void main(String[] args) {
         SpringApplication.run(BasedataApplication.class, args);
+    }
+
+    @Override
+    public void run(String... args) throws Exception {
+        taskService.prepareTask();
     }
 }

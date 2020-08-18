@@ -74,4 +74,22 @@
         WHERE login_name = #{loginName} AND login_time = #{loginTime}
     </update>
 
+    <select id="queryAllOnlineUser" resultType="OnlineUserModel">
+        SELECT
+            online.id AS id,
+            online.online AS online,
+            online.last_time AS lastTime
+        FROM t_online_user online
+        WHERE online.online = 'true'
+    </select>
+
+    <update id="updateOnlineStatus" parameterType="java.util.List">
+        UPDATE t_online_user SET online = 'false'
+        WHERE id IN (
+            <foreach collection="list" item="item" separator=",">
+                #{item}
+            </foreach>
+        )
+    </update>
+
 </mapper>

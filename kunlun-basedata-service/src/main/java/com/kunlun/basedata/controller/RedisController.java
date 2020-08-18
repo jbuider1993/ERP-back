@@ -5,6 +5,7 @@ import com.kunlun.common.utils.ResponseUtil;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -16,6 +17,7 @@ public class RedisController {
     private Logger log = LogManager.getLogger();
 
     @Autowired
+    @Qualifier("redisService")
     private RedisJedisService jedisService;
 
     @RequestMapping(value = "/set", method = RequestMethod.POST)

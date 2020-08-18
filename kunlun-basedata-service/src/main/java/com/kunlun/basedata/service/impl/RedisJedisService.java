@@ -10,14 +10,14 @@ import redis.clients.jedis.JedisPool;
 import java.util.Map;
 import java.util.Set;
 
-@Service
+@Service("redisService")
 public class RedisJedisService implements IRedisService {
 
     private final static int DEFAULT_EXISTS = 1000 * 60 * 30;
 
     private final static int DEFAULT_DATABASE = 0;
 
-    private final static String DEFAULT_HASH = "scmp";
+    private final static String DEFAULT_HASH = "kunlun";
 
     @Autowired
     private JedisPool jedisPool;
@@ -49,6 +49,14 @@ public class RedisJedisService implements IRedisService {
         jedis.select(dataBase == 0 ? DEFAULT_DATABASE : dataBase);
         jedis.close();
         return jedis.del(key);
+    }
+
+    @Override
+    public Object keys(String pattern, int dataBase) throws Exception {
+        Jedis jedis  = getJedis();
+        jedis.select(dataBase == 0 ? DEFAULT_DATABASE : dataBase);
+        jedis.close();
+        return jedis.keys(pattern);
     }
 
     @Override
