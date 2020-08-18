@@ -95,7 +95,7 @@
         <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>druid-spring-boot-starter</artifactId>
-            <version>1.1.9</version>
+            <version>1.1.20</version>
         </dependency>
 
         <dependency>
@@ -140,12 +140,6 @@
             <version>3.14.0</version>
         </dependency>
 
-<!--        <dependency>-->
-<!--            <groupId>com.codeborne</groupId>-->
-<!--            <artifactId>phantomjsdriver</artifactId>-->
-<!--            <version>1.4.4</version>-->
-<!--        </dependency>-->
-
         <!-- Dom4j -->
         <dependency>
             <groupId>dom4j</groupId>
@@ -182,14 +176,14 @@
         </dependency>
 
         <dependency>
-            <groupId>org.elasticsearch.client</groupId>
-            <artifactId>elasticsearch-rest-high-level-client</artifactId>
-            <version>7.2.0</version>
-        </dependency>
-        <dependency>
             <groupId>org.elasticsearch</groupId>
             <artifactId>elasticsearch</artifactId>
-            <version>7.2.0</version>
+            <version>6.5.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.elasticsearch.client</groupId>
+            <artifactId>elasticsearch-rest-high-level-client</artifactId>
+            <version>6.5.0</version>
         </dependency>
 
         <dependency>
