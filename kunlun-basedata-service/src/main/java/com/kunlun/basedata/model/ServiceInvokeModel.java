@@ -1,10 +1,11 @@
 package com.kunlun.basedata.model;
 
+/**
+ * 服务调用情况统计模型
+ */
 public class ServiceInvokeModel {
 
     private String id;
-
-    private String traceId;
 
     private String serviceName;
 
@@ -12,17 +13,15 @@ public class ServiceInvokeModel {
 
     private long count;
 
-    private String duration;
+    private long successAccess;
+
+    private long duration;
+
+    private String available;
 
     private String ipv4;
 
     private String port;
-
-    private String path;
-
-    private String clz;
-
-    private String status;
 
     public String getId() {
         return id;
@@ -32,19 +31,11 @@ public class ServiceInvokeModel {
         this.id = id;
     }
 
-    public String getTraceId() {
-        return traceId;
-    }
-
-    public void setTraceId(String traceId) {
-        this.traceId = traceId;
-    }
-
-    public String getDuration() {
+    public long getDuration() {
         return duration;
     }
 
-    public void setDuration(String duration) {
+    public void setDuration(long duration) {
         this.duration = duration;
     }
 
@@ -62,22 +53,6 @@ public class ServiceInvokeModel {
 
     public void setPort(String port) {
         this.port = port;
-    }
-
-    public String getPath() {
-        return path;
-    }
-
-    public void setPath(String path) {
-        this.path = path;
-    }
-
-    public String getClz() {
-        return clz;
-    }
-
-    public void setClz(String clz) {
-        this.clz = clz;
     }
 
     public String getServiceName() {
@@ -104,11 +79,19 @@ public class ServiceInvokeModel {
         this.count = count;
     }
 
-    public String getStatus() {
-        return status;
+    public String getAvailable() {
+        return available;
     }
 
-    public void setStatus(String status) {
-        this.status = status;
+    public void setAvailable(String available) {
+        this.available = available;
+    }
+
+    public long getSuccessAccess() {
+        return successAccess;
+    }
+
+    public void setSuccessAccess(long successAccess) {
+        this.successAccess = successAccess;
     }
 }

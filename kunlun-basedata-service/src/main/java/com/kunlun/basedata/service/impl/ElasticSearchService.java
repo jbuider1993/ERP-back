@@ -1,9 +1,7 @@
 package com.kunlun.basedata.service.impl;
 
-import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.kunlun.basedata.model.ServiceInvokeModel;
-import com.kunlun.basedata.model.ServiceTraceModel;
 import com.kunlun.basedata.service.IElasticSearchService;
 import com.kunlun.basedata.utils.CommonUtil;
 import org.apache.logging.log4j.LogManager;
@@ -25,6 +23,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
 
+import java.math.BigDecimal;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -66,39 +65,65 @@ public class ElasticSearchService implements IElasticSearchService {
                 SearchHits hits = searchResponse.getHits();
                 for (SearchHit hit : hits) {
                     JSONObject jsonObject = JSONObject.parseObject(hit.getSourceAsString());
-                    ServiceTraceModel traceModel = JSON.parseObject(String.valueOf(jsonObject), ServiceTraceModel.class);
-
                     JSONObject localEndpointObject = jsonObject.getJSONObject("localEndpoint");
                     String serviceName = localEndpointObject.getString("serviceName");
+                    long duration = jsonObject.getLong("duration");
+                    JSONObject tagsObject = jsonObject.getJSONObject("tags");
+                    String requestType = "", error = null;
+                    if (!ObjectUtils.isEmpty(tagsObject)) {
+                        error = tagsObject.getString("error");
+                        requestType = tagsObject.getString("http.method");
+                    }
                     if (resultMap.containsKey(serviceName)) {
                         ServiceInvokeModel model = resultMap.get(serviceName);
                         long count = model.getCount();
                         count++;
                         model.setCount(count);
+
+                        duration += model.getDuration();
+                        model.setDuration(duration);
+
+                        if (!ObjectUtils.isEmpty(requestType) && !model.getRequestType().contains(requestType)) {
+                            model.setRequestType(model.getRequestType() + ", " + requestType);
+                        }
+
+                        long successCount = model.getSuccessAccess();
+                        if (ObjectUtils.isEmpty(error)) {
+                            successCount++;
+                            model.setSuccessAccess(successCount);
+                        } else {
+                            successCount--;
+                            model.setSuccessAccess(successCount);
+                        }
                     } else {
                         ServiceInvokeModel invokeModel = new ServiceInvokeModel();
                         invokeModel.setId(CommonUtil.generateUUID());
-                        invokeModel.setRequestType(traceModel.getType());
                         invokeModel.setServiceName(serviceName);
                         invokeModel.setIpv4(localEndpointObject.getString("ipv4"));
+                        invokeModel.setDuration(duration);
 
                         JSONObject remoteEndpointObject = jsonObject.getJSONObject("remoteEndpoint");
                         if (!ObjectUtils.isEmpty(remoteEndpointObject)) {
                             invokeModel.setPort(remoteEndpointObject.getString("port"));
                         }
-
-                        JSONObject tagsObject = jsonObject.getJSONObject("tags");
-                        if (!ObjectUtils.isEmpty(tagsObject)) {
-                            invokeModel.setClz(tagsObject.getString("mvc.controller.class"));
-                            invokeModel.setStatus(tagsObject.getString("http.status_cod"));
-                            invokeModel.setPath(tagsObject.getString("http.path"));
-                        }
-                        invokeModel.setCount(0);
+                        invokeModel.setRequestType(requestType);
+                        invokeModel.setCount(1);
+                        invokeModel.setSuccessAccess(ObjectUtils.isEmpty(error) ? 1 : 0);
                         resultMap.put(invokeModel.getServiceName(), invokeModel);
                     }
                 }
             }
         }
-        return resultMap.entrySet().stream().map(obj -> obj.getValue()).collect(Collectors.toList());
+
+        List<ServiceInvokeModel> results = resultMap.entrySet().stream().map(obj -> {
+            ServiceInvokeModel model = obj.getValue();
+            model.setDuration(model.getDuration() / model.getCount());
+            BigDecimal successAccess = new BigDecimal(model.getSuccessAccess() * 100);
+            BigDecimal count = new BigDecimal(model.getCount());
+            BigDecimal result = successAccess.divide(count, 2, BigDecimal.ROUND_HALF_UP);
+            model.setAvailable(result.toString());
+            return model;
+        }).collect(Collectors.toList());
+        return results;
     }
 }
