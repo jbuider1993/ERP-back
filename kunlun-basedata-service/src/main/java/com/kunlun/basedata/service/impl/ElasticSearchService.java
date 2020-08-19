@@ -2,8 +2,10 @@ package com.kunlun.basedata.service.impl;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.kunlun.basedata.model.ServiceInvokeModel;
 import com.kunlun.basedata.model.ServiceTraceModel;
 import com.kunlun.basedata.service.IElasticSearchService;
+import com.kunlun.basedata.utils.CommonUtil;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.elasticsearch.action.admin.indices.alias.get.GetAliasesRequest;
@@ -23,10 +25,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class ElasticSearchService implements IElasticSearchService {
@@ -37,13 +37,7 @@ public class ElasticSearchService implements IElasticSearchService {
     private RestHighLevelClient highLevelClient;
 
     @Override
-    public List<ServiceTraceModel> queryServiceInvokes() throws Exception {
-        // 查询所有index
-        GetAliasesRequest request = new GetAliasesRequest();
-        GetAliasesResponse getAliasesResponse =  highLevelClient.indices().getAlias(request,RequestOptions.DEFAULT);
-        Map<String, Set<AliasMetaData>> map = getAliasesResponse.getAliases();
-        String indexName = map.keySet().stream().filter(obj -> obj.contains("zipkin-es")).sorted((x, y) -> - x.compareTo(y)).findFirst().get();
-
+    public List<ServiceInvokeModel> queryServiceInvokes() throws Exception {
         // 范围查询策略
         RangeQueryBuilder queryBuilder = QueryBuilders.rangeQuery("duration").gte(14752);
 
@@ -55,43 +49,56 @@ public class ElasticSearchService implements IElasticSearchService {
         sourceBuilder.from(0);
         sourceBuilder.size(10000);
 
-        // 创建查询请求对象，将查询对象配置到其中
-        SearchRequest searchRequest = new SearchRequest(indexName);
-        searchRequest.source(sourceBuilder);
+        // 查询所有index
+        GetAliasesRequest request = new GetAliasesRequest();
+        GetAliasesResponse getAliasesResponse =  highLevelClient.indices().getAlias(request,RequestOptions.DEFAULT);
+        Map<String, Set<AliasMetaData>> map = getAliasesResponse.getAliases();
+        Set<String> indexNameSet = map.keySet().stream().filter(obj -> obj.contains("zipkin-es")).collect(Collectors.toSet());
+        Map<String, ServiceInvokeModel> resultMap = new HashMap<>();
+        for (String indexName : indexNameSet) {
+            // 创建查询请求对象，将查询对象配置到其中
+            SearchRequest searchRequest = new SearchRequest(indexName);
+            searchRequest.source(sourceBuilder);
 
-        // 执行查询，然后处理响应结果
-        List<ServiceTraceModel> results = new ArrayList<>();
-        SearchResponse searchResponse = highLevelClient.search(searchRequest, RequestOptions.DEFAULT);
-        if (RestStatus.OK.equals(searchResponse.status()) && searchResponse.getHits().totalHits > 0) {
-            SearchHits hits = searchResponse.getHits();
-            System.out.println("totalHits ===>>> " + hits.totalHits);
-            for (SearchHit hit : hits) {
-                JSONObject jsonObject = JSONObject.parseObject(hit.getSourceAsString());
-                ServiceTraceModel traceModel = JSON.parseObject(String.valueOf(jsonObject), ServiceTraceModel.class);
+            // 执行查询，然后处理响应结果
+            SearchResponse searchResponse = highLevelClient.search(searchRequest, RequestOptions.DEFAULT);
+            if (RestStatus.OK.equals(searchResponse.status()) && searchResponse.getHits().totalHits > 0) {
+                SearchHits hits = searchResponse.getHits();
+                for (SearchHit hit : hits) {
+                    JSONObject jsonObject = JSONObject.parseObject(hit.getSourceAsString());
+                    ServiceTraceModel traceModel = JSON.parseObject(String.valueOf(jsonObject), ServiceTraceModel.class);
 
-                JSONObject localEndpointObject = jsonObject.getJSONObject("localEndpoint");
-                traceModel.setIpv4(localEndpointObject.getString("ipv4"));
-                traceModel.setLocalServceName(localEndpointObject.getString("serviceName"));
+                    JSONObject localEndpointObject = jsonObject.getJSONObject("localEndpoint");
+                    String serviceName = localEndpointObject.getString("serviceName");
+                    if (resultMap.containsKey(serviceName)) {
+                        ServiceInvokeModel model = resultMap.get(serviceName);
+                        long count = model.getCount();
+                        count++;
+                        model.setCount(count);
+                    } else {
+                        ServiceInvokeModel invokeModel = new ServiceInvokeModel();
+                        invokeModel.setId(CommonUtil.generateUUID());
+                        invokeModel.setRequestType(traceModel.getType());
+                        invokeModel.setServiceName(serviceName);
+                        invokeModel.setIpv4(localEndpointObject.getString("ipv4"));
 
-                JSONObject remoteEndpointObject = jsonObject.getJSONObject("remoteEndpoint");
-                if (!ObjectUtils.isEmpty(remoteEndpointObject)) {
-                    traceModel.setPort(remoteEndpointObject.getString("port"));
-                    traceModel.setRemoteServceName(remoteEndpointObject.getString("serviceName"));
+                        JSONObject remoteEndpointObject = jsonObject.getJSONObject("remoteEndpoint");
+                        if (!ObjectUtils.isEmpty(remoteEndpointObject)) {
+                            invokeModel.setPort(remoteEndpointObject.getString("port"));
+                        }
+
+                        JSONObject tagsObject = jsonObject.getJSONObject("tags");
+                        if (!ObjectUtils.isEmpty(tagsObject)) {
+                            invokeModel.setClz(tagsObject.getString("mvc.controller.class"));
+                            invokeModel.setStatus(tagsObject.getString("http.status_cod"));
+                            invokeModel.setPath(tagsObject.getString("http.path"));
+                        }
+                        invokeModel.setCount(0);
+                        resultMap.put(invokeModel.getServiceName(), invokeModel);
+                    }
                 }
-
-                JSONObject tagsObject = jsonObject.getJSONObject("tags");
-                if (!ObjectUtils.isEmpty(tagsObject)) {
-                    traceModel.setClz(tagsObject.getString("mvc.controller.class"));
-                    traceModel.setMethod(tagsObject.getString("mvc.controller.method"));
-                    traceModel.setPath(tagsObject.getString("http.path"));
-                    traceModel.setType(tagsObject.getString("http.method"));
-                    traceModel.setStatusCode(tagsObject.getString("http.status_cod"));
-                    traceModel.setError(tagsObject.getString("error"));
-                }
-
-                results.add(traceModel);
             }
         }
-        return results;
+        return resultMap.entrySet().stream().map(obj -> obj.getValue()).collect(Collectors.toList());
     }
 }

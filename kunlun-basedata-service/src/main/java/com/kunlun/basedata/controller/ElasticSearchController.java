@@ -1,5 +1,6 @@
 package com.kunlun.basedata.controller;
 
+import com.kunlun.basedata.model.ServiceInvokeModel;
 import com.kunlun.basedata.model.ServiceTraceModel;
 import com.kunlun.basedata.service.IElasticSearchService;
 import com.kunlun.common.utils.ResponseUtil;
@@ -23,8 +24,8 @@ public class ElasticSearchController {
     @RequestMapping("/queryServiceInvokes")
     public Object queryServiceInvokes() {
         try {
-            List<ServiceTraceModel> serviceTraceModels = elasticSearchService.queryServiceInvokes();
-            return ResponseUtil.successResponse(serviceTraceModels);
+            List<ServiceInvokeModel> invokeModels = elasticSearchService.queryServiceInvokes();
+            return ResponseUtil.successResponse(invokeModels);
         } catch (Exception e) {
             log.error("ElasticSearchController queryServiceInvokes error", e);
             return ResponseUtil.failedResponse("ElasticSearchController queryServiceInvokes error", e.getLocalizedMessage());
