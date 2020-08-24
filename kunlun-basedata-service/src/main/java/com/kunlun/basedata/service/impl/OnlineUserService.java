@@ -1,5 +1,6 @@
 package com.kunlun.basedata.service.impl;
 
+import com.kunlun.basedata.model.vo.StatisticUserVo;
 import com.kunlun.basedata.utils.AddressUtil;
 import com.kunlun.basedata.utils.CommonUtil;
 import com.kunlun.basedata.dao.IOnlineDao;
@@ -13,9 +14,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpServletRequest;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.time.LocalDate;
+import java.util.*;
 
 @Service
 @Transactional
@@ -87,5 +87,27 @@ public class OnlineUserService implements IOnlineUserService {
     @Override
     public void updateOnlineStatus(List<String> onlineUserIds) throws Exception {
         onlineDao.updateOnlineStatus(onlineUserIds);
+    }
+
+    @Override
+    public List<StatisticUserVo> statisticOnlineByYear(String year) throws Exception {
+        String[] monthArrays = new String[]{"01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"};
+        List<StatisticUserVo> statisticList = onlineDao.statisticOnlineByYear(year + "-01", year + "-12");
+        List<StatisticUserVo> results = new ArrayList<>();
+        for (String month : monthArrays) {
+            Optional<StatisticUserVo> optional = statisticList.stream().filter(obj -> ("2020-" + month).equals(obj.getMonth())).findAny();
+            StatisticUserVo statisticUserVo = null;
+            if (!optional.isPresent()) {
+                statisticUserVo = new StatisticUserVo();
+                statisticUserVo.setMonth(month);
+                statisticUserVo.setValue(0);
+                results.add(statisticUserVo);
+            } else {
+                statisticUserVo = optional.get();
+                statisticUserVo.setMonth(statisticUserVo.getMonth().substring(statisticUserVo.getMonth().indexOf("-") + 1));
+                results.add(optional.get());
+            }
+        }
+        return results;
     }
 }

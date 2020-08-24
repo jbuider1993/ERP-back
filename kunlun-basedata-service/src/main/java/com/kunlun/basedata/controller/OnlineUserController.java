@@ -1,6 +1,7 @@
 package com.kunlun.basedata.controller;
 
 import com.kunlun.basedata.model.OnlineUserModel;
+import com.kunlun.basedata.model.vo.StatisticUserVo;
 import com.kunlun.basedata.service.IOnlineUserService;
 import com.kunlun.common.model.Page;
 import com.kunlun.common.utils.ResponseUtil;
@@ -12,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping(value = "/onlineUser")
@@ -52,6 +55,17 @@ public class OnlineUserController {
         } catch (Exception e) {
             log.error("OnlineUserController updateOnlineUser Error: ", e);
             return ResponseUtil.failedResponse("更新所有在线用户失败！", e.getMessage());
+        }
+    }
+
+    @RequestMapping(value = "/statisticOnlineByYear", method = RequestMethod.GET)
+    public Object statisticOnlineByYear(String year) {
+        try {
+            List<StatisticUserVo> statisticsList = onlineUserService.statisticOnlineByYear(year);
+            return ResponseUtil.successResponse(statisticsList);
+        } catch (Exception e) {
+            log.error("OnlineUserController statisticOnlineByYear Error: ", e);
+            return ResponseUtil.failedResponse("用户访问量统计失败！", e.getMessage());
         }
     }
 }
