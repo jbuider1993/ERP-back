@@ -27,4 +27,14 @@ public class HomeController {
             return ResponseUtil.failedResponse("用户数获取失败！", e.getMessage());
         }
     }
+
+    @RequestMapping(value="/getDiskInfo", method= RequestMethod.GET)
+    public Object getDiskInfo() {
+        try {
+            return ResponseUtil.successResponse(homeService.getDiskInfo());
+        } catch (Exception e) {
+            log.error("HomeController getUserCount Error: ", e);
+            return ResponseUtil.failedResponse("系统磁盘及内存使用率获取失败！", e.getMessage());
+        }
+    }
 }
