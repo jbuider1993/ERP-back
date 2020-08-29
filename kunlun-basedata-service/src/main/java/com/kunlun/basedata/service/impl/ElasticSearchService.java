@@ -67,6 +67,9 @@ public class ElasticSearchService implements IElasticSearchService {
                     JSONObject jsonObject = JSONObject.parseObject(hit.getSourceAsString());
                     JSONObject localEndpointObject = jsonObject.getJSONObject("localEndpoint");
                     String serviceName = localEndpointObject.getString("serviceName");
+                    if (!ObjectUtils.isEmpty(serviceName) && !serviceName.startsWith("kunlun")) {
+                        continue;
+                    }
                     long duration = jsonObject.getLong("duration");
                     JSONObject tagsObject = jsonObject.getJSONObject("tags");
                     String requestType = "", error = null;
@@ -83,7 +86,7 @@ public class ElasticSearchService implements IElasticSearchService {
                         duration += model.getDuration();
                         model.setDuration(duration);
 
-                        if (!ObjectUtils.isEmpty(requestType) && !model.getRequestType().contains(requestType)) {
+                        if (!ObjectUtils.isEmpty(requestType) && !ObjectUtils.isEmpty(model.getRequestType()) && !model.getRequestType().contains(requestType)) {
                             model.setRequestType(model.getRequestType() + ", " + requestType);
                         }
 
@@ -117,11 +120,11 @@ public class ElasticSearchService implements IElasticSearchService {
 
         List<ServiceInvokeModel> results = resultMap.entrySet().stream().map(obj -> {
             ServiceInvokeModel model = obj.getValue();
-            model.setDuration(model.getDuration() / model.getCount());
+            model.setDuration(model.getDuration() / (model.getCount() * 1000));
             BigDecimal successAccess = new BigDecimal(model.getSuccessAccess() * 100);
             BigDecimal count = new BigDecimal(model.getCount());
             BigDecimal result = successAccess.divide(count, 2, BigDecimal.ROUND_HALF_UP);
-            model.setAvailable(result.toString());
+            model.setAvailable("100.00".equals(result.toString()) ? "100" : result.toString());
             return model;
         }).collect(Collectors.toList());
         return results;
