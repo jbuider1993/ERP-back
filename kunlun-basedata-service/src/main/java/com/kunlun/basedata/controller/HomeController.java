@@ -1,6 +1,7 @@
 package com.kunlun.basedata.controller;
 
 import com.kunlun.basedata.service.IHomeService;
+import com.kunlun.basedata.service.IRedisService;
 import com.kunlun.common.utils.ResponseUtil;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -18,6 +19,9 @@ public class HomeController {
     @Autowired
     private IHomeService homeService;
 
+    @Autowired
+    private IRedisService redisService;
+
     @RequestMapping(value="/getUserCount", method= RequestMethod.GET)
     public Object getUserCount() {
         try {
@@ -32,6 +36,16 @@ public class HomeController {
     public Object getDiskInfo() {
         try {
             return ResponseUtil.successResponse(homeService.getDiskInfo());
+        } catch (Exception e) {
+            log.error("HomeController getUserCount Error: ", e);
+            return ResponseUtil.failedResponse("系统磁盘及内存使用率获取失败！", e.getMessage());
+        }
+    }
+
+    @RequestMapping(value="/getRedisInfo", method= RequestMethod.GET)
+    public Object getRedisInfo() {
+        try {
+            return ResponseUtil.successResponse(redisService.getRedisInfo());
         } catch (Exception e) {
             log.error("HomeController getUserCount Error: ", e);
             return ResponseUtil.failedResponse("系统磁盘及内存使用率获取失败！", e.getMessage());
