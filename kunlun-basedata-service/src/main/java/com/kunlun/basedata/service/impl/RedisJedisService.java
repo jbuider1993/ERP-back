@@ -160,7 +160,6 @@ public class RedisJedisService implements IRedisService {
 
             RedisInfoVo redisMemory = new RedisInfoVo();
             redisMemory.setTime(time);
-            redisMemory.setLegend("占用内存");
             redisMemory.setType("memory");
             String memory = info.substring(info.indexOf("used_memory") + 12, info.indexOf("used_memory_human")).trim();
             long memorySize = Long.parseLong(memory);
@@ -180,7 +179,6 @@ public class RedisJedisService implements IRedisService {
 
             RedisInfoVo redisKeys = new RedisInfoVo();
             redisKeys.setTime(time);
-            redisKeys.setLegend("键值对数");
             redisKeys.setValue(String.valueOf(keyNum));
             redisKeys.setType("keyValue");
 

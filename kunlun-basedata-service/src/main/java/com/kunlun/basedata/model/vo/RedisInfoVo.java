@@ -4,8 +4,6 @@ public class RedisInfoVo {
 
     private String id;
 
-    private String legend;
-
     private String time;
 
     private String value;
@@ -18,14 +16,6 @@ public class RedisInfoVo {
 
     public void setId(String id) {
         this.id = id;
-    }
-
-    public String getLegend() {
-        return legend;
-    }
-
-    public void setLegend(String legend) {
-        this.legend = legend;
     }
 
     public String getTime() {
