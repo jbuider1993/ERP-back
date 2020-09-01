@@ -1,10 +1,10 @@
 package com.kunlun.center.service;
 
-import com.alibaba.fastjson.JSONArray;
+import com.kunlun.center.model.MQInfoVo;
 
 import java.util.List;
-import java.util.Map;
 
 public interface IMQInformationService {
-    public Map<String, JSONArray> getMessages() throws Exception;
+
+    public List<MQInfoVo> getMessages() throws Exception;
 }
