@@ -36,8 +36,12 @@ public class ShiroConfig {
         // 自定义url规则，即添加自定义拦截器
         Map<String, String> filterRuleMap = new HashMap<>();
 
-        // 访问 /unauthorized/** 不通过ShiroFilter，其中anon是Filter，还有authc表示需要认证过滤
-        filterRuleMap.put("/unauthorized/**", "anon");
+        // 访问URI不通过ShiroFilter，其中anon是Filter，还有authc表示需要认证过滤
+        filterRuleMap.put("/swagger-ui.html**", "anon");
+        filterRuleMap.put("/v2/api-docs", "anon");
+        filterRuleMap.put("/swagger-resources/**", "anon");
+        filterRuleMap.put("/webjars/**", "anon");
+        filterRuleMap.put("/actuator/hystrix.stream", "anon");
 
         // 所有请求通过我们自己的ShiroFilter
         filterRuleMap.put("/**", "shiro");

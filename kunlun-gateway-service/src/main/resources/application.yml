@@ -9,7 +9,7 @@ shiro:
   secret: 61D73234C4F93E03074D74D74D1E39D9
   expireTime: 1800000
   tokenHeader: Authorization
-  ignoreUrls: /kunlun-gateway-service/shiro/login, /kunlun-basedata-service/code/getAuthCode, /kunlun-gateway-service/shiro/logout, /actuator/hystrix.stream
+  ignoreUrls: /kunlun-gateway-service/shiro/login, /kunlun-basedata-service/code/getAuthCode, /kunlun-gateway-service/shiro/logout, /kunlun-basedata-service/v2/api-docs, /kunlun-system-service/v2/api-docs, /actuator/hystrix.stream, /hystrix, /hystrix/images/hystrix-logo.png
 
 zuul:
   # 饥饿加载，防止懒加载时第一次请求超时而失败
