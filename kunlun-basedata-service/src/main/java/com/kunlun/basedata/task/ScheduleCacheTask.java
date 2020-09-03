@@ -1,6 +1,5 @@
 package com.kunlun.basedata.task;
 
-import com.kunlun.basedata.model.OnlineUserModel;
 import com.kunlun.basedata.service.IOnlineUserService;
 import com.kunlun.basedata.service.IRedisService;
 import com.kunlun.basedata.utils.JwtTokenUtil;
@@ -9,10 +8,7 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.util.ObjectUtils;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 /**
  * 删除过期的token
@@ -25,9 +21,13 @@ public class ScheduleCacheTask implements Runnable {
 
     private static final String TOKEN_KEY_TIME = "loginTime";
 
+    private static final String TOKEN_ONLINE_USER_ID = "onlineUserId";
+
     private static final String TIME_PATTERN = "yyyyMMddHHmmss";
 
     private static final long HALF_HOUR = 30 * 60 * 1000;
+
+    private ThreadLocal<List<String>> threadLocal = new ThreadLocal<>();
 
     private IRedisService redisService;
 
@@ -41,11 +41,15 @@ public class ScheduleCacheTask implements Runnable {
     @Override
     public void run() {
         try {
+            threadLocal.set(new ArrayList<>());
+
             // 删除Redis上过期的token
             clearCachedLoginStatus();
 
             // 清理DB中在线用户
             clearDBLoginStatus();
+
+            threadLocal.remove();
         } catch (Exception e) {
             log.error("ScheduleCacheTask Error", e);
         }
@@ -62,6 +66,9 @@ public class ScheduleCacheTask implements Runnable {
             Date delay = new Date(loginTime.getTime() - HALF_HOUR);
             long minus = new Date().getTime() - delay.getTime();
             if (minus > HALF_HOUR) {
+                String onlineUserId = JwtTokenUtil.getTokenInfo(value, TOKEN_ONLINE_USER_ID);
+                List<String> onlineUsers = threadLocal.get();
+                onlineUsers.add(onlineUserId);
                 redisService.del(key, 1);
                 log.info("deleting timeout token, key: " + key + ", token: " + value);
             }
@@ -69,16 +76,7 @@ public class ScheduleCacheTask implements Runnable {
     }
 
     public void clearDBLoginStatus() throws Exception {
-        List<OnlineUserModel> onlineUserModels = onlineUserService.queryAllOnlineUser();
-        List<String> onlineUserIds = new ArrayList<>();
-        for (OnlineUserModel onlineUser : onlineUserModels) {
-            Date delay = new Date(onlineUser.getLastTime().getTime() - HALF_HOUR);
-            long minus = new Date().getTime() - delay.getTime();
-            if (minus > HALF_HOUR) {
-                onlineUserIds.add(onlineUser.getId());
-            }
-        }
-
+        List<String> onlineUserIds = threadLocal.get();
         if (!ObjectUtils.isEmpty(onlineUserIds)) {
             onlineUserService.updateOnlineStatus(onlineUserIds);
         }

@@ -6,6 +6,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.Date;
+
 @Service("basedataService")
 @FeignClient(name = "kunlun-basedata-service")
 public interface IBasedataService {
@@ -22,8 +24,8 @@ public interface IBasedataService {
     public Object getUserByUserName(@RequestParam(value = "userName") String userName);
 
     @RequestMapping(value = "/onlineUser/addOnlineUser", method = RequestMethod.POST)
-    public Object addOnlineUser(@RequestParam(value = "userName") String userName);
+    public Object addOnlineUser(@RequestParam(value = "id") String id, @RequestParam(value = "userName") String userName, @RequestParam(value = "loginDate") Date loginDate);
 
     @RequestMapping(value = "/onlineUser/updateOnlineUser", method = RequestMethod.POST)
-    public Object updateOnlineUser(@RequestParam(value = "userName") String userName, @RequestParam(value = "loginTime") String loginTime);
+    public Object updateOnlineUser(@RequestParam(value = "id") String id);
 }

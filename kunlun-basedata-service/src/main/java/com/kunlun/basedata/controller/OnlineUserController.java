@@ -13,8 +13,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 @RestController
 @RequestMapping(value = "/onlineUser")
@@ -37,10 +37,10 @@ public class OnlineUserController {
     }
 
     @RequestMapping(value = "/addOnlineUser", method = RequestMethod.POST)
-    public Object addOnlineUser(HttpServletRequest request, String userName) {
+    public Object addOnlineUser(HttpServletRequest request, String id, String userName, Date loginDate) {
         try {
-            OnlineUserModel onlineUserModel = onlineUserService.addOnlineUser(request, userName);
-            return ResponseUtil.successResponse(onlineUserModel);
+            onlineUserService.addOnlineUser(request, id, userName, loginDate);
+            return ResponseUtil.successResponse("successs");
         } catch (Exception e) {
             log.error("OnlineUserController addOnlineUser Error: ", e);
             return ResponseUtil.failedResponse("新增在线用户失败！", e.getMessage());
@@ -48,9 +48,9 @@ public class OnlineUserController {
     }
 
     @RequestMapping(value = "/updateOnlineUser", method = RequestMethod.POST)
-    public Object updateOnlineUser(String userName, String loginTime) {
+    public Object updateOnlineUser(String id) {
         try {
-            onlineUserService.updateOnlineUser(userName, loginTime);
+            onlineUserService.updateOnlineUser(id);
             return ResponseUtil.successResponse("success");
         } catch (Exception e) {
             log.error("OnlineUserController updateOnlineUser Error: ", e);

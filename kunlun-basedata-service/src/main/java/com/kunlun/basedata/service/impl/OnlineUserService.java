@@ -40,7 +40,7 @@ public class OnlineUserService implements IOnlineUserService {
     }
 
     @Override
-    public OnlineUserModel addOnlineUser(HttpServletRequest request, String userName) throws Exception {
+    public void addOnlineUser(HttpServletRequest request, String id, String userName, Date loginDate) throws Exception {
         // 获取登录IP地址、登录所在城市及经纬度坐标
         String ipAddr = AddressUtil.getIpAddr(request);
         String addr = AddressUtil.getRealAddressByIP(ipAddr);
@@ -51,7 +51,7 @@ public class OnlineUserService implements IOnlineUserService {
 
         // 处理在线用户
         OnlineUserModel model = new OnlineUserModel();
-        model.setId(CommonUtil.generateUUID());
+        model.setId(id);
         model.setLoginName(userName);
         model.setLoginIp(ipAddr);
         model.setLoginAddress(addr);
@@ -59,23 +59,20 @@ public class OnlineUserService implements IOnlineUserService {
         model.setUsedBrowser(browserInfo);
         model.setUsedWindow(systemInfo);
         model.setOnline(true);
-        model.setLoginTime(new Date());
-        model.setLastTime(new Date());
+        model.setLoginTime(loginDate);
+        model.setLastTime(loginDate);
         onlineDao.addOnlineUser(model);
-        return model;
     }
 
     @Override
-    public void updateOnlineUser(String userName, String loginTime) throws Exception {
+    public void updateOnlineUser(String id) throws Exception {
         String time = dateFormat.format(new Date());
         Date date = dateFormat.parse(time);
-        SimpleDateFormat format = new SimpleDateFormat("yyyyMMddHHmmssSSS");
 
         OnlineUserModel model = new OnlineUserModel();
-        model.setLoginName(userName);
+        model.setId(id);
         model.setOnline(false);
         model.setLastTime(date);
-        model.setLoginTime(format.parse(loginTime));
         onlineDao.updateOnlineUser(model);
     }
 

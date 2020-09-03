@@ -3,7 +3,9 @@ package com.kunlun.gateway.service.impl;
 import com.kunlun.common.annotation.OperatorLogger;
 import com.kunlun.common.model.enums.OperatorLogType;
 import com.kunlun.gateway.model.ShiroConfigModel;
+import com.kunlun.gateway.model.SignTokenModel;
 import com.kunlun.gateway.model.TokenModel;
+import com.kunlun.gateway.utils.CommonUtil;
 import com.kunlun.gateway.utils.JwtTokenUtil;
 import com.kunlun.gateway.model.UserModel;
 import com.kunlun.gateway.service.IBasedataService;
@@ -21,8 +23,6 @@ import java.util.LinkedHashMap;
 @Transactional
 public class ShiroServiceImpl implements IShiroService {
 
-    private SimpleDateFormat dateCSTFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss:SSS");
-
     private SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
     @Autowired
@@ -35,7 +35,9 @@ public class ShiroServiceImpl implements IShiroService {
     @Override
     public TokenModel handleLogin(String userName, String password) throws Exception {
         // 处理在线用户
-        Object onlineUserObj = basedataService.addOnlineUser(userName);
+        String id = CommonUtil.generateUUID();
+        Date loginDate = new Date();
+        basedataService.addOnlineUser(id, userName, loginDate);
 
         // 登录用户基本信息
         Object userObj = basedataService.getUserByUserName(userName);
@@ -51,14 +53,13 @@ public class ShiroServiceImpl implements IShiroService {
 
         // 生成Token
         SimpleDateFormat format = new SimpleDateFormat("yyyyMMddHHmmssSSS");
-        Object onlineObj = ((LinkedHashMap)onlineUserObj).get("data");
-        Date loginTime = dateCSTFormat.parse(((LinkedHashMap)onlineObj).get("loginTime").toString());
-        String loginTimeKey = format.format(loginTime);
-        String shiroToken = JwtTokenUtil.sign(userName, password, loginTimeKey, shiroConfig.getSecret(), shiroConfig.getExpireTime());
+        String loginTime = format.format(loginDate);
+        SignTokenModel signToken = new SignTokenModel(id, userName, password, loginTime, shiroConfig.getSecret(), shiroConfig.getExpireTime());
+        String shiroToken = JwtTokenUtil.sign(signToken);
         TokenModel tokenModel = new TokenModel(shiroToken, userModel);
 
         // 缓存token到redis
-        String redisKey = userName + "_" + loginTimeKey;
+        String redisKey = userName + "_" + loginTime;
         basedataService.set(redisKey, shiroToken, shiroConfig.getExpireTime(), 1);
         return tokenModel;
     }
@@ -67,10 +68,11 @@ public class ShiroServiceImpl implements IShiroService {
     @Override
     public void handleLogout(HttpServletRequest request, String userName) throws Exception {
         String token = request.getHeader(shiroConfig.getTokenHeader());
+        String onlineUserId = JwtTokenUtil.getTokenInfo(token, "onlineUserId");
         String loginTime = JwtTokenUtil.getTokenInfo(token, "loginTime");
 
         // 处理在线用户
-        basedataService.updateOnlineUser(userName, loginTime);
+        basedataService.updateOnlineUser(onlineUserId);
 
         // 注销成功删除缓存在redis的Token
         String redisKey = userName + "_" + loginTime;

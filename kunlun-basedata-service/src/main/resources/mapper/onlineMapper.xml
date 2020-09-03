@@ -71,7 +71,7 @@
             online = #{online},
             last_time = #{lastTime},
             access_count = access_count + 1
-        WHERE login_name = #{loginName} AND login_time = #{loginTime}
+        WHERE id = #{id}
     </update>
 
     <select id="queryAllOnlineUser" resultType="OnlineUserModel">

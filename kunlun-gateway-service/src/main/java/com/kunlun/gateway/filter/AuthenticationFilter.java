@@ -2,6 +2,7 @@ package com.kunlun.gateway.filter;
 
 import com.kunlun.gateway.config.BeanUtil;
 import com.kunlun.gateway.model.ShiroConfigModel;
+import com.kunlun.gateway.model.SignTokenModel;
 import com.kunlun.gateway.service.IBasedataService;
 import com.kunlun.gateway.utils.JwtTokenUtil;
 import org.apache.logging.log4j.LogManager;
@@ -19,7 +20,7 @@ import java.util.Map;
 /**
  * shiro过滤器，认证token
  */
-public class ShiroFilter extends BasicHttpAuthenticationFilter {
+public class AuthenticationFilter extends BasicHttpAuthenticationFilter {
 
     private Logger log = LogManager.getLogger();
 
@@ -66,7 +67,9 @@ public class ShiroFilter extends BasicHttpAuthenticationFilter {
             // 用户在线操作，Token续期
             // 此处不能刷新即续期token，否则新的token无法传递到前台，无法保持全局一致；此处不能校验token是否有效，因刷新或续期token无法处理
             log.info("token ===>>> " + token);
-            String shiroToken = JwtTokenUtil.sign(userName, password, loginTime, shiroConfigModel.getSecret(), shiroConfigModel.getExpireTime());
+            String onlineUserId = JwtTokenUtil.getTokenInfo(token, "onlineUserId");
+            SignTokenModel signToken = new SignTokenModel(onlineUserId, userName, password, loginTime, shiroConfigModel.getSecret(), shiroConfigModel.getExpireTime());
+            String shiroToken = JwtTokenUtil.sign(signToken);
             log.info("update token ===>>> " + shiroToken);
             basedataService.set(redisKey, shiroToken, shiroConfigModel.getExpireTime(), 1);
         } else {

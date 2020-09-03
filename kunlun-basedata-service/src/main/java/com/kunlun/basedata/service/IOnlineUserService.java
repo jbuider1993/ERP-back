@@ -5,15 +5,16 @@ import com.kunlun.basedata.model.vo.StatisticUserVo;
 import com.kunlun.common.model.Page;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
 public interface IOnlineUserService {
     public Page getAllOnlineUser(OnlineUserModel onlineUserModel, int currentPage, int pageSize) throws Exception;
 
-    public OnlineUserModel addOnlineUser(HttpServletRequest request, String userName) throws Exception;
+    public void addOnlineUser(HttpServletRequest request, String id, String userName, Date loginDate) throws Exception;
 
-    public void updateOnlineUser(String userName, String loginTime) throws Exception;
+    public void updateOnlineUser(String id) throws Exception;
 
     public List<OnlineUserModel> queryAllOnlineUser() throws Exception;
 

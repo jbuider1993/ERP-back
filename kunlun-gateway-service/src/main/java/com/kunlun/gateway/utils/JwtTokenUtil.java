@@ -5,6 +5,7 @@ import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTDecodeException;
 import com.auth0.jwt.interfaces.DecodedJWT;
+import com.kunlun.gateway.model.SignTokenModel;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -61,14 +62,14 @@ public class JwtTokenUtil {
     /**
      * 生成jwt token，签名，30min后过期
      *
-     * @param userName 用户名
+     * @param signToken      SignTokenModel
      * @return 加密的token
      */
-    public static String sign(String userName, String password, String loginTime, String secret, Integer expireTime) {
-        Date date = new Date(System.currentTimeMillis() + expireTime);
-        Algorithm algorithm = Algorithm.HMAC256(secret);
+    public static String sign(SignTokenModel signToken) {
+        Date date = new Date(System.currentTimeMillis() + signToken.getExpireTime());
+        Algorithm algorithm = Algorithm.HMAC256(signToken.getSecret());
 
         // 附带username、password及过期时长信息
-        return JWT.create().withClaim("userName", userName).withClaim("password", password).withClaim("loginTime", loginTime).withExpiresAt(date).sign(algorithm);
+        return JWT.create().withClaim("onlineUserId", signToken.getId()).withClaim("userName", signToken.getUserName()).withClaim("password", signToken.getPassword()).withClaim("loginTime", signToken.getLoginTime()).withExpiresAt(date).sign(algorithm);
     }
 }

@@ -1,6 +1,6 @@
 package com.kunlun.gateway.config;
 
-import com.kunlun.gateway.filter.ShiroFilter;
+import com.kunlun.gateway.filter.AuthenticationFilter;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
@@ -30,7 +30,7 @@ public class ShiroConfig {
 
         // 添加自己的过滤器并且取名为shiro
         Map<String, Filter> filterMap = new HashMap<String, Filter>(1);
-        filterMap.put("shiro", new ShiroFilter());
+        filterMap.put("shiro", new AuthenticationFilter());
         factoryBean.setFilters(filterMap);
 
         // 自定义url规则，即添加自定义拦截器

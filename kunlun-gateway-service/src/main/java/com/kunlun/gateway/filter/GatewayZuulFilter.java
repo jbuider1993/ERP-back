@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * zuul过滤器
  */
-public class GateWayFilter extends ZuulFilter {
+public class GatewayZuulFilter extends ZuulFilter {
 
     private Logger log = LogManager.getLogger();
 

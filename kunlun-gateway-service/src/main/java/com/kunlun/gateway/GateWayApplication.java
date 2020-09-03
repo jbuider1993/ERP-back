@@ -1,6 +1,6 @@
 package com.kunlun.gateway;
 
-import com.kunlun.gateway.filter.GateWayFilter;
+import com.kunlun.gateway.filter.GatewayZuulFilter;
 import feign.Retryer;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -33,7 +33,7 @@ public class GateWayApplication {
     }
 
     @Bean
-    public GateWayFilter authFilter() {
-        return new GateWayFilter();
+    public GatewayZuulFilter authFilter() {
+        return new GatewayZuulFilter();
     }
 }
