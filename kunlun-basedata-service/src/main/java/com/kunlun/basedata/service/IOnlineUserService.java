@@ -21,4 +21,6 @@ public interface IOnlineUserService {
     public void updateOnlineStatus(List<String> onlineUserIds) throws Exception;
 
     public List<StatisticUserVo> statisticOnlineByYear(String year) throws Exception;
+
+    public void forceExit(String onlineUsers) throws Exception;
 }

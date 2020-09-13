@@ -1,5 +1,7 @@
 package com.kunlun.basedata.service.impl;
 
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.kunlun.basedata.model.vo.StatisticUserVo;
 import com.kunlun.basedata.utils.AddressUtil;
 import com.kunlun.basedata.utils.CommonUtil;
@@ -8,6 +10,7 @@ import com.kunlun.basedata.model.OnlineUserModel;
 import com.kunlun.basedata.service.IOnlineUserService;
 import com.kunlun.common.model.Page;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,6 +28,10 @@ public class OnlineUserService implements IOnlineUserService {
 
     @Autowired
     private IOnlineDao onlineDao;
+
+    @Autowired
+    @Qualifier("redisService")
+    private RedisJedisService jedisService;
 
     @Override
     public Page getAllOnlineUser(OnlineUserModel onlineUserModel, int currentPage, int pageSize) throws Exception {
@@ -106,5 +113,20 @@ public class OnlineUserService implements IOnlineUserService {
             }
         }
         return results;
+    }
+
+    @Override
+    public void forceExit(String onlineUsers) throws Exception {
+        JSONArray jsonArray = JSONArray.parseArray(onlineUsers);
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMddHHmmssSSS");
+        List<String> onlineIds = new ArrayList<>();
+        for (Object object : jsonArray) {
+            JSONObject jsonObject = (JSONObject) object;
+            String date = dateFormat.format(dateFormat.parse(jsonObject.getString("lastTime")));
+            String key = jsonObject.getString("loginName") + "_" + date;
+            jedisService.del(key, 1);
+            onlineIds.add(jsonObject.getString("id"));
+        }
+        onlineDao.updateOnlineStatus(onlineIds);
     }
 }

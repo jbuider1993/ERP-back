@@ -1,6 +1,5 @@
 package com.kunlun.basedata.service.impl;
 
-import com.alibaba.fastjson.JSONObject;
 import com.kunlun.basedata.model.vo.RedisInfoVo;
 import com.kunlun.basedata.service.IRedisService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,7 +8,6 @@ import org.springframework.util.StringUtils;
 import redis.clients.jedis.Client;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
-import redis.clients.util.Slowlog;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;

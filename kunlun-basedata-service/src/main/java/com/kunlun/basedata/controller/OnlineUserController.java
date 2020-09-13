@@ -68,4 +68,15 @@ public class OnlineUserController {
             return ResponseUtil.failedResponse("用户访问量统计失败！", e.getMessage());
         }
     }
+
+    @RequestMapping(value = "/forceExit", method = RequestMethod.POST)
+    public Object forceExit(String onlineUsers) {
+        try {
+            onlineUserService.forceExit(onlineUsers);
+            return ResponseUtil.successResponse("success");
+        } catch (Exception e) {
+            log.error("OnlineUserController forceExist Error: ", e);
+            return ResponseUtil.failedResponse("强制用户下线失败！", e.getMessage());
+        }
+    }
 }
