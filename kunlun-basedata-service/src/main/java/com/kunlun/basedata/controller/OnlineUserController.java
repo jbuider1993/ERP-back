@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.Date;
 import java.util.List;
 
@@ -66,6 +67,15 @@ public class OnlineUserController {
         } catch (Exception e) {
             log.error("OnlineUserController statisticOnlineByYear Error: ", e);
             return ResponseUtil.failedResponse("用户访问量统计失败！", e.getMessage());
+        }
+    }
+
+    @RequestMapping(value = "/downloadOnlineUsers", method = RequestMethod.GET)
+    public void downloadOnlineUsers(HttpServletResponse response, HttpServletRequest request, OnlineUserModel onlineUserModel) {
+        try {
+            onlineUserService.downloadOnlineUsers(response, request, onlineUserModel);
+        } catch (Exception e) {
+            log.error("OnlineUserController downloadOnlineUsers Error: ", e);
         }
     }
 

@@ -2,6 +2,7 @@ package com.kunlun.basedata.service.impl;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.kunlun.basedata.model.IconModel;
 import com.kunlun.basedata.model.vo.StatisticUserVo;
 import com.kunlun.basedata.utils.AddressUtil;
 import com.kunlun.basedata.utils.CommonUtil;
@@ -9,6 +10,7 @@ import com.kunlun.basedata.dao.IOnlineDao;
 import com.kunlun.basedata.model.OnlineUserModel;
 import com.kunlun.basedata.service.IOnlineUserService;
 import com.kunlun.common.model.Page;
+import com.kunlun.common.utils.ExcelUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
@@ -16,6 +18,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.*;
@@ -113,6 +116,23 @@ public class OnlineUserService implements IOnlineUserService {
             }
         }
         return results;
+    }
+
+    @Override
+    public void downloadOnlineUsers(HttpServletResponse response, HttpServletRequest request, OnlineUserModel onlineUserModel) throws Exception {
+        Map<String, Object> queryMap = CommonUtil.packageQueryMap(new OnlineUserModel(), 0, 99999);
+        List<OnlineUserModel> onlineUserModels = onlineDao.getAllOnlineUser(queryMap);
+        String[] headerNames = new String[]{"登录账号", "登录IP", "登录地点", "位置信息", "浏览器", "操作系统", "登录状态", "登录时间", "最后访问时间"};
+        String[] fieldNames = new String[]{"loginName", "loginIp", "loginAddress", "location", "usedBrowser", "usedWindow", "online", "loginTime", "lastTime"};
+        int[] lineWidths = new int[]{40, 40, 40, 80, 40, 40, 40, 80, 80};
+
+        Map<String, Object> paramMap = new HashMap<>();
+        paramMap.put("dataSource", onlineUserModels);
+        paramMap.put("sheetName", "登录用户");
+        paramMap.put("headerNames", headerNames);
+        paramMap.put("fieldNames", fieldNames);
+        paramMap.put("lineWidths", lineWidths);
+        ExcelUtil.exportExcel(request, response, OnlineUserModel.class, paramMap);
     }
 
     @Override

@@ -77,7 +77,7 @@ public class OnlineUserModel {
         this.usedWindow = usedWindow;
     }
 
-    public boolean isOnline() {
+    public boolean getOnline() {
         return online;
     }
 
