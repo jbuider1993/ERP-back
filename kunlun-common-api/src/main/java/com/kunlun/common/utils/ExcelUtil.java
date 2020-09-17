@@ -4,6 +4,7 @@ import com.kunlun.common.constant.CommonConstant;
 import org.apache.poi.hssf.util.HSSFColor;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.*;
+import org.springframework.util.ObjectUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -14,6 +15,7 @@ import java.lang.reflect.Method;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 public class ExcelUtil {
 
@@ -21,7 +23,13 @@ public class ExcelUtil {
 
     private static final int CELL_HEIGHT = 20;
 
-    public static void exportExcel(HttpServletRequest request, HttpServletResponse response, List<?> excelList, Object object, String sheetName, String[] headerNames) throws Exception {
+    public static void exportExcel(HttpServletRequest request, HttpServletResponse response, Object object, Map<String, Object> paramsMap) throws Exception {
+        List<?> excelList = (List<?>) paramsMap.get("dataSource");
+        String sheetName = (String) paramsMap.get("sheetName");
+        String[] headerNames = (String[]) paramsMap.get("headerNames");
+        String[] fieldNames = (String[]) paramsMap.get("fieldNames");
+        int[] lineWidths = (int[]) paramsMap.get("lineWidths");
+
         // 设置请求及响应Header
         OutputStream outputStream = setResponseHeader(request, response);
 
@@ -43,7 +51,7 @@ public class ExcelUtil {
         cellStyle.setWrapText(false);
 
         // 设置Excel表头，及表头行高
-        generateHeaderRow(headerNames, sheet, headerStyle);
+        generateHeaderRow(headerNames, lineWidths, sheet, headerStyle);
 
         // 设置数据到单元格
         int size = excelList.size();
@@ -53,19 +61,13 @@ public class ExcelUtil {
             row.setHeightInPoints(CELL_HEIGHT);
             Field[] fields = ((Class) object).getDeclaredFields();
             int cellIndex = 0;
-            for (int j = 0; j < fields.length; j++) {
-                // 获取数字段
-                String fieldName = fields[j].getName();
-                if (fieldName.contains("id") || fieldName.contains("Id")) {
-                    cellIndex--;
-                    continue;
-                }
-
+            for (int j = 0; j < fieldNames.length; j++) {
                 // 获取字段的值
+                String fieldName = fieldNames[j];
                 String property = "get" + fieldName.substring(0, 1).toUpperCase() + fieldName.substring(1);
                 Method method = ((Class) object).getMethod(property);
                 Object obj = method.invoke(excelList.get(i));
-                String value = String.valueOf(obj);
+                String value = String.valueOf(ObjectUtils.isEmpty(obj) ? "" : obj);
                 if (obj instanceof Date) {
                     SimpleDateFormat dateFormat = new SimpleDateFormat(CommonConstant.DATE_FORMAT);
                     value = dateFormat.format(obj);
@@ -89,7 +91,7 @@ public class ExcelUtil {
         workbook.close();
     }
 
-    private static void generateHeaderRow(String[] headerNames, XSSFSheet sheet, XSSFCellStyle headerStyle) {
+    private static void generateHeaderRow(String[] headerNames, int[] lineWidths, XSSFSheet sheet, XSSFCellStyle headerStyle) {
         XSSFRow headerRow = sheet.createRow(0);
         headerRow.setHeightInPoints(HEADER_HEIGHT);
         for (int j = 0; j < headerNames.length; j++) {
@@ -99,7 +101,7 @@ public class ExcelUtil {
 
             // 表头列宽自动设置
             sheet.autoSizeColumn(j);
-            sheet.setColumnWidth(j, sheet.getColumnWidth(j) * 17 / 10);
+            sheet.setColumnWidth(j, lineWidths[j] * 100);
         }
     }
 

@@ -12,10 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 @Service
 @Transactional
@@ -66,6 +63,15 @@ public class UserService implements IUserService {
         Map<String, Object> queryMap = CommonUtil.packageQueryMap(new UserModel(), 0, 99999);
         List<UserModel> userlogList = userDao.getAllUser(queryMap);
         String[] headerNames = new String[]{"用户名", "密码", "电话号码", "邮箱", "创建时间", "更新时间"};
-        ExcelUtil.exportExcel(request, response, userlogList, UserModel.class, "人员用户", headerNames);
+        String[] fieldNames = new String[]{"userName", "password", "phoneNumber", "email", "createTime", "modifiedTime"};
+        int[] lineWidths = new int[]{40, 40, 50, 50, 80, 80};
+
+        Map<String, Object> paramMap = new HashMap<>();
+        paramMap.put("dataSource", userlogList);
+        paramMap.put("sheetName", "人员用户");
+        paramMap.put("headerNames", headerNames);
+        paramMap.put("fieldNames", fieldNames);
+        paramMap.put("lineWidths", lineWidths);
+        ExcelUtil.exportExcel(request, response, UserModel.class, paramMap);
     }
 }
