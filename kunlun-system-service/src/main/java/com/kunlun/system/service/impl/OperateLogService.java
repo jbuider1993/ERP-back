@@ -64,7 +64,7 @@ public class OperateLogService implements IOperateLogService {
         List<OperatorLogModel> logList = operateLogDao.getAllOperateLog(queryMap);
         String[] headerNames = new String[]{"IP地址", "用户名", "操作类型", "操作描述", "请求URL", "请求协议", "请求参数", "请求方式", "访问服务名", "访问服务端口", "运行线程名", "访问类名", "调用方法", "异常信息", "访问状态", "访问时间"};
         String[] fieldNames = new String[]{"ip", "userName", "operatorType", "operateDescription", "requestUrl", "protocal", "params", "style", "serviceName", "port", "threadName", "clzName", "methodName", "exceptionInfo", "status", "operateTime"};
-        int[] lineWidths = new int[]{20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20};
+        int[] lineWidths = new int[]{35, 35, 30, 50, 80, 30, 80, 30, 60, 35, 60, 80, 50, 60, 30, 60};
 
         Map<String, Object> paramMap = new HashMap<>();
         paramMap.put("dataSource", logList);
