@@ -24,9 +24,13 @@ public class HomeService implements IHomeService {
 
     @Override
     public HomeCountModel getUserCount() throws Exception {
+        // 注册用户量
+        Map<String, Object> userMap = new HashMap<>();
+        int userCount = userDao.getUsersCount(userMap);
+
         // 总访问量
         HashMap<String, Object> newMap = new HashMap<>();
-        int userCount = onlineDao.getOnlinesCount(newMap);
+        int visitCount = onlineDao.getOnlinesCount(newMap);
 
         // 在线用户数
         Map<String, Object> queryMap = new HashMap<>();
@@ -37,6 +41,7 @@ public class HomeService implements IHomeService {
         int leastMonthCount = onlineDao.getCountLeastMonth(newMap);
         HomeCountModel countModel = new HomeCountModel();
         countModel.setUserCount(userCount);
+        countModel.setVisitCount(visitCount);
         countModel.setOnlineCount(onlineCount);
         countModel.setLeastCount(leastMonthCount);
         return countModel;

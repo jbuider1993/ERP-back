@@ -5,6 +5,8 @@ public class HomeCountModel {
 
     private int userCount;
 
+    private int visitCount;
+
     private int onlineCount;
 
     private int leastCount;
@@ -23,6 +25,14 @@ public class HomeCountModel {
 
     public void setUserCount(int userCount) {
         this.userCount = userCount;
+    }
+
+    public int getVisitCount() {
+        return visitCount;
+    }
+
+    public void setVisitCount(int visitCount) {
+        this.visitCount = visitCount;
     }
 
     public int getOnlineCount() {
