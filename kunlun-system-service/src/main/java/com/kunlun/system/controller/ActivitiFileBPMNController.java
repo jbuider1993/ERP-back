@@ -1,4 +1,4 @@
-package com.kunlun.system.controller.activiti;
+package com.kunlun.system.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
@@ -25,7 +25,7 @@ import java.io.InputStreamReader;
 
 @RestController
 @RequestMapping("importBPMN")
-public class FileBPMNController {
+public class ActivitiFileBPMNController {
 
     @Autowired
     private RepositoryService repositoryService;

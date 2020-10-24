@@ -1,4 +1,4 @@
-package com.kunlun.system.controller.activiti;
+package com.kunlun.system.controller;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
