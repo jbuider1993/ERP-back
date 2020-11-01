@@ -1,5 +1,8 @@
 package com.kunlun.system.controller;
 
+import com.kunlun.common.model.SystemDataModel;
+import com.kunlun.common.utils.ResponseUtil;
+import com.kunlun.common.utils.SystemMonitor;
 import com.kunlun.system.service.MailService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -10,11 +13,22 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping(value = "/test")
-public class EmailController {
-    private Logger log = LoggerFactory.getLogger(EmailController.class);
+public class CommonController {
+    private Logger log = LoggerFactory.getLogger(CommonController.class);
 
     @Autowired
     private MailService mailService;
+
+    @RequestMapping(value = "/collect", method = RequestMethod.GET)
+    public Object collectMonitor() {
+        try {
+            SystemDataModel systemDataModel = SystemMonitor.collect();
+            return ResponseUtil.successResponse(systemDataModel);
+        } catch (Exception e) {
+            log.error("收集系统信息失败", e);
+            return ResponseUtil.failedResponse("收集系统信息成功", e.getMessage());
+        }
+    }
 
     @RequestMapping(value = "/email", method = RequestMethod.GET)
     public Object email() {

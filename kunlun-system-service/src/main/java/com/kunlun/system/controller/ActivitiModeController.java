@@ -35,9 +35,9 @@ import java.io.InputStream;
 
 @RestController
 @RequestMapping(value = "/service")
-public class ActivitiModelController implements ModelDataJsonConstants {
+public class ActivitiModeController implements ModelDataJsonConstants {
 
-    protected static final Logger log = LoggerFactory.getLogger(ActivitiModelController.class);
+    protected static final Logger log = LoggerFactory.getLogger(ActivitiModeController.class);
 
     @Autowired
     ProcessEngine processEngine;

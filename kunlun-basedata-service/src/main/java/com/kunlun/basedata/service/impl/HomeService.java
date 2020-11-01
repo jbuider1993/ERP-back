@@ -3,13 +3,13 @@ package com.kunlun.basedata.service.impl;
 import com.kunlun.basedata.dao.IOnlineDao;
 import com.kunlun.basedata.dao.IUserDao;
 import com.kunlun.basedata.model.HomeCountModel;
-import com.kunlun.basedata.model.vo.MemoryDiskVo;
 import com.kunlun.basedata.service.IHomeService;
-import com.sun.management.OperatingSystemMXBean;
+import com.kunlun.common.model.SystemDataModel;
+import com.kunlun.common.utils.SystemMonitor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import java.lang.management.ManagementFactory;
+
 import java.util.*;
 
 @Service
@@ -48,13 +48,7 @@ public class HomeService implements IHomeService {
     }
 
     @Override
-    public MemoryDiskVo getDiskInfo() throws Exception {
-        MemoryDiskVo memoryDiskVo = new MemoryDiskVo();
-        OperatingSystemMXBean mem = (OperatingSystemMXBean) ManagementFactory.getOperatingSystemMXBean();
-        System.out.println("Total RAM：" + mem.getTotalPhysicalMemorySize() / 1024 / 1024 + "MB");
-        System.out.println("Available　RAM：" + mem.getFreePhysicalMemorySize() / 1024 / 1024 + "MB");
-        System.out.println("getProcessCpuLoad：" + mem.getProcessCpuLoad());
-        System.out.println("getSystemCpuLoad：" + mem.getSystemCpuLoad());
-        return null;
+    public SystemDataModel collectMonitor() throws Exception {
+        return SystemMonitor.collect();
     }
 }

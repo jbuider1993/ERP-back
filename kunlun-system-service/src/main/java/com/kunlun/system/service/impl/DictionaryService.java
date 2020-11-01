@@ -54,6 +54,11 @@ public class DictionaryService implements IDictionaryService {
     }
 
     @Override
+    public List<DictionaryValueModel> getValuesByDictCode(String dictCode) throws Exception {
+        return dictionaryDao.getValuesByDictCode(dictCode);
+    }
+
+    @Override
     public void insertDictionaryItem(DictionaryItemModel dictionaryItemModel) throws Exception {
         dictionaryItemModel.setId(CommonUtil.generateUUID());
         dictionaryItemModel.setCreateTime(new Date());

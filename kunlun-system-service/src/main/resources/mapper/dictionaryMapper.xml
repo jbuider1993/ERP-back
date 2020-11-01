@@ -81,4 +81,16 @@
         DELETE FROM t_dictionary_value WHERE id IN (#{id});
     </delete>
 
+    <select id="getValuesByDictCode" parameterType="java.lang.String" resultType="DictionaryValueModel">
+        SELECT
+            dict.id AS id,
+            dict.dict_id AS dictId,
+            dict.dict_sub_code AS dictSubCode,
+            dict.dict_sub_name AS dictSubName,
+            dict.dict_value AS dictValue
+        FROM t_dictionary_value dict
+        LEFT JOIN t_dictionary_item item ON item.id = dict.dict_id
+        WHERE item.dict_code = #{dictCode}
+    </select>
+
 </mapper>

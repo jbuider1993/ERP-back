@@ -1,6 +1,6 @@
 package com.kunlun.basedata;
 
-import com.kunlun.basedata.task.TaskService;
+import com.kunlun.basedata.task.ScheduleTaskService;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -22,7 +22,7 @@ import zipkin.server.EnableZipkinServer;
 public class BasedataApplication implements CommandLineRunner {
 
     @Autowired
-    private TaskService taskService;
+    private ScheduleTaskService scheduleTaskService;
 
     public static void main(String[] args) {
         SpringApplication.run(BasedataApplication.class, args);
@@ -30,6 +30,7 @@ public class BasedataApplication implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        taskService.prepareTask();
+        // 定时删除缓存的Token
+        scheduleTaskService.prepareCache();
     }
 }

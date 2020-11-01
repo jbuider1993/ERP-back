@@ -4,10 +4,14 @@ import com.kunlun.common.model.Page;
 import com.kunlun.system.model.DictionaryItemModel;
 import com.kunlun.system.model.DictionaryValueModel;
 
+import java.util.List;
+
 public interface IDictionaryService {
     public Page<DictionaryItemModel> getAllDictionaryItem(DictionaryItemModel dictionaryItemModel, int currentPage, int pageSize) throws Exception;
 
     public Page<DictionaryValueModel> getAllDictionaryValue(DictionaryValueModel dictionaryModel, int currentPage, int pageSize) throws Exception;
+
+    public List<DictionaryValueModel> getValuesByDictCode(String dictCode) throws Exception;
 
     public void insertDictionaryItem(DictionaryItemModel dictionaryItemModel) throws Exception;
 

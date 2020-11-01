@@ -15,6 +15,8 @@ public interface IDictionaryDao {
 
     public List<DictionaryValueModel> getAllDictionaryValue(Map<String, Object> queryMap) throws Exception;
 
+    public List<DictionaryValueModel> getValuesByDictCode(String dictCode) throws Exception;
+
     public int getDictionarySubCount(Map<String, Object> queryMap) throws Exception;
 
     public void insertDictionaryItem(DictionaryItemModel dictionaryItemModel) throws Exception;

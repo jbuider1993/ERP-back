@@ -13,9 +13,11 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 @Service
-public class TaskService {
+public class ScheduleTaskService {
 
     private static Logger log = LogManager.getLogger();
+
+    private ScheduledExecutorService executorPool = Executors.newScheduledThreadPool(1);
 
     @Autowired
     @Qualifier("redisService")
@@ -24,11 +26,10 @@ public class TaskService {
     @Autowired
     private IOnlineUserService onlineUserService;
 
-    public void prepareTask() {
-        log.info("TaskService prepareTask start");
-        ScheduledExecutorService executorPool = Executors.newScheduledThreadPool(1);
+    public void prepareCache() {
+        log.info("TaskService prepareCache start");
         ScheduleCacheTask task = new ScheduleCacheTask(redisService, onlineUserService);
         executorPool.scheduleAtFixedRate(task, 1, 60 * 35, TimeUnit.SECONDS);
-        log.info("TaskService prepareTask end");
+        log.info("TaskService prepareCache end");
     }
 }

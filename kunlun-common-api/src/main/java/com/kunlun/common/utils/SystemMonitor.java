@@ -21,7 +21,7 @@ public class SystemMonitor {
 
     private static Logger log = LogManager.getLogger();
 
-    public static SystemDataModel init() {
+    public static SystemDataModel collect() {
         SystemDataModel systemModel = new SystemDataModel();
         try {
             // 操作系统

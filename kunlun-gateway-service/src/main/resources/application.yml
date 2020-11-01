@@ -9,7 +9,7 @@ shiro:
   secret: 61D73234C4F93E03074D74D74D1E39D9
   expireTime: 1800000
   tokenHeader: Authorization
-  ignoreUrls: /kunlun-gateway-service/shiro/login, /kunlun-basedata-service/code/getAuthCode, /kunlun-gateway-service/shiro/logout, /kunlun-basedata-service/v2/api-docs, /kunlun-system-service/v2/api-docs, /actuator/hystrix.stream, /hystrix, /hystrix/images/hystrix-logo.png
+  ignoreUrls: /kunlun-gateway-service/shiro/login, /kunlun-basedata-service/code/getAuthCode, /kunlun-gateway-service/shiro/logout, /kunlun-basedata-service/v2/api-docs, /kunlun-system-service/v2/api-docs, /actuator/hystrix.stream, /hystrix, /hystrix/images/hystrix-logo.png, /kunlun-register-service/home/collect, /kunlun-gateway-service/home/collect, /kunlun-basedata-service/home/collect, /kunlun-system-service/home/collect
 
 zuul:
   # 饥饿加载，防止懒加载时第一次请求超时而失败
@@ -20,8 +20,8 @@ zuul:
   host:
     max-total-connections: 200
     max-per-route-connections: 20
-    socket-timeout-millis: 10000
-    connect-timeout-millis: 10000
+    socket-timeout-millis: 30000
+    connect-timeout-millis: 30000
   routes:
     register:
       path: /kunlun-register-service/**
@@ -61,9 +61,9 @@ ribbon:
     clients: kunlun-basedata-service, kunlun-system-service
   eureka:
     enabled: true
-  ReadTimeout: 10000
-  ConnectTimeout: 10000
-  SocketTimeout: 10000
+  ReadTimeout: 30000
+  ConnectTimeout: 30000
+  SocketTimeout: 30000
   #对当前实例的重试次数
   MaxAutoRetries: 1
   #切换实例的重试次数
