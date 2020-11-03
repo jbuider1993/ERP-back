@@ -61,9 +61,9 @@ ribbon:
     clients: kunlun-basedata-service, kunlun-system-service
   eureka:
     enabled: true
-  ReadTimeout: 30000
-  ConnectTimeout: 30000
-  SocketTimeout: 30000
+  ReadTimeout: 50000
+  ConnectTimeout: 50000
+  SocketTimeout: 50000
   #对当前实例的重试次数
   MaxAutoRetries: 1
   #切换实例的重试次数

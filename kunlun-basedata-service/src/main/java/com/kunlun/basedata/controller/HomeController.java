@@ -4,6 +4,7 @@ import com.kunlun.basedata.service.IHomeService;
 import com.kunlun.basedata.service.IRedisService;
 import com.kunlun.common.model.SystemDataModel;
 import com.kunlun.common.utils.ResponseUtil;
+import com.kunlun.common.utils.SystemMonitor;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,7 +47,7 @@ public class HomeController {
     @RequestMapping(value = "/collect", method = RequestMethod.GET)
     public Object collectMonitor() {
         try {
-            SystemDataModel systemDataModel = homeService.collectMonitor();
+            SystemDataModel systemDataModel = SystemMonitor.collect();
             return ResponseUtil.successResponse(systemDataModel);
         } catch (Exception e) {
             log.error("收集系统信息失败", e);

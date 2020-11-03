@@ -4,8 +4,6 @@ import com.kunlun.basedata.dao.IOnlineDao;
 import com.kunlun.basedata.dao.IUserDao;
 import com.kunlun.basedata.model.HomeCountModel;
 import com.kunlun.basedata.service.IHomeService;
-import com.kunlun.common.model.SystemDataModel;
-import com.kunlun.common.utils.SystemMonitor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -45,10 +43,5 @@ public class HomeService implements IHomeService {
         countModel.setOnlineCount(onlineCount);
         countModel.setLeastCount(leastMonthCount);
         return countModel;
-    }
-
-    @Override
-    public SystemDataModel collectMonitor() throws Exception {
-        return SystemMonitor.collect();
     }
 }

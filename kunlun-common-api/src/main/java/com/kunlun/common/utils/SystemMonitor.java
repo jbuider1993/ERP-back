@@ -102,8 +102,8 @@ public class SystemMonitor {
                 - prevTicks[CentralProcessor.TickType.IDLE.getIndex()];
         long totalCpu = user + nice + cSys + idle + iowait + irq + softirq + steal;
 
-        String usedSystem = new DecimalFormat("#.##").format(cSys * 1.0 / totalCpu);
-        String usedUser = new DecimalFormat("#.##").format(user * 1.0 / totalCpu);
+        String usedSystem = totalCpu == 0 ? "0" : new DecimalFormat("#.##").format(cSys * 1.0 / totalCpu);
+        String usedUser = totalCpu == 0 ? "0" : new DecimalFormat("#.##").format(user * 1.0 / totalCpu);
         BigDecimal totalUse = new BigDecimal(usedSystem).add(new BigDecimal(usedUser)).multiply(new BigDecimal(100));
         String cpuCore = String.valueOf(processor.getLogicalProcessorCount());
         log.info("CPU核数: " + cpuCore + " CPU使用率: " + totalUse + " CPU空闲率: " + new DecimalFormat("#.##%").format(idle * 1.0 / totalCpu));
