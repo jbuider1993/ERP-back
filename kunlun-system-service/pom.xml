@@ -138,6 +138,16 @@
             <groupId>org.activiti</groupId>
             <artifactId>activiti-explorer</artifactId>
             <version>5.22.0</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.vaadin.addons</groupId>
+                    <artifactId>dcharts-widget</artifactId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>groovy-all</artifactId>
+                    <groupId>org.codehaus.groovy</groupId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>org.activiti</groupId>
