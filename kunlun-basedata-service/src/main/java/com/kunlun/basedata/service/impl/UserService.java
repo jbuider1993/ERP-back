@@ -22,9 +22,9 @@ public class UserService implements IUserService {
     private IUserDao userDao;
 
     @Override
-    public Page getAllUser(UserModel userMode, int currentPage, int pageSize) throws Exception {
+    public Page getAllUser(UserModel userModel, int currentPage, int pageSize) throws Exception {
         int startIndex = (currentPage - 1) * pageSize;
-        Map<String, Object> queryMap = CommonUtil.packageQueryMap(userMode, startIndex, pageSize);
+        Map<String, Object> queryMap = CommonUtil.packageQueryMap(userModel, startIndex, pageSize);
 
         Page page = new Page();
         page.setCurrentPage(currentPage);
