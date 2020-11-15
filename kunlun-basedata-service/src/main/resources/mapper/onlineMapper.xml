@@ -15,7 +15,6 @@
 
     <select id = "getOnlinesCount" parameterType="java.util.Map" resultType = "java.lang.Integer">
         SELECT COUNT(id) FROM t_online_user
-        WHERE 1 = 1
         <include refid="queryOnlineCondition" />
     </select>
 
@@ -25,27 +24,29 @@
     </select>
 
     <sql id="queryOnlineCondition">
-        <if test="loginName != null and loginName != ''">
-            AND login_name LIKE CONCAT('%', #{loginName}, '%')
-        </if>
-        <if test="loginIp != null and loginIp != ''">
-            AND login_ip LIKE CONCAT('%', #{loginIp}, '%')
-        </if>
-        <if test="loginAddress != null and loginAddress != ''">
-            AND login_address = #{loginAddress}
-        </if>
-        <if test="usedBrowser != null and usedBrowser != ''">
-            AND used_browser = #{usedBrowser}
-        </if>
-        <if test="usedWindow != null and usedWindow != ''">
-            AND used_window = #{usedWindow}
-        </if>
-        <if test="online != null and online != ''">
-            AND online = #{online}
-        </if>
-        <if test="loginTime != null and loginTime != ''">
-            AND login_time = #{loginTime}
-        </if>
+        <trim prefix="WHERE" prefixOverrides="AND | OR">
+            <if test="loginName != null and loginName != ''">
+                AND login_name LIKE CONCAT('%', #{loginName}, '%')
+            </if>
+            <if test="loginIp != null and loginIp != ''">
+                AND login_ip LIKE CONCAT('%', #{loginIp}, '%')
+            </if>
+            <if test="loginAddress != null and loginAddress != ''">
+                AND login_address = #{loginAddress}
+            </if>
+            <if test="usedBrowser != null and usedBrowser != ''">
+                AND used_browser = #{usedBrowser}
+            </if>
+            <if test="usedWindow != null and usedWindow != ''">
+                AND used_window = #{usedWindow}
+            </if>
+            <if test="online != null and online != ''">
+                AND online = #{online}
+            </if>
+            <if test="loginTime != null and loginTime != ''">
+                AND login_time = #{loginTime}
+            </if>
+        </trim>
     </sql>
 
     <insert id="addOnlineUser" parameterType="OnlineUserModel">
