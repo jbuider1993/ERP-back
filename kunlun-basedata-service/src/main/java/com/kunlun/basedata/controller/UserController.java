@@ -7,6 +7,7 @@ import com.kunlun.common.utils.ResponseUtil;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -26,9 +27,9 @@ public class UserController {
     private IUserService userService;
 
     @RequestMapping(value = "/getAllUser", method = RequestMethod.GET)
-    public Object getAllUser(UserModel userMode, int currentPage, int pageSize) {
+    public Object getAllUser(UserModel userModel, int currentPage, int pageSize) {
         try {
-            Page users = userService.getAllUser(userMode, currentPage, pageSize);
+            Page users = userService.getAllUser(userModel, currentPage, pageSize);
             return ResponseUtil.successResponse(users);
         } catch (Exception e) {
             log.error("UserController getAllUser Error: ", e);

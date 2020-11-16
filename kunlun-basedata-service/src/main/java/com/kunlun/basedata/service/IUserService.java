@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 public interface IUserService {
-    public Page getAllUser(UserModel userMode, int currentPage, int pageSize) throws Exception;
+    public Page getAllUser(UserModel userModel, int currentPage, int pageSize) throws Exception;
 
     public void addUser(UserModel user) throws Exception;
 
