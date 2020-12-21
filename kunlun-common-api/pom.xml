@@ -6,7 +6,7 @@
 
     <groupId>com.kunlun.common</groupId>
     <artifactId>kunlun-common-api</artifactId>
-    <version>1.0.0-SNAPSHOT</version>
+    <version>1.0.1-SNAPSHOT</version>
 
     <name>kunlun-common-api</name>
     <description>基础数据公共工具</description>
