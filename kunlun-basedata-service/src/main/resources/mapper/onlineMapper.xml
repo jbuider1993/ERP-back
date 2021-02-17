@@ -94,7 +94,7 @@
     </update>
 
     <select id="statisticOnlineByYear" resultType="StatisticUserVo">
-        SELECT to_char(online.login_time, 'YYYY-MM') AS month, COUNT(online.id) AS value FROM t_online_user online
+        SELECT to_char(online.login_time, 'MM') AS month, COUNT(online.id) AS value FROM t_online_user online
         WHERE online.login_time BETWEEN to_date(#{start}, 'YYYY-MM') AND to_date(#{end}, 'YYYY-MM')
         GROUP BY month
     </select>

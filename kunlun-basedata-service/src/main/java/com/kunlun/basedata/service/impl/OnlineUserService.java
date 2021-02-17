@@ -99,21 +99,21 @@ public class OnlineUserService implements IOnlineUserService {
     @Override
     public List<StatisticUserVo> statisticOnlineByYear(String year) throws Exception {
         String[] monthArrays = new String[]{"01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"};
-        List<StatisticUserVo> statisticList = onlineDao.statisticOnlineByYear(year + "-01", year + "-12");
+        String startDate = year + "-" + monthArrays[0];
+        String endDate = year + "-" + monthArrays[11];
+        List<StatisticUserVo> statisticList = onlineDao.statisticOnlineByYear(startDate, endDate);
         List<StatisticUserVo> results = new ArrayList<>();
         for (String month : monthArrays) {
-            Optional<StatisticUserVo> optional = statisticList.stream().filter(obj -> ("2020-" + month).equals(obj.getMonth())).findAny();
+            Optional<StatisticUserVo> optional = statisticList.stream().filter(obj -> month.equals(obj.getMonth())).findAny();
             StatisticUserVo statisticUserVo = null;
             if (!optional.isPresent()) {
                 statisticUserVo = new StatisticUserVo();
                 statisticUserVo.setMonth(month);
                 statisticUserVo.setValue(0);
-                results.add(statisticUserVo);
             } else {
                 statisticUserVo = optional.get();
-                statisticUserVo.setMonth(statisticUserVo.getMonth().substring(statisticUserVo.getMonth().indexOf("-") + 1));
-                results.add(optional.get());
             }
+            results.add(statisticUserVo);
         }
         return results;
     }
