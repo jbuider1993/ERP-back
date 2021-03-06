@@ -1,5 +1,7 @@
 package com.kunlun.system.model;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.util.Date;
 
 public class SchedulePlanModel {
@@ -10,8 +12,10 @@ public class SchedulePlanModel {
 
     private String themeColor;
 
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date startTime;
 
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date endTime;
 
     private String participants;
