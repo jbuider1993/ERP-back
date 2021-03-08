@@ -21,6 +21,7 @@ spring:
       retry:
         enabled: true
   zipkin:
+    enabled: true
     sleuth:
       sampler:
         percentage: 1.0
@@ -39,7 +40,9 @@ spring:
     publisher-returns: true
 
 # Feign配置
-feign.hystrix.enabled: true
+feign:
+  hystrix:
+    enabled: true
 
 # hystrix熔断配置
 hystrix:
@@ -47,13 +50,13 @@ hystrix:
   command:
     default:
       circuitBreaker:
-        sleepWindowInMilliseconds: 360000
+        sleepWindowInMilliseconds: 80000
         forceClosed: true
       execution:
         isolation:
           thread:
             # hystrix 超时时间最好大于Ribbon的超时时间
-            timeoutInMilliseconds: 360000
+            timeoutInMilliseconds: 80000
         timeout:
           enabled: true
 

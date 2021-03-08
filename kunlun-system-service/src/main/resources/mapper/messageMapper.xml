@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace = "com.kunlun.system.dao.IMessageDao">
+
+    <select id = "getAllMessges" parameterType="java.util.Map" resultType = "MessageNoticeModel">
+        SELECT
+            msg.id AS id,
+            msg.user_id AS userId,
+            msg.type AS type,
+            msg.title AS title,
+            msg.description AS description,
+            msg.content AS content,
+            msg.create_time AS createTime,
+            msg.modified_time AS modifiedTime
+        FROM t_message_notice msg
+        WHERE 1 = 1
+        ORDER BY msg.create_time ASC
+        LIMIT #{pageSize}
+    </select>
+
+    <select id = "getMessageCount" parameterType="java.util.Map" resultType = "java.lang.Integer">
+        SELECT COUNT(id) FROM t_message_notice
+        WHERE 1 = 1
+    </select>
+
+    <sql id="queryUserCondition">
+        <if test="userName != null and userName != ''">
+            AND user_name LIKE CONCAT('%', #{userName}, '%')
+        </if>
+        <if test="phoneNumber != null and phoneNumber != ''">
+            AND phone_number LIKE CONCAT('%', #{phoneNumber}, '%')
+        </if>
+        <if test="email != null and email != ''">
+            AND email LIKE CONCAT('%', #{email}, '%')
+        </if>
+        <if test="createTime != null and createTime != ''">
+            AND create_time = #{createTime}
+        </if>
+    </sql>
+
+    <insert id="addMessage" parameterType="MessageNoticeModel">
+        INSERT INTO t_message_notice
+        (id, user_id, type, title, description, content, create_time, modified_time)
+        VALUES
+        (#{id}, #{userId}, #{type}, #{title}, #{description},
+        #{content}, #{createTime}, #{modifiedTime})
+    </insert>
+
+    <update id="updateMessage" parameterType="MessageNoticeModel">
+        UPDATE t_message_notice SET
+            user_id = #{userId}, type = #{type}, title = #{title}, description = #{description},
+            content = #{content}, modified_time = #{modifiedTime}
+        WHERE id = #{id}
+    </update>
+
+    <delete id="batchDeleteMessage" parameterType="java.util.List">
+        DELETE FROM t_message_notice WHERE id IN
+        <foreach collection="list" item="item" open="(" close=")" separator=",">
+            #{item}
+        </foreach>
+    </delete>
+
+</mapper>

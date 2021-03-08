@@ -1,36 +1,40 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace = "com.scmp.base.dao.IMenuDao">
+<mapper namespace = "com.kunlun.basedata.dao.IMenuDao">
 
     <select id = "getAllMenu" parameterType="java.util.Map" resultType = "MenuModel">
         SELECT
-		    menu.id, menu.name, menu.key, menu.url, menu.level, icon.key AS icon, menu.forbid, menu.parent_id AS parentId, menu.long_code AS longCode
-        FROM t_menu menu
-        LEFT JOIN t_icon icon ON menu.icon_id = icon.id
+		    menu.id, menu.name, menu.key, menu.url, menu.icon, menu.show,
+		    menu.carry_token AS carryToken, menu.parent_id AS parentId, menu.long_code AS longCode,
+		    menu.create_time AS createTime, menu.modified_time AS modifiedTime
+        FROM t_display_menu menu
         WHERE 1 = 1
         <include refid="queryMenuCondition" />
         ORDER BY menu.create_time ASC
     </select>
 
     <select id = "getMenusCount" parameterType="java.util.Map" resultType = "java.lang.Integer">
-        SELECT COUNT(id) FROM t_menu menu
+        SELECT COUNT(id) FROM t_display_menu menu
         WHERE 1 = 1
         <include refid="queryMenuCondition" />
     </select>
 
     <sql id="queryMenuCondition">
+        <if test="menuKeys != null and menuKeys != ''">
+            AND menu.key IN (
+            <foreach collection="menuKeys" item="item" separator=",">
+                #{item}
+            </foreach>)
+        </if>
         <if test="name != null and name != ''">
             AND menu.name LIKE CONCAT('%', #{name}, '%')
         </if>
         <if test="url != null and url != ''">
             AND menu.url LIKE CONCAT('%', #{url}, '%')
         </if>
-        <if test="level != null and level != ''">
-            AND menu.level = #{level}
-        </if>
-        <if test="forbid != null and forbid != ''">
-            AND menu.forbid = #{forbid}
+        <if test="show != null and show != ''">
+            AND menu.show = #{show}
         </if>
         <if test="createTime != null and createTime != ''">
             AND menu.create_time = #{createTime}
@@ -38,23 +42,23 @@
     </sql>
 
     <insert id="addMenu" parameterType="MenuModel">
-        INSERT INTO t_menu
-            (id, name, key, url, level, icon_id, forbid, parent_id, long_code, create_time, modified_time)
+        INSERT INTO t_display_menu
+            (id, name, key, url, icon, show, carry_token, parent_id, long_code, create_time, modified_time)
         VALUES
-            (#{id}, #{name}, #{key}, #{url}, #{level}, #{iconId}, #{forbid},
+            (#{id}, #{name}, #{key}, #{url}, #{icon}, #{show}, #{carryToken},
             #{parentId}, #{longCode}, #{createTime}, #{modifiedTime})
     </insert>
 
     <update id="editMenu" parameterType="MenuModel">
-        UPDATE t_menu SET
-            name = #{name}, key = #{key}, url = #{url}, icon_id = #{iconId}, forbid = #{forbid},
+        UPDATE t_display_menu SET
+            name = #{name}, key = #{key}, url = #{url}, icon = #{icon}, show = #{show}, carry_token = #{carryToken},
             parent_id = #{parentId}, long_code = #{longCode}, modified_time = #{modifiedTime}
         WHERE id = #{id}
     </update>
 
     <delete id="deleteMenu" parameterType="java.util.Arrays">
         <foreach collection="array" item="item" separator=";">
-            DELETE FROM t_menu WHERE position(#{item} IN long_code) > 0
+            DELETE FROM t_display_menu WHERE position(#{item} IN long_code) > 0
         </foreach>
     </delete>
 

@@ -3,13 +3,13 @@ server:
 
 spring:
   application:
-    name: scmp-gate-way
+    name: kunlun-gateway-service
 
 shiro:
   secret: 61D73234C4F93E03074D74D74D1E39D9
   expireTime: 1800000
   tokenHeader: Authorization
-  ignoreUrls: /gate-way/shiro/login, /base-cache/code/getAuthCode, /gate-way/shiro/logout
+  ignoreUrls: /kunlun-gateway-service/shiro/login, /kunlun-basedata-service/code/getAuthCode, /kunlun-gateway-service/shiro/logout, /kunlun-basedata-service/v2/api-docs, /kunlun-system-service/v2/api-docs, /actuator/hystrix.stream, /hystrix, /hystrix/images/hystrix-logo.png, /kunlun-register-service/home/collect, /kunlun-gateway-service/home/collect, /kunlun-basedata-service/home/collect, /kunlun-system-service/home/collect
 
 zuul:
   # 饥饿加载，防止懒加载时第一次请求超时而失败
@@ -18,36 +18,65 @@ zuul:
   #是否开启路由重试
   retryable: true
   host:
-    socket-timeout-millis: 300000
-    connect-timeout-millis: 300000
+    max-total-connections: 200
+    max-per-route-connections: 20
+    socket-timeout-millis: 30000
+    connect-timeout-millis: 30000
   routes:
-    registry-amqp:
-      path: /registry-amqp/**
-      serviceId: scmp-registry-ampq
-    gate-way:
-      path: /gate-way/**
-      serviceId: scmp-gate-way
-    base-cache:
-      path: /base-cache/**
-      serviceId: scmp-base-cache
-    system-service:
-      path: /system-service/**
-      serviceId: scmp-system-service
+    register:
+      path: /kunlun-register-service/**
+      serviceId: kunlun-register-service
+      # 不过滤Header中的Authorization或Token
+      sensitive-headers:
+      custom-sensitive-headers: true
+    gateway:
+      path: /kunlun-gateway-service/**
+      serviceId: kunlun-gateway-service
+      sensitive-headers:
+      custom-sensitive-headers: true
+    basedata:
+      path: /kunlun-basedata-service/**
+      serviceId: kunlun-basedata-service
+      sensitive-headers:
+      custom-sensitive-headers: true
+    system:
+      path: /kunlun-system-service/**
+      serviceId: kunlun-system-service
+      sensitive-headers:
+      custom-sensitive-headers: true
   ignored-headers: Access-Control-Allow-Credentials, Access-Control-Allow-Origin
+
+turbine:
+  # 配置 Eureka 中的 serviceId 列表，指定要监控的服务
+  app-config: kunlun-gateway-service, kunlun-basedata-service, kunlun-system-service
+  aggregator:
+    cluster-config: default
+  # 指定集群名称
+  cluster-name-expression: "'default'"
 
 ribbon:
   # 饥饿加载，防止懒加载时第一次请求超时而失败
   eager-load:
     enabled: true
-    clients: scmp-base-cache, scmp-system-service
+    clients: kunlun-basedata-service, kunlun-system-service
   eureka:
     enabled: true
-  ReadTimeout: 300000
-  ConnectTimeout: 300000
-  SocketTimeout: 300000
+  ReadTimeout: 50000
+  ConnectTimeout: 50000
+  SocketTimeout: 50000
   #对当前实例的重试次数
   MaxAutoRetries: 1
   #切换实例的重试次数
-  MaxAutoRetriesNextServer: 1
+#  MaxAutoRetriesNextServer: 1
   #对所有操作请求都进行重试
   OkToRetryOnAllOperations: true
+
+# 系统自动配置项
+kunlun:
+  # swagger配置
+  swagger:
+    enable: true
+    basePackage: com.kunlun.gateway.controller
+    title: ${spring.application.name}服务Swagger文档
+    description: 系统业务接口服务
+    version: 1.0.0

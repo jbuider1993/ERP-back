@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.kunlun.system.dao.IDictionaryDao" >
+
+    <select id="getAllDictionaryItem" parameterType="java.util.Map" resultType="DictionaryItemModel">
+        SELECT
+            id,
+            dict_name AS dictName,
+            dict_code AS dictCode,
+            status,
+            description,
+            create_time AS createTime,
+            modified_time AS modifiedTime
+        FROM t_dictionary_item
+        ORDER BY create_time DESC
+        OFFSET #{currentPage} LIMIT #{pageSize}
+    </select>
+
+    <select id = "getDictionaryCount" parameterType="java.util.Map" resultType = "java.lang.Integer">
+        SELECT
+            COUNT(id)
+        FROM t_dictionary_item
+    </select>
+
+    <select id = "getAllDictionaryValue" parameterType="java.util.Map" resultType = "DictionaryValueModel">
+        SELECT
+            id,
+            dict_sub_name AS dictSubName,
+            dict_sub_code AS dictSubCode,
+            dict_value AS dictValue,
+            description,
+            dict_id AS dictId,
+            create_time AS createTime
+        FROM t_dictionary_value
+        WHERE dict_id = #{dictId}
+    </select>
+
+    <select id = "getDictionarySubCount" parameterType="java.util.Map" resultType = "java.lang.Integer">
+        SELECT
+            COUNT(id)
+        FROM t_dictionary_value
+        WHERE dict_id = #{dictId}
+    </select>
+
+    <insert id="insertDictionaryItem" parameterType="DictionaryItemModel">
+        INSERT INTO t_dictionary_item (
+            id, dict_name, dict_code, status, description, create_time, modified_time
+        ) VALUES (
+            #{id}, #{dictName}, #{dictCode}, #{status}, #{description}, #{createTime}, #{modifiedTime}
+        )
+    </insert>
+
+    <insert id="insertDictionaryValue" parameterType="DictionaryValueModel">
+        INSERT INTO t_dictionary_value (
+            id, dict_sub_code, dict_value, description, dict_id, create_time, modified_time
+        ) VALUES (
+            #{id}, #{dictSubCode}, #{dictValue}, #{description}, #{dictId}, #{createTime}, #{modifiedTime}
+        )
+    </insert>
+
+    <update id="updateDictionaryItem" parameterType="DictionaryItemModel">
+        UPDATE t_dictionary_item SET
+            dict_name = #{dictSubName}, dict_code = #{dictCode}, status = #{status}, description = #{description},
+            create_time = #{createTime}, modified_time = #{modifiedTime}
+        WHERE id = #{id};
+    </update>
+
+    <update id="updateDictionaryValue" parameterType="DictionaryValueModel">
+        UPDATE t_dictionary_value SET
+            dict_sub_code = #{dictSubCode}, dict_value = #{dictValue},
+            description = #{description}, modified_time = #{modifiedTime}
+        WHERE id = #{id};
+    </update>
+
+    <delete id="deleteDictionaryItem" parameterType="DictionaryItemModel">
+        DELETE FROM t_dictionary_item WHERE id IN (#{id});
+        DELETE FROM t_dictionary_value WHERE dict_id IN (#{id});
+    </delete>
+
+    <delete id="deleteDictionaryValue" parameterType="DictionaryValueModel">
+        DELETE FROM t_dictionary_value WHERE id IN (#{id});
+    </delete>
+
+    <select id="getValuesByDictCode" parameterType="java.lang.String" resultType="DictionaryValueModel">
+        SELECT
+            dict.id AS id,
+            dict.dict_id AS dictId,
+            dict.dict_sub_code AS dictSubCode,
+            dict.dict_sub_name AS dictSubName,
+            dict.dict_value AS dictValue
+        FROM t_dictionary_value dict
+        LEFT JOIN t_dictionary_item item ON item.id = dict.dict_id
+        WHERE item.dict_code = #{dictCode}
+    </select>
+
+</mapper>

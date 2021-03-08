@@ -3,14 +3,14 @@ server:
 
 spring:
   application:
-    name: scmp-system-service
+    name: kunlun-system-service
   main:
     allow-bean-definition-overriding: true
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource
     master:
       driver-class-name: org.postgresql.Driver
-      url: jdbc:postgresql://localhost:5432/scmp_system
+      url: jdbc:postgresql://localhost:5432/kunlun_system
       username: postgres
       password: java
       #配置初始化大小/最小/最大
@@ -32,7 +32,7 @@ spring:
       max-pool-prepared-statement-per-connection-size: 20
     activiti:
       driver-class-name: org.postgresql.Driver
-      url: jdbc:postgresql://localhost:5432/scmp_activiti
+      url: jdbc:postgresql://localhost:5432/kunlun_activiti
       username: postgres
       password: java
       #配置初始化大小/最小/最大
@@ -72,7 +72,7 @@ spring:
   mail:
     host: smtp.126.com
     username: sjxue126@126.com
-    password: <xsj890702>
+    password: xxxxxxxxxx
     default-encoding: UTF-8
   flyway:
     # 是否开启flywary，默认true
@@ -101,26 +101,47 @@ spring:
     baseline-version: 1.0.0
     # 对执行迁移时基准版本的描述
     baseline-description: "initial flyway"
+    # 自定义flyway数据库链接
+    url: ${spring.datasource.master.url}
+    user: ${spring.datasource.master.username}
+    password: ${spring.datasource.master.password}
+
+ribbon:
+  # 饥饿加载，防止懒加载时第一次请求超时而失败
+  eager-load:
+    enabled: true
+    clients: kunlun-basedata-service
+  eureka:
+    enabled: true
+  ReadTimeout: 10000
+  ConnectTimeout: 10000
+  SocketTimeout: 10000
+  #对当前实例的重试次数
+  MaxAutoRetries: 1
+  #切换实例的重试次数
+  #  MaxAutoRetriesNextServer: 1
+  #对所有操作请求都进行重试
+  OkToRetryOnAllOperations: true
 
 mybatis:
   mapper-locations: classpath:mapper/*Mapper.xml
-  type-aliases-package: com.scmp.common.model, com.scmp.system.model
+  type-aliases-package: com.kunlun.common.model, com.kunlun.system.model
   #开启驼峰命名法
   configuration:
     map-underscore-to-camel-case: true
 
 # 系统自动配置项
-scmp:
+kunlun:
   # ControllerAdvice配置
   controllerAdvice:
-    enable: true
+    enable: false
 
   # swagger配置
   swagger:
     enable: true
-    basePackage: com.scmp.system.controller
+    basePackage: com.kunlun.system.controller
     title: ${spring.application.name}服务Swagger文档
-    description: 系统业务接口提供服务
+    description: 系统业务数据接口提供服务
     version: 1.0.0
 
   # 是否开启跨域配置

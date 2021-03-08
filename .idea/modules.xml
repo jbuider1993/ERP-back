@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/kunlun-basedata-service/kunlun-basedata-service.iml" filepath="$PROJECT_DIR$/kunlun-basedata-service/kunlun-basedata-service.iml" />
+      <module fileurl="file://$PROJECT_DIR$/kunlun-common-api/kunlun-common-api.iml" filepath="$PROJECT_DIR$/kunlun-common-api/kunlun-common-api.iml" />
+      <module fileurl="file://$PROJECT_DIR$/kunlun-gateway-service/kunlun-gateway-service.iml" filepath="$PROJECT_DIR$/kunlun-gateway-service/kunlun-gateway-service.iml" />
+      <module fileurl="file://$PROJECT_DIR$/kunlun-register-service/kunlun-register-service.iml" filepath="$PROJECT_DIR$/kunlun-register-service/kunlun-register-service.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/kunlun-service.iml" filepath="$PROJECT_DIR$/.idea/kunlun-service.iml" />
+      <module fileurl="file://$PROJECT_DIR$/kunlun-system-service/kunlun-system-service.iml" filepath="$PROJECT_DIR$/kunlun-system-service/kunlun-system-service.iml" />
+    </modules>
+  </component>
+</project>

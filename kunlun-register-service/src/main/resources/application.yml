@@ -25,7 +25,7 @@ eureka:
 spring:
   # 服务名配置
   application:
-    name: scmp-registry-ampq
+    name: kunlun-register-service
   zipkin:
     sleuth:
       sampler:
@@ -54,11 +54,11 @@ spring:
         ##### config配置存储在Git #####
         git:
           #服务的git仓库地址
-          uri: https://gitee.com/xuesjie/scmp-common-service.git
-          search-paths: src/main/resources/shared
+          uri: https://gitee.com/xuesjie/kunlun-service.git
+          search-paths: kunlun-common-api/src/main/resources/shared
           #用户名和密码
           username: sjxue126@126.com
-          password: xsj890702<>
+          password: xxxxxxxx
         default-label: develop
         ##### config配置存储在Git #####
     bus:

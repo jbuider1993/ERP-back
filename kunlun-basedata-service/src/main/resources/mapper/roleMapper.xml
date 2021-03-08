@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace = "com.scmp.base.dao.IRoleDao">
+<mapper namespace = "com.kunlun.basedata.dao.IRoleDao">
 
     <select id = "getAllRole" parameterType="java.util.Map" resultType = "RoleModel">
         SELECT
             id, role_name AS roleName, role_word AS roleWord, status, menu_ids AS menuIds,
             user_ids AS userIds, create_time AS createTime, modified_time AS modifiedTime
-        FROM t_role
+        FROM t_user_role
         WHERE 1 = 1
         <include refid="queryRoleCondition" />
         ORDER BY create_time DESC
@@ -15,7 +15,7 @@
     </select>
 
     <select id = "getRolesCount" parameterType="java.util.Map" resultType = "java.lang.Integer">
-        SELECT COUNT(id) FROM t_role
+        SELECT COUNT(id) FROM t_user_role
         WHERE 1 = 1
         <include refid="queryRoleCondition" />
     </select>
@@ -33,7 +33,7 @@
     </sql>
 
     <insert id="addRole" parameterType="RoleModel">
-        INSERT INTO t_role
+        INSERT INTO t_user_role
         (id, role_name, role_word, status, menu_ids, user_ids, create_time, modified_time)
         VALUES
         (#{id}, #{roleName}, #{roleWord}, #{status}, #{menuIds},
@@ -41,17 +41,51 @@
     </insert>
 
     <update id="updateRole" parameterType="RoleModel">
-        UPDATE t_role SET
+        UPDATE t_user_role SET
             role_name = #{roleName}, role_word = #{roleWord}, status = #{status},
             menu_ids = #{menuIds}, user_ids = #{userIds}, modified_time = #{modifiedTime}
         WHERE id = #{id}
     </update>
 
-    <delete id="batchDeleteRole" parameterType="java.util.List">
-        DELETE FROM t_role WHERE id IN
+    <update id="updateMenuLimit" parameterType="RoleModel">
+        UPDATE t_user_role SET
+            menu_ids = #{menuIds}, modified_time = #{modifiedTime}
+        WHERE id = #{id}
+    </update>
+
+    <update id="updateAllotUser" parameterType="RoleModel">
+        UPDATE t_user_role SET
+            user_ids = #{userIds}, modified_time = #{modifiedTime}
+        WHERE id = #{id}
+    </update>
+
+    <delete id="deleteRole" parameterType="java.util.List">
+        DELETE FROM t_user_role WHERE id IN
         <foreach collection="list" item="item" open="(" close=")" separator=",">
             #{item}
         </foreach>
     </delete>
+
+    <select id = "getRoleById" parameterType="java.lang.String" resultType = "RoleModel">
+        SELECT
+            id, role_name AS roleName, role_word AS roleWord, status, menu_ids AS menuIds,
+            user_ids AS userIds, create_time AS createTime, modified_time AS modifiedTime
+        FROM t_user_role
+        WHERE id = #{id}
+    </select>
+
+    <select id = "getRoleByUserId" parameterType="java.lang.String" resultType = "RoleModel">
+        SELECT
+            id,
+            role_name AS roleName,
+            role_word AS roleWord,
+            status,
+            menu_ids AS menuIds,
+            user_ids AS userIds,
+            create_time AS createTime,
+            modified_time AS modifiedTime
+        FROM t_user_role
+        WHERE POSITION(#{userId} IN user_ids) > 0
+    </select>
 
 </mapper>

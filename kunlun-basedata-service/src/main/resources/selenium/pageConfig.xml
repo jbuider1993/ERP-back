@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <pages>
-    <page name="autoTest" url="https://ant.design/docs/react/introduce-cn">
+    <page name="autoFetchIcons" url="https://remixicon.com/">
         <action type = "navigate" waitTime="2000"/>
-        <action type = "sendKeys" byxpath="//*[@id='search-box']/span/input" text="ABCDEFGH"/>
-        <action type = "click" byid="button" waitTime="2000"/>
-        <action type = "click" byid="reload" waitTime="2000"/>
-        <action type = "executeScript" script="alert('Selenium自动执行完成！')"/>
+<!--        <action type = "click" byxpath="//*[@id='content']/div[3]/div[1]" waitTime="500"/>-->
+<!--        <action type = "click" byxpath="//*[@id='select-list']/div[2]" waitTime="500"/>-->
+        <action type = "get" byxpath="//*[@id='icon-content']/div/div/div[2]/div" waitTime="500"/>
+<!--        <action type = "get" byxpath="//*[@id='icon-content']/div/div/div[2]/div" waitTime="500"/>-->
+<!--        <action type = "get" byxpath="//*[@id='icon-content']/div/div/div[2]/div/div[1]/div[1]/div/i" waitTime="500"/>-->
+        <action type = "executeScript" script="console.log('Selenium自动执行从Remix Icon抓取图标完成！')"/>
     </page>
 </pages>

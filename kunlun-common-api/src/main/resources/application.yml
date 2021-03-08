@@ -1,4 +1,4 @@
 # 公共模块
 spring:
   application:
-    name: scmp-common-service
+    name: kunlun-common-api

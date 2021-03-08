@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace = "com.scmp.base.dao.IOnlineDao">
+<mapper namespace = "com.kunlun.basedata.dao.IOnlineDao">
 
     <select id = "getAllOnlineUser" parameterType="java.util.Map" resultType = "OnlineUserModel">
         SELECT
@@ -15,32 +15,38 @@
 
     <select id = "getOnlinesCount" parameterType="java.util.Map" resultType = "java.lang.Integer">
         SELECT COUNT(id) FROM t_online_user
-        WHERE 1 = 1
         <include refid="queryOnlineCondition" />
     </select>
 
+    <select id = "getCountLeastMonth" parameterType="java.util.Map" resultType = "java.lang.Integer">
+        SELECT COUNT(*) FROM t_online_user online
+        WHERE online.login_time >= to_timestamp(substring(to_char(now(),'yyyy-MM-dd hh24:MI:ss') FROM 1 FOR 10), 'yyyy-MM-dd')- interval '30 day';
+    </select>
+
     <sql id="queryOnlineCondition">
-        <if test="loginName != null and loginName != ''">
-            AND login_name LIKE CONCAT('%', #{loginName}, '%')
-        </if>
-        <if test="loginIp != null and loginIp != ''">
-            AND login_ip LIKE CONCAT('%', #{loginIp}, '%')
-        </if>
-        <if test="loginAddress != null and loginAddress != ''">
-            AND login_address = #{loginAddress}
-        </if>
-        <if test="usedBrowser != null and usedBrowser != ''">
-            AND used_browser = #{usedBrowser}
-        </if>
-        <if test="usedWindow != null and usedWindow != ''">
-            AND used_window = #{usedWindow}
-        </if>
-        <if test="online != null and online != ''">
-            AND online = #{online}
-        </if>
-        <if test="loginTime != null and loginTime != ''">
-            AND login_time = #{loginTime}
-        </if>
+        <trim prefix="WHERE" prefixOverrides="AND | OR">
+            <if test="loginName != null and loginName != ''">
+                AND login_name LIKE CONCAT('%', #{loginName}, '%')
+            </if>
+            <if test="loginIp != null and loginIp != ''">
+                AND login_ip LIKE CONCAT('%', #{loginIp}, '%')
+            </if>
+            <if test="loginAddress != null and loginAddress != ''">
+                AND login_address = #{loginAddress}
+            </if>
+            <if test="usedBrowser != null and usedBrowser != ''">
+                AND used_browser = #{usedBrowser}
+            </if>
+            <if test="usedWindow != null and usedWindow != ''">
+                AND used_window = #{usedWindow}
+            </if>
+            <if test="online != null and online != ''">
+                AND online = #{online}
+            </if>
+            <if test="loginTime != null and loginTime != ''">
+                AND login_time = #{loginTime}
+            </if>
+        </trim>
     </sql>
 
     <insert id="addOnlineUser" parameterType="OnlineUserModel">
@@ -49,18 +55,48 @@
         VALUES
             (#{id}, #{loginName}, #{loginIp}, #{loginAddress}, #{usedBrowser},
             #{usedWindow}, #{online}, #{loginTime}, #{lastTime})
-        ON CONFLICT (login_name) DO
-        UPDATE SET
-            login_ip = #{loginIp}, login_address = #{loginAddress}, used_browser = #{usedBrowser},
-            used_window = #{usedWindow}, online = #{online}, login_time = #{loginTime}
     </insert>
+
+<!--    INSERT INTO t_online_user-->
+<!--    (id, login_name, login_ip, login_address, used_browser, used_window, online, login_time, last_time)-->
+<!--    VALUES-->
+<!--    (#{id}, #{loginName}, #{loginIp}, #{loginAddress}, #{usedBrowser},-->
+<!--    #{usedWindow}, #{online}, #{loginTime}, #{lastTime})-->
+<!--    ON CONFLICT (login_name) DO-->
+<!--    UPDATE SET-->
+<!--    login_ip = #{loginIp}, login_address = #{loginAddress}, used_browser = #{usedBrowser},-->
+<!--    used_window = #{usedWindow}, online = #{online}, login_time = #{loginTime}-->
 
     <update id="updateOnlineUser" parameterType="OnlineUserModel">
         UPDATE t_online_user SET
             online = #{online},
             last_time = #{lastTime},
             access_count = access_count + 1
-        WHERE login_name = #{loginName}
+        WHERE id = #{id}
     </update>
+
+    <select id="queryAllOnlineUser" resultType="OnlineUserModel">
+        SELECT
+            online.id AS id,
+            online.online AS online,
+            online.last_time AS lastTime
+        FROM t_online_user online
+        WHERE online.online = 'true'
+    </select>
+
+    <update id="updateOnlineStatus" parameterType="java.util.List">
+        UPDATE t_online_user SET online = 'false'
+        WHERE id IN (
+            <foreach collection="list" item="item" separator=",">
+                #{item}
+            </foreach>
+        )
+    </update>
+
+    <select id="statisticOnlineByYear" resultType="StatisticUserVo">
+        SELECT to_char(online.login_time, 'MM') AS month, COUNT(online.id) AS value FROM t_online_user online
+        WHERE online.login_time BETWEEN to_date(#{start}, 'YYYY-MM') AND to_date(#{end}, 'YYYY-MM')
+        GROUP BY month
+    </select>
 
 </mapper>

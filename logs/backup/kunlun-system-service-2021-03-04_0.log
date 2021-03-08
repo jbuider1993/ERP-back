@@ -1,0 +1,207 @@
+2021-03-04 23:08:23 INFO  [main] o.s.c.c.client.ConfigServicePropertySourceLocator : Fetching config from server at : http://localhost:8010/
+2021-03-04 23:08:25 INFO  [main] o.s.c.c.client.ConfigServicePropertySourceLocator : Located environment: name=application-config, profiles=[dev], label=develop, version=eafddcf43d911a9890a60f6d104ce637e9cace8f, state=null
+2021-03-04 23:08:25 INFO  [main] o.s.c.b.c.PropertySourceBootstrapConfiguration : Located property source: [BootstrapPropertySource {name='bootstrapProperties-configClient'}, BootstrapPropertySource {name='bootstrapProperties-https://gitee.com/xuesjie/kunlun-service.git/kunlun-common-api/src/main/resources/shared/application-config-dev.yml'}]
+2021-03-04 23:08:25 INFO  [main] com.kunlun.system.SystemApplication : No active profile set, falling back to default profiles: default
+2021-03-04 23:08:29 WARN  [main] org.mybatis.spring.mapper.ClassPathMapperScanner : No MyBatis mapper was found in '[mapper]' package. Please check your configuration.
+2021-03-04 23:08:30 WARN  [main] o.springframework.boot.actuate.endpoint.EndpointId : Endpoint ID 'bus-env' contains invalid characters, please migrate to a valid format.
+2021-03-04 23:08:30 WARN  [main] o.springframework.boot.actuate.endpoint.EndpointId : Endpoint ID 'bus-refresh' contains invalid characters, please migrate to a valid format.
+2021-03-04 23:08:31 WARN  [main] o.springframework.boot.actuate.endpoint.EndpointId : Endpoint ID 'service-registry' contains invalid characters, please migrate to a valid format.
+2021-03-04 23:08:31 WARN  [main] o.springframework.boot.actuate.endpoint.EndpointId : Endpoint ID 'hystrix.stream' contains invalid characters, please migrate to a valid format.
+2021-03-04 23:08:32 INFO  [main] o.springframework.cloud.context.scope.GenericScope : BeanFactory id=f1f719cd-a76b-3423-afda-de4002151716
+2021-03-04 23:08:32 INFO  [main] o.s.i.c.DefaultConfiguringBeanFactoryPostProcessor : No bean named 'errorChannel' has been explicitly defined. Therefore, a default PublishSubscribeChannel will be created.
+2021-03-04 23:08:32 INFO  [main] o.s.i.c.DefaultConfiguringBeanFactoryPostProcessor : No bean named 'taskScheduler' has been explicitly defined. Therefore, a default ThreadPoolTaskScheduler will be created.
+2021-03-04 23:08:32 INFO  [main] o.s.i.c.DefaultConfiguringBeanFactoryPostProcessor : No bean named 'integrationHeaderChannelRegistry' has been explicitly defined. Therefore, a default DefaultHeaderChannelRegistry will be created.
+2021-03-04 23:08:33 INFO  [main] o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration' of type [org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration$$EnhancerBySpringCGLIB$$a40a1be6] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2021-03-04 23:08:33 INFO  [main] o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker : Bean 'integrationDisposableAutoCreatedBeans' of type [org.springframework.integration.config.annotation.Disposables] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2021-03-04 23:08:33 INFO  [main] o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.integration.config.IntegrationManagementConfiguration' of type [org.springframework.integration.config.IntegrationManagementConfiguration$$EnhancerBySpringCGLIB$$efbd715] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2021-03-04 23:08:33 INFO  [main] o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.boot.autoconfigure.integration.IntegrationAutoConfiguration$IntegrationJmxConfiguration' of type [org.springframework.boot.autoconfigure.integration.IntegrationAutoConfiguration$IntegrationJmxConfiguration$$EnhancerBySpringCGLIB$$ea8de235] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2021-03-04 23:08:33 INFO  [main] o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.boot.autoconfigure.jmx.JmxAutoConfiguration' of type [org.springframework.boot.autoconfigure.jmx.JmxAutoConfiguration$$EnhancerBySpringCGLIB$$23758b02] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2021-03-04 23:08:33 INFO  [main] o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker : Bean 'mbeanServer' of type [com.sun.jmx.mbeanserver.JmxMBeanServer] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2021-03-04 23:08:34 INFO  [main] o.s.boot.web.embedded.tomcat.TomcatWebServer : Tomcat initialized with port(s): 8025 (http)
+2021-03-04 23:08:34 INFO  [main] org.apache.coyote.http11.Http11NioProtocol : Initializing ProtocolHandler ["http-nio-8025"]
+2021-03-04 23:08:34 INFO  [main] org.apache.catalina.core.StandardService : Starting service [Tomcat]
+2021-03-04 23:08:34 INFO  [main] org.apache.catalina.core.StandardEngine : Starting Servlet engine: [Apache Tomcat/9.0.30]
+2021-03-04 23:08:34 INFO  [main] o.a.c.core.ContainerBase.[Tomcat].[localhost].[/] : Initializing Spring embedded WebApplicationContext
+2021-03-04 23:08:34 INFO  [main] org.springframework.web.context.ContextLoader : Root WebApplicationContext: initialization completed in 9172 ms
+2021-03-04 23:08:35 WARN  [main] com.netflix.config.sources.URLConfigurationSource : No URLs will be polled as dynamic configuration sources.
+2021-03-04 23:08:35 INFO  [main] com.netflix.config.sources.URLConfigurationSource : To enable URLs as dynamic configuration sources, define System property archaius.configurationSource.additionalUrls or make config.properties available on classpath.
+2021-03-04 23:08:35 INFO  [main] com.netflix.config.DynamicPropertyFactory : DynamicPropertyFactory is initialized with configuration sources: com.netflix.config.ConcurrentCompositeConfiguration@16fb9fdd
+2021-03-04 23:08:37 INFO  [main] c.k.s.config.activiti.ActitytiDataSourceConfig : activitiDataSource 初始化...
+2021-03-04 23:08:38 INFO  [main] c.kunlun.system.config.dataSource.DataSourceConfig : masterDataSource 初始化...
+2021-03-04 23:08:41 INFO  [main] o.s.scheduling.concurrent.ThreadPoolTaskScheduler : Initializing ExecutorService 'taskScheduler'
+2021-03-04 23:08:42 INFO  [main] o.s.b.a.endpoint.web.ServletEndpointRegistrar : Registered '/actuator/hystrix.stream' to hystrix.stream-actuator-endpoint
+2021-03-04 23:08:47 INFO  [main] com.alibaba.druid.pool.DruidDataSource : {dataSource-1} inited
+2021-03-04 23:08:55 INFO  [main] org.activiti.engine.impl.ProcessEngineImpl : ProcessEngine default created
+2021-03-04 23:08:55 INFO  [main] org.activiti.engine.impl.jobexecutor.JobExecutor : Starting up the JobExecutor[org.activiti.engine.impl.jobexecutor.DefaultJobExecutor].
+2021-03-04 23:08:55 INFO  [Thread-76] o.a.e.impl.jobexecutor.AcquireJobsRunnableImpl : JobExecutor[org.activiti.engine.impl.jobexecutor.DefaultJobExecutor] starting to acquire jobs
+2021-03-04 23:08:57 INFO  [main] o.s.b.actuate.endpoint.web.EndpointLinksResolver : Exposing 26 endpoint(s) beneath base path '/actuator'
+2021-03-04 23:08:59 INFO  [main] c.k.system.config.activiti.StaticResourceConfig : ===== 设置静态资源路径 =====
+2021-03-04 23:08:59 INFO  [main] s.d.s.w.PropertySourcedRequestMappingHandlerMapping : Mapped URL path [/v2/api-docs] onto method [public org.springframework.http.ResponseEntity<springfox.documentation.spring.web.json.Json> springfox.documentation.swagger2.web.Swagger2Controller.getDocumentation(java.lang.String,javax.servlet.http.HttpServletRequest)]
+2021-03-04 23:09:00 WARN  [main] com.netflix.config.sources.URLConfigurationSource : No URLs will be polled as dynamic configuration sources.
+2021-03-04 23:09:00 INFO  [main] com.netflix.config.sources.URLConfigurationSource : To enable URLs as dynamic configuration sources, define System property archaius.configurationSource.additionalUrls or make config.properties available on classpath.
+2021-03-04 23:09:00 INFO  [main] com.kunlun.common.config.Swagger2AutoConfiguration : Loading Swagger configuration ...
+2021-03-04 23:09:03 INFO  [main] org.flywaydb.core.internal.license.VersionPrinter : Flyway Community Edition 5.2.4 by Boxfuse
+2021-03-04 23:09:04 INFO  [main] o.flywaydb.core.internal.database.DatabaseFactory : Database: jdbc:postgresql://localhost:5432/kunlun_system (PostgreSQL 12.0)
+2021-03-04 23:09:04 WARN  [main] org.flywaydb.core.internal.database.base.Database : Flyway upgrade recommended: PostgreSQL 12.0 is newer than this version of Flyway and support has not been tested.
+2021-03-04 23:09:06 INFO  [main] org.flywaydb.core.internal.command.DbValidate : Successfully validated 5 migrations (execution time 00:00.636s)
+2021-03-04 23:09:06 INFO  [main] org.flywaydb.core.internal.command.DbMigrate : Current version of schema "public": 1.0.0.2020050800
+2021-03-04 23:09:06 WARN  [main] org.flywaydb.core.internal.command.DbMigrate : outOfOrder mode is active. Migration of schema "public" may not be reproducible.
+2021-03-04 23:09:06 INFO  [main] org.flywaydb.core.internal.command.DbMigrate : Migrating schema "public" to version 1.0.0.2021013000 - INIT ACTIVITI TABLES
+2021-03-04 23:09:06 INFO  [main] o.f.c.internal.sqlscript.DefaultSqlScriptExecutor : DB: 表 "act_ge_property" 不存在
+2021-03-04 23:09:08 INFO  [main] o.f.c.internal.sqlscript.DefaultSqlScriptExecutor : DB: 表 "act_evt_log" 不存在
+2021-03-04 23:09:09 INFO  [main] o.f.c.internal.sqlscript.DefaultSqlScriptExecutor : DB: 表 "act_ge_bytearray" 不存在
+2021-03-04 23:09:09 INFO  [main] o.f.c.internal.sqlscript.DefaultSqlScriptExecutor : DB: 表 "act_hi_actinst" 不存在
+2021-03-04 23:09:09 INFO  [main] o.f.c.internal.sqlscript.DefaultSqlScriptExecutor : DB: 表 "act_hi_attachment" 不存在
+2021-03-04 23:09:09 INFO  [main] o.f.c.internal.sqlscript.DefaultSqlScriptExecutor : DB: 表 "act_hi_comment" 不存在
+2021-03-04 23:09:09 INFO  [main] o.f.c.internal.sqlscript.DefaultSqlScriptExecutor : DB: 表 "act_hi_detail" 不存在
+2021-03-04 23:09:09 INFO  [main] o.f.c.internal.sqlscript.DefaultSqlScriptExecutor : DB: 表 "act_hi_identitylink" 不存在
+2021-03-04 23:09:09 INFO  [main] o.f.c.internal.sqlscript.DefaultSqlScriptExecutor : DB: 表 "act_hi_procinst" 不存在
+2021-03-04 23:09:09 INFO  [main] o.f.c.internal.sqlscript.DefaultSqlScriptExecutor : DB: 表 "act_hi_taskinst" 不存在
+2021-03-04 23:09:09 INFO  [main] o.f.c.internal.sqlscript.DefaultSqlScriptExecutor : DB: 表 "act_hi_varinst" 不存在
+2021-03-04 23:09:09 INFO  [main] o.f.c.internal.sqlscript.DefaultSqlScriptExecutor : DB: 表 "act_id_group" 不存在
+2021-03-04 23:09:09 INFO  [main] o.f.c.internal.sqlscript.DefaultSqlScriptExecutor : DB: 表 "act_id_info" 不存在
+2021-03-04 23:09:09 INFO  [main] o.f.c.internal.sqlscript.DefaultSqlScriptExecutor : DB: 表 "act_id_membership" 不存在
+2021-03-04 23:09:09 INFO  [main] o.f.c.internal.sqlscript.DefaultSqlScriptExecutor : DB: 表 "act_id_user" 不存在
+2021-03-04 23:09:09 INFO  [main] o.f.c.internal.sqlscript.DefaultSqlScriptExecutor : DB: 表 "act_procdef_info" 不存在
+2021-03-04 23:09:09 INFO  [main] o.f.c.internal.sqlscript.DefaultSqlScriptExecutor : DB: 表 "act_re_deployment" 不存在
+2021-03-04 23:09:09 INFO  [main] o.f.c.internal.sqlscript.DefaultSqlScriptExecutor : DB: 表 "act_re_model" 不存在
+2021-03-04 23:09:10 INFO  [main] o.f.c.internal.sqlscript.DefaultSqlScriptExecutor : DB: 表 "act_re_procdef" 不存在
+2021-03-04 23:09:10 INFO  [main] o.f.c.internal.sqlscript.DefaultSqlScriptExecutor : DB: 表 "act_ru_event_subscr" 不存在
+2021-03-04 23:09:10 INFO  [main] o.f.c.internal.sqlscript.DefaultSqlScriptExecutor : DB: 表 "act_ru_execution" 不存在
+2021-03-04 23:09:10 INFO  [main] o.f.c.internal.sqlscript.DefaultSqlScriptExecutor : DB: 表 "act_ru_identitylink" 不存在
+2021-03-04 23:09:10 INFO  [main] o.f.c.internal.sqlscript.DefaultSqlScriptExecutor : DB: 表 "act_ru_job" 不存在
+2021-03-04 23:09:10 INFO  [main] o.f.c.internal.sqlscript.DefaultSqlScriptExecutor : DB: 表 "act_ru_task" 不存在
+2021-03-04 23:09:10 INFO  [main] o.f.c.internal.sqlscript.DefaultSqlScriptExecutor : DB: 表 "act_ru_variable" 不存在
+2021-03-04 23:09:11 ERROR [main] org.flywaydb.core.internal.command.DbMigrate : Migration of schema "public" to version 1.0.0.2021013000 - INIT ACTIVITI TABLES failed! Changes successfully rolled back.
+2021-03-04 23:09:11 WARN  [main] o.s.b.w.s.c.AnnotationConfigServletWebServerApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'flywayInitializer' defined in class path resource [org/springframework/boot/autoconfigure/flyway/FlywayAutoConfiguration$FlywayConfiguration.class]: Invocation of init method failed; nested exception is org.flywaydb.core.internal.command.DbMigrate$FlywayMigrateException: 
+Migration V1.0.0.2021013000__INIT_ACTIVITI_TABLES.sql failed
+------------------------------------------------------------
+SQL State  : 42830
+Error Code : 0
+Message    : 错误: 没有唯一约束与关联表 "act_re_deployment" 给定的键值匹配
+Location   : migration/V1.0.0.2021013000__INIT_ACTIVITI_TABLES.sql (E:\相关软件\Java2EE\Codes\kunlun\kunlun-service\kunlun-system-service\target\classes\migration\V1.0.0.2021013000__INIT_ACTIVITI_TABLES.sql)
+Line       : 501
+Statement  : -- ----------------------------
+-- Foreign Keys structure for table act_ge_bytearray
+-- ----------------------------
+ALTER TABLE "public"."act_ge_bytearray" ADD CONSTRAINT "act_fk_bytearr_depl" FOREIGN KEY ("deployment_id_") REFERENCES "public"."act_re_deployment" ("id_") ON DELETE NO ACTION ON UPDATE NO ACTION
+
+2021-03-04 23:09:11 INFO  [main] org.activiti.engine.impl.jobexecutor.JobExecutor : Shutting down the JobExecutor[org.activiti.engine.impl.jobexecutor.DefaultJobExecutor].
+2021-03-04 23:09:11 INFO  [Thread-76] o.a.e.impl.jobexecutor.AcquireJobsRunnableImpl : JobExecutor[org.activiti.engine.impl.jobexecutor.DefaultJobExecutor] stopped job acquisition
+2021-03-04 23:09:11 INFO  [main] o.s.scheduling.concurrent.ThreadPoolTaskScheduler : Shutting down ExecutorService 'taskScheduler'
+2021-03-04 23:09:11 INFO  [main] com.alibaba.druid.pool.DruidDataSource : {dataSource-1} closed
+2021-03-04 23:09:12 INFO  [main] org.apache.catalina.core.StandardService : Stopping service [Tomcat]
+2021-03-04 23:09:12 WARN  [main] org.apache.catalina.loader.WebappClassLoaderBase : The web application [ROOT] appears to have started a thread named [RxIoScheduler-1 (Evictor)] but has failed to stop it. This is very likely to create a memory leak. Stack trace of thread:
+ sun.misc.Unsafe.park(Native Method)
+ java.util.concurrent.locks.LockSupport.parkNanos(LockSupport.java:215)
+ java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.awaitNanos(AbstractQueuedSynchronizer.java:2078)
+ java.util.concurrent.ScheduledThreadPoolExecutor$DelayedWorkQueue.take(ScheduledThreadPoolExecutor.java:1093)
+ java.util.concurrent.ScheduledThreadPoolExecutor$DelayedWorkQueue.take(ScheduledThreadPoolExecutor.java:809)
+ java.util.concurrent.ThreadPoolExecutor.getTask(ThreadPoolExecutor.java:1074)
+ java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1134)
+ java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+ java.lang.Thread.run(Thread.java:748)
+2021-03-04 23:09:12 INFO  [main] o.s.b.a.l.ConditionEvaluationReportLoggingListener : 
+
+Error starting ApplicationContext. To display the conditions report re-run your application with 'debug' enabled.
+2021-03-04 23:09:12 ERROR [main] org.springframework.boot.SpringApplication : Application run failed
+org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'flywayInitializer' defined in class path resource [org/springframework/boot/autoconfigure/flyway/FlywayAutoConfiguration$FlywayConfiguration.class]: Invocation of init method failed; nested exception is org.flywaydb.core.internal.command.DbMigrate$FlywayMigrateException: 
+Migration V1.0.0.2021013000__INIT_ACTIVITI_TABLES.sql failed
+------------------------------------------------------------
+SQL State  : 42830
+Error Code : 0
+Message    : 错误: 没有唯一约束与关联表 "act_re_deployment" 给定的键值匹配
+Location   : migration/V1.0.0.2021013000__INIT_ACTIVITI_TABLES.sql (E:\相关软件\Java2EE\Codes\kunlun\kunlun-service\kunlun-system-service\target\classes\migration\V1.0.0.2021013000__INIT_ACTIVITI_TABLES.sql)
+Line       : 501
+Statement  : -- ----------------------------
+-- Foreign Keys structure for table act_ge_bytearray
+-- ----------------------------
+ALTER TABLE "public"."act_ge_bytearray" ADD CONSTRAINT "act_fk_bytearr_depl" FOREIGN KEY ("deployment_id_") REFERENCES "public"."act_re_deployment" ("id_") ON DELETE NO ACTION ON UPDATE NO ACTION
+
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1771)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:593)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:515)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:320)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:222)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:318)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:199)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:307)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:199)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:847)
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:877)
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:549)
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:141)
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:744)
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:391)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:312)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1215)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1204)
+	at com.kunlun.system.SystemApplication.main(SystemApplication.java:46)
+Caused by: org.flywaydb.core.internal.command.DbMigrate$FlywayMigrateException: 
+Migration V1.0.0.2021013000__INIT_ACTIVITI_TABLES.sql failed
+------------------------------------------------------------
+SQL State  : 42830
+Error Code : 0
+Message    : 错误: 没有唯一约束与关联表 "act_re_deployment" 给定的键值匹配
+Location   : migration/V1.0.0.2021013000__INIT_ACTIVITI_TABLES.sql (E:\相关软件\Java2EE\Codes\kunlun\kunlun-service\kunlun-system-service\target\classes\migration\V1.0.0.2021013000__INIT_ACTIVITI_TABLES.sql)
+Line       : 501
+Statement  : -- ----------------------------
+-- Foreign Keys structure for table act_ge_bytearray
+-- ----------------------------
+ALTER TABLE "public"."act_ge_bytearray" ADD CONSTRAINT "act_fk_bytearr_depl" FOREIGN KEY ("deployment_id_") REFERENCES "public"."act_re_deployment" ("id_") ON DELETE NO ACTION ON UPDATE NO ACTION
+
+	at org.flywaydb.core.internal.command.DbMigrate.doMigrateGroup(DbMigrate.java:370)
+	at org.flywaydb.core.internal.command.DbMigrate.access$200(DbMigrate.java:54)
+	at org.flywaydb.core.internal.command.DbMigrate$3.call(DbMigrate.java:284)
+	at org.flywaydb.core.internal.jdbc.TransactionTemplate.execute(TransactionTemplate.java:74)
+	at org.flywaydb.core.internal.command.DbMigrate.applyMigrations(DbMigrate.java:281)
+	at org.flywaydb.core.internal.command.DbMigrate.migrateGroup(DbMigrate.java:246)
+	at org.flywaydb.core.internal.command.DbMigrate.access$100(DbMigrate.java:54)
+	at org.flywaydb.core.internal.command.DbMigrate$2.call(DbMigrate.java:164)
+	at org.flywaydb.core.internal.command.DbMigrate$2.call(DbMigrate.java:161)
+	at org.flywaydb.core.internal.database.postgresql.PostgreSQLAdvisoryLockTemplate.execute(PostgreSQLAdvisoryLockTemplate.java:71)
+	at org.flywaydb.core.internal.database.postgresql.PostgreSQLConnection.lock(PostgreSQLConnection.java:104)
+	at org.flywaydb.core.internal.schemahistory.JdbcTableSchemaHistory.lock(JdbcTableSchemaHistory.java:155)
+	at org.flywaydb.core.internal.command.DbMigrate.migrateAll(DbMigrate.java:161)
+	at org.flywaydb.core.internal.command.DbMigrate.migrate(DbMigrate.java:139)
+	at org.flywaydb.core.Flyway$1.execute(Flyway.java:1395)
+	at org.flywaydb.core.Flyway$1.execute(Flyway.java:1356)
+	at org.flywaydb.core.Flyway.execute(Flyway.java:1711)
+	at org.flywaydb.core.Flyway.migrate(Flyway.java:1356)
+	at org.springframework.boot.autoconfigure.flyway.FlywayMigrationInitializer.afterPropertiesSet(FlywayMigrationInitializer.java:65)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.invokeInitMethods(AbstractAutowireCapableBeanFactory.java:1830)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1767)
+	... 18 common frames omitted
+Caused by: org.flywaydb.core.internal.sqlscript.FlywaySqlScriptException: 
+Migration V1.0.0.2021013000__INIT_ACTIVITI_TABLES.sql failed
+------------------------------------------------------------
+SQL State  : 42830
+Error Code : 0
+Message    : 错误: 没有唯一约束与关联表 "act_re_deployment" 给定的键值匹配
+Location   : migration/V1.0.0.2021013000__INIT_ACTIVITI_TABLES.sql (E:\相关软件\Java2EE\Codes\kunlun\kunlun-service\kunlun-system-service\target\classes\migration\V1.0.0.2021013000__INIT_ACTIVITI_TABLES.sql)
+Line       : 501
+Statement  : -- ----------------------------
+-- Foreign Keys structure for table act_ge_bytearray
+-- ----------------------------
+ALTER TABLE "public"."act_ge_bytearray" ADD CONSTRAINT "act_fk_bytearr_depl" FOREIGN KEY ("deployment_id_") REFERENCES "public"."act_re_deployment" ("id_") ON DELETE NO ACTION ON UPDATE NO ACTION
+
+	at org.flywaydb.core.internal.sqlscript.DefaultSqlScriptExecutor.handleException(DefaultSqlScriptExecutor.java:253)
+	at org.flywaydb.core.internal.sqlscript.DefaultSqlScriptExecutor.executeStatement(DefaultSqlScriptExecutor.java:202)
+	at org.flywaydb.core.internal.sqlscript.DefaultSqlScriptExecutor.execute(DefaultSqlScriptExecutor.java:125)
+	at org.flywaydb.core.internal.resolver.sql.SqlMigrationExecutor.execute(SqlMigrationExecutor.java:77)
+	at org.flywaydb.core.internal.command.DbMigrate.doMigrateGroup(DbMigrate.java:367)
+	... 38 common frames omitted
+Caused by: org.postgresql.util.PSQLException: 错误: 没有唯一约束与关联表 "act_re_deployment" 给定的键值匹配
+	at org.postgresql.core.v3.QueryExecutorImpl.receiveErrorResponse(QueryExecutorImpl.java:2505)
+	at org.postgresql.core.v3.QueryExecutorImpl.processResults(QueryExecutorImpl.java:2241)
+	at org.postgresql.core.v3.QueryExecutorImpl.execute(QueryExecutorImpl.java:310)
+	at org.postgresql.jdbc.PgStatement.executeInternal(PgStatement.java:447)
+	at org.postgresql.jdbc.PgStatement.execute(PgStatement.java:368)
+	at org.postgresql.jdbc.PgStatement.executeWithFlags(PgStatement.java:309)
+	at org.postgresql.jdbc.PgStatement.executeCachedSql(PgStatement.java:295)
+	at org.postgresql.jdbc.PgStatement.executeWithFlags(PgStatement.java:272)
+	at org.postgresql.jdbc.PgStatement.execute(PgStatement.java:267)
+	at org.flywaydb.core.internal.jdbc.JdbcTemplate.executeStatement(JdbcTemplate.java:235)
+	at org.flywaydb.core.internal.sqlscript.StandardSqlStatement.execute(StandardSqlStatement.java:42)
+	at org.flywaydb.core.internal.sqlscript.DefaultSqlScriptExecutor.executeStatement(DefaultSqlScriptExecutor.java:189)
+	... 41 common frames omitted

@@ -1,15 +1,16 @@
 # 昆仑管理系统
 
 <p align="center"> 
-    <img src="https://img.shields.io/circleci/project/vuejs/vue/dev.svg" alt="Build Status">
+    <img src="https://img.shields.io/badge/React-6.13.0-red.svg" alt="Coverage Status">
+    <img src="https://img.shields.io/badge/Ant Design-4.4.0-yellow.svg" alt="Coverage Status">
     <img src="https://img.shields.io/badge/Spring%20Cloud-Greenwich.SR5-blue.svg" alt="Coverage Status">
-    <img src="https://img.shields.io/badge/Spring%20Boot-2.1.7.RELEASE-blue.svg" alt="Downloads">
+    <img src="https://img.shields.io/badge/Spring%20Boot-2.1.7.RELEASE-green.svg" alt="Downloads">
 </p>
 
 #### 系统介绍
 昆仑管理系统是一套基于前后端分离架构的后台管理系统。kunlun-web 基于React + Umi(乌米) + Ant Design (蚂蚁金服) 构建开发，提供前端解决方案；kunlun-service 基于 SpringBoot 与 Spring Cloud 构建开发，提供后端基于微服务架构的解决方案。系统通过Apache Shiro与Jwt组件，用token进行数据交互认证，可快速开发并独立进行Docker容器化部署。
 
-系统模块主要功能（kunlun-web包括kunlun-home-web和kunlun-system-web，kunlun-service包括：kunlun-common-api、kunlun-register-service、kunlun-gateway-service、kunlun-basedata-service和kunlun-system-service）：
+系统模块主要功能（kunlun-web包括kunlun-home-web和kunlun-system-web，kunlun-service包括：kunlun-common-api、kunlun-register-service、kunlun-gateway-service、kunlun-basedata-service和kunlun-system-service。目前为节省项目运行资源，未对服务进行细粒度划分，如kunlun-system-web拆分成系统服务web与业务服务web，kunlun-register-service拆分成注册中心与配置中心，kunlun-gateway-service拆分成用户校验鉴权与服务网关，kunlun-basedata-service拆分成基础数据与缓存服务，kunlun-system-service拆分成流程服务与业务服务等）：
 <table>
     <tr>
         <td>kunlun-common-api</td>
