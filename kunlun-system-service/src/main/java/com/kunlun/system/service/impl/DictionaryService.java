@@ -28,6 +28,8 @@ public class DictionaryService implements IDictionaryService {
         int startIndex = (currentPage - 1) * pageSize;
         Map<String, Object> queryMap = CommonUtil.packageQueryMap(dictionaryItemModel, startIndex, pageSize);
 
+        DbContextHolder.setDbType(DataSourceType.MASTER.getKey());
+
         int count = dictionaryDao.getDictionaryCount(queryMap);
         List<DictionaryItemModel> dictionaryList = dictionaryDao.getAllDictionaryItem(queryMap);
 
