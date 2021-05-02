@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace = "com.kunlun.basedata.dao.IDepartmentDao">
+
+    <select id = "getAllDepartment" parameterType="java.util.Map" resultType = "DepartmentModel">
+        SELECT
+            id, department_name AS departmentName, department_code AS departmentCode, type,
+            status, duty_desc AS dutyDesc, parent_id AS parentId, long_code AS longCode,
+            create_time AS createTime, modified_time AS modifiedTime
+        FROM t_department
+        WHERE 1 = 1
+        <include refid="queryDepartmentCondition" />
+        ORDER BY create_time DESC
+        OFFSET #{currentPage} LIMIT #{pageSize}
+    </select>
+
+    <select id = "getDepartmentCount" parameterType="java.util.Map" resultType = "java.lang.Integer">
+        SELECT COUNT(id) FROM t_display_icon
+        WHERE 1 = 1
+        <include refid="queryDepartmentCondition" />
+    </select>
+
+    <sql id="queryDepartmentCondition">
+        <if test="name != null and name != ''">
+            AND name LIKE CONCAT('%', #{name}, '%')
+        </if>
+        <if test="key != null and key != ''">
+            AND key LIKE CONCAT('%', #{key}, '%')
+        </if>
+        <if test="modifiedTime != null and modifiedTime != ''">
+            AND modified_time = #{modifiedTime}
+        </if>
+    </sql>
+
+    <insert id="addDepartment" parameterType="DepartmentModel">
+        INSERT INTO t_department
+            ("id", "department_name", "department_code", "type", "status", "duty_desc", "parent_id", "long_code", "create_time", "modified_time")
+        VALUES
+          (#{id}, #{departmentName}, #{departmentCode}, #{type}, #{status}, #{dutyDesc}, #{parentId}, #{longCode}, NOW(), NOW())
+    </insert>
+
+    <update id="updateDepartment" parameterType="DepartmentModel">
+        UPDATE t_department SET
+            department_name = #{departmentName}, department_code = #{departmentCode},
+            status = #{status}, duty_desc = #{dutyDesc}, modified_time = NOW()
+        WHERE id = #{id}
+    </update>
+
+    <delete id="deleteDepartment" parameterType="java.util.List">
+        DELETE FROM t_department WHERE id IN (
+            <foreach collection="list" item="item" separator=",">
+                #{item}
+            </foreach>
+        )
+    </delete>
+
+</mapper>
