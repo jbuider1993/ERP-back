@@ -1,6 +1,7 @@
 package com.kunlun.basedata.model;
 
 public class HomeCountModel {
+
     private String id;
 
     private int userCount;

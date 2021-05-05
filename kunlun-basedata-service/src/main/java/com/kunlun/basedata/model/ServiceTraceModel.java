@@ -1,8 +1,8 @@
 package com.kunlun.basedata.model;
 
-public class ServiceTraceModel {
+import com.kunlun.common.model.BaseModel;
 
-    private String id;
+public class ServiceTraceModel extends BaseModel {
 
     private String traceId;
 
@@ -33,14 +33,6 @@ public class ServiceTraceModel {
     private String statusCode;
 
     private String error;
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
 
     public String getTraceId() {
         return traceId;

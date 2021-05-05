@@ -1,28 +1,21 @@
 package com.kunlun.basedata.model;
 
-import java.util.Date;
+import com.kunlun.common.model.BaseModel;
 
 /**
  * 系统平台图标模型
  */
-public class IconModel {
-    private String id;
+public class IconModel extends BaseModel {
 
+    /**
+     * 图标名称
+     */
     private String name;
 
+    /**
+     * 图标key
+     */
     private String key;
-
-    private Date createTime;
-
-    private Date modifiedTime;
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
 
     public String getKey() {
         return key;
@@ -38,21 +31,5 @@ public class IconModel {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public Date getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
-    }
-
-    public Date getModifiedTime() {
-        return modifiedTime;
-    }
-
-    public void setModifiedTime(Date modifiedTime) {
-        this.modifiedTime = modifiedTime;
     }
 }

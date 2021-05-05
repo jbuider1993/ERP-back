@@ -1,37 +1,46 @@
 package com.kunlun.basedata.model;
 
-import java.util.Date;
-import java.util.List;
+import com.kunlun.common.model.TreeModel;
 
 /**
  * 系统平台菜单模型
  */
-public class MenuModel {
-    private String id;
+public class MenuModel extends TreeModel<MenuModel> {
 
+    /**
+     * 菜单名称
+     */
     private String name;
 
+    /**
+     * 菜单key
+     */
     private String key;
 
+    /**
+     * 菜单url
+     */
     private String url;
 
+    /**
+     * 图标
+     */
     private String icon;
 
+    /**
+     * 是否显示
+     */
     private boolean show;
 
+    /**
+     * 是否携带Token
+     */
     private boolean carryToken;
 
+    /**
+     * 父节点名称
+     */
     private String parent;
-
-    private String parentId;
-
-    private String longCode;
-
-    private Date createTime;
-
-    private Date modifiedTime;
-
-    private List<MenuModel> children;
 
     public String getParent() {
         return parent;
@@ -55,14 +64,6 @@ public class MenuModel {
 
     public void setCarryToken(boolean carryToken) {
         this.carryToken = carryToken;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
     }
 
     public String getKey() {
@@ -95,45 +96,5 @@ public class MenuModel {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public String getParentId() {
-        return parentId;
-    }
-
-    public void setParentId(String parentId) {
-        this.parentId = parentId;
-    }
-
-    public String getLongCode() {
-        return longCode;
-    }
-
-    public void setLongCode(String longCode) {
-        this.longCode = longCode;
-    }
-
-    public List<MenuModel> getChildren() {
-        return children;
-    }
-
-    public void setChildren(List<MenuModel> children) {
-        this.children = children;
-    }
-
-    public Date getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
-    }
-
-    public Date getModifiedTime() {
-        return modifiedTime;
-    }
-
-    public void setModifiedTime(Date modifiedTime) {
-        this.modifiedTime = modifiedTime;
     }
 }
