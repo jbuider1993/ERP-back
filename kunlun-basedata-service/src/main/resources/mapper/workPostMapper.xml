@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace = "com.kunlun.basedata.dao.IWorkPostDao">
+
+    <select id = "getAllWorkPost" parameterType="java.util.Map" resultType = "WorkPostModel">
+        SELECT
+            id, post_name AS postName, post_code AS postCode, status,
+            duty_desc AS dutyDesc, create_time AS createTime, modified_time AS modifiedTime
+        FROM t_work_post
+        WHERE 1 = 1
+        <include refid="queryWorkPostCondition" />
+        ORDER BY create_time DESC
+        OFFSET #{currentPage} LIMIT #{pageSize}
+    </select>
+
+    <select id = "getWorkPostCount" parameterType="java.util.Map" resultType = "java.lang.Integer">
+        SELECT COUNT(id) FROM t_work_post
+        WHERE 1 = 1
+        <include refid="queryWorkPostCondition" />
+    </select>
+
+    <sql id="queryWorkPostCondition">
+        <if test="name != null and name != ''">
+            AND name LIKE CONCAT('%', #{name}, '%')
+        </if>
+        <if test="key != null and key != ''">
+            AND key LIKE CONCAT('%', #{key}, '%')
+        </if>
+        <if test="modifiedTime != null and modifiedTime != ''">
+            AND modified_time = #{modifiedTime}
+        </if>
+    </sql>
+
+    <insert id="addWorkPost" parameterType="IconModel">
+        INSERT INTO t_work_post
+            ("id", "post_name", "post_code", "duty_desc", "status", "create_time", "modified_time")
+        VALUES
+          (#{id}, #{postName}, #{postCode}, #{dutyDesc}, #{status}, NOW(), NOW())
+    </insert>
+
+    <update id="updateWorkPost" parameterType="IconModel">
+        UPDATE t_work_post SET
+            post_name = #{postName}, post_code = #{postCode},
+            status = #{status}, duty_desc = #{dutyDesc}, modified_time = NOW()
+        WHERE id = #{id}
+    </update>
+
+    <delete id="deleteWorkPost" parameterType="java.util.List">
+        DELETE FROM t_work_post WHERE id IN (
+            <foreach collection="list" item="item" separator=",">
+                #{item}
+            </foreach>
+        )
+    </delete>
+
+</mapper>

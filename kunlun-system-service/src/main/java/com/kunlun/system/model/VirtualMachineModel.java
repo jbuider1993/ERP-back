@@ -2,8 +2,14 @@ package com.kunlun.system.model;
 
 import java.util.Date;
 
-public class CollectMachineModel {
+/**
+ * 虚拟环境监控表（t_virtual_machine）模型
+ */
+public class VirtualMachineModel {
+
     private String id;
+
+    private String virtualName;
 
     private String machineIp;
 

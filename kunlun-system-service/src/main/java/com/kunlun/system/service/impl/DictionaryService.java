@@ -1,6 +1,8 @@
 package com.kunlun.system.service.impl;
 
 import com.kunlun.common.model.Page;
+import com.kunlun.system.config.dataSource.DataSourceType;
+import com.kunlun.system.config.dataSource.DbContextHolder;
 import com.kunlun.system.dao.IDictionaryDao;
 import com.kunlun.system.model.DictionaryItemModel;
 import com.kunlun.system.model.DictionaryValueModel;
@@ -26,6 +28,8 @@ public class DictionaryService implements IDictionaryService {
         int startIndex = (currentPage - 1) * pageSize;
         Map<String, Object> queryMap = CommonUtil.packageQueryMap(dictionaryItemModel, startIndex, pageSize);
 
+        DbContextHolder.setDbType(DataSourceType.MASTER.getKey());
+
         int count = dictionaryDao.getDictionaryCount(queryMap);
         List<DictionaryItemModel> dictionaryList = dictionaryDao.getAllDictionaryItem(queryMap);
 
@@ -41,6 +45,8 @@ public class DictionaryService implements IDictionaryService {
     public Page<DictionaryValueModel> getAllDictionaryValue(DictionaryValueModel dictionaryModel, int currentPage, int pageSize) throws Exception {
         int startIndex = (currentPage - 1) * pageSize;
         Map<String, Object> queryMap = CommonUtil.packageQueryMap(dictionaryModel, startIndex, pageSize);
+
+        DbContextHolder.setDbType(DataSourceType.MASTER.getKey());
 
         int count = dictionaryDao.getDictionarySubCount(queryMap);
         List<DictionaryValueModel> dictionaryList = dictionaryDao.getAllDictionaryValue(queryMap);

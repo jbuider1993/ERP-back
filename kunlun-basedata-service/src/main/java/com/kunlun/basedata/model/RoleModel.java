@@ -1,27 +1,36 @@
 package com.kunlun.basedata.model;
 
-import java.util.Date;
+import com.kunlun.common.model.BaseModel;
 
 /**
  *
  */
-public class RoleModel {
-    private String id;
+public class RoleModel extends BaseModel {
+
+    /**
+     * 角色名称
+     */
     private String roleName;
+
+    /**
+     * 角色字符
+     */
     private String roleWord;
+
+    /**
+     * 状态
+     */
     private boolean status;
+
+    /**
+     * 菜单权限
+     */
     private String menuIds;
+
+    /**
+     * 用户权限
+     */
     private String userIds;
-    private Date createTime;
-    private Date modifiedTime;
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
 
     public String getRoleName() {
         return roleName;
@@ -61,21 +70,5 @@ public class RoleModel {
 
     public void setUserIds(String userIds) {
         this.userIds = userIds;
-    }
-
-    public Date getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
-    }
-
-    public Date getModifiedTime() {
-        return modifiedTime;
-    }
-
-    public void setModifiedTime(Date modifiedTime) {
-        this.modifiedTime = modifiedTime;
     }
 }

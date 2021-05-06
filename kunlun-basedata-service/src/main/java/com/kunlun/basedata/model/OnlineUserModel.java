@@ -1,33 +1,64 @@
 package com.kunlun.basedata.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.kunlun.common.model.BaseModel;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
 
-public class OnlineUserModel {
-    private String id;
+/**
+ * 系统在线用户模型类
+ */
+public class OnlineUserModel extends BaseModel {
+
+    /**
+     * 登录账号
+     */
     private String loginName;
+
+    /**
+     * 登录主机
+     */
     private String loginIp;
+
+    /**
+     * 登录地点
+     */
     private String loginAddress;
+
+    /**
+     * 登录地点
+     */
     private String location;
+
+    /**
+     * 浏览器
+     */
     private String usedBrowser;
+
+    /**
+     * 操作系统
+     */
     private String usedWindow;
+
+    /**
+     * 登录状态
+     */
     private boolean online;
+
+    /**
+     * 登录时间
+     */
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss:SSS", timezone = "GMT+8")
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss:SSS")
     private Date loginTime;
+
+    /**
+     * 最后访问时间
+     */
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss:SSS", timezone = "GMT+8")
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss:SSS")
     private Date lastTime;
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
 
     public String getLoginName() {
         return loginName;

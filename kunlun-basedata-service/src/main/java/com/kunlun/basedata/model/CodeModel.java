@@ -1,31 +1,15 @@
 package com.kunlun.basedata.model;
 
-import java.util.Date;
+import com.kunlun.common.model.BaseModel;
 
-public class CodeModel {
-    private Integer id;
+/**
+ * 验证码模型类
+ */
+public class CodeModel extends BaseModel {
 
     private String code;
 
     private String binary;
-
-    private Date createTime;
-
-    public Date getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
 
     public String getCode() {
         return code;

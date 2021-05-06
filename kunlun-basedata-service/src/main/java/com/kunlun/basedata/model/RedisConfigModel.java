@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 @Component
 @ConfigurationProperties
 public class RedisConfigModel {
+
     @Value("${spring.redis.host}")
     public String host;
 

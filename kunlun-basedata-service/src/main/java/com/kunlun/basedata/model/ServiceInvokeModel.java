@@ -1,11 +1,11 @@
 package com.kunlun.basedata.model;
 
+import com.kunlun.common.model.BaseModel;
+
 /**
  * 服务调用情况统计模型
  */
-public class ServiceInvokeModel {
-
-    private String id;
+public class ServiceInvokeModel extends BaseModel {
 
     private String serviceName;
 
@@ -22,14 +22,6 @@ public class ServiceInvokeModel {
     private String ipv4;
 
     private String port;
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
 
     public long getDuration() {
         return duration;

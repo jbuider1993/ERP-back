@@ -1,6 +1,10 @@
 package com.kunlun.basedata.model;
 
+/**
+ * Selenium常量
+ */
 public class SeleniumConstant {
+
     public static final String CLASS_PATH = "src/main/resources";
 
     public static final String SELENIUM_PATH = "selenium";
