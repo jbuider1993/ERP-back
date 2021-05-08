@@ -4,6 +4,8 @@ import com.kunlun.basedata.model.UserModel;
 import com.kunlun.basedata.service.IUserService;
 import com.kunlun.basedata.utils.CommonUtil;
 import com.kunlun.basedata.dao.IUserDao;
+import com.kunlun.common.model.Context;
+import com.kunlun.common.model.CurrentAccount;
 import com.kunlun.common.model.Page;
 import com.kunlun.common.utils.ExcelUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +16,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.*;
 
+/**
+ * 用户管理业务Service
+ */
 @Service
 @Transactional
 public class UserService implements IUserService {
@@ -25,6 +30,8 @@ public class UserService implements IUserService {
     public Page getAllUser(UserModel userModel, int currentPage, int pageSize) throws Exception {
         int startIndex = (currentPage - 1) * pageSize;
         Map<String, Object> queryMap = CommonUtil.packageQueryMap(userModel, startIndex, pageSize);
+
+        CurrentAccount currentAccount = Context.getCurrentAccount();
 
         Page page = new Page();
         page.setCurrentPage(currentPage);

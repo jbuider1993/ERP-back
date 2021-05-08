@@ -1,4 +1,5 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
   com.kunlun.common.config.Swagger2AutoConfiguration,\
   com.kunlun.common.config.CorsAutoConfiguration, \
-  com.kunlun.common.config.ControllerAdviceAutoConfiguration
+  com.kunlun.common.config.ControllerAdviceAutoConfiguration, \
+  com.kunlun.common.filter.CurrentAccountFilter

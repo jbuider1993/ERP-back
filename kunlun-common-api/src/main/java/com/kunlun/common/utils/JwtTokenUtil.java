@@ -95,6 +95,7 @@ public class JwtTokenUtil {
                     }
                 }
             }
+            clientToken.setClientToken(token);
             return clientToken;
         } catch (JWTDecodeException e) {
             log.error("JwtTokenUtil getTokenInfo Error: ", e);

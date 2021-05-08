@@ -15,14 +15,13 @@ import javax.servlet.FilterConfig;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
-import javax.servlet.annotation.WebFilter;
+import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 
 /**
  * 当前账户Filter
  */
 @Order(Integer.MAX_VALUE - 8)
-@WebFilter
 public class CurrentAccountFilter implements Filter {
 
     private Logger logger = LogManager.getLogger();
@@ -36,11 +35,12 @@ public class CurrentAccountFilter implements Filter {
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
         logger.info("CurrentAccountFilter doFilter ...");
         CurrentAccount currentAccount = Context.getCurrentAccount();
-        if (ObjectUtils.isEmpty(currentAccount)) {
-            String authorization = servletRequest.getAttribute("Authorization").toString();
+        String authorization = ((HttpServletRequest) servletRequest).getHeader("Authorization");
+        if (ObjectUtils.isEmpty(currentAccount) && !ObjectUtils.isEmpty(authorization)) {
             ClientToken clientToken = JwtTokenUtil.getClientToken(authorization);
             currentAccount = new CurrentAccount(clientToken);
             Context.setCurrentAccount(currentAccount);
+            logger.info("CurrentAccount Context setting finish");
         }
         filterChain.doFilter(servletRequest, servletResponse);
     }
