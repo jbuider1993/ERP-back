@@ -14,6 +14,12 @@ spring:
     username: postgres
     password: java
     continue-on-error: true
+#    # 启动时需要初始化的建表语句
+#    schema: classpath:BaseDataSQL.sql
+#    # 启动时需要初始化的数据
+#    data: classpath:data-mysql.sql
+#    # Initialize the datasource with available DDL and DML scripts.
+#    initialization-mode: always
   main:
     allow-bean-definition-overriding: true
   redis:
