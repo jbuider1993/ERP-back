@@ -3,6 +3,7 @@ package com.kunlun.common.utils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.io.File;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -22,14 +23,17 @@ public class SchemaUtil {
             Connection conn = java.sql.DriverManager.getConnection(url, "postgres", "java");
 
             // 检查kunlun_home数据库是否已创建
-            String checkSQL = "SELECT u.datname  FROM pg_catalog.pg_database u where u.datname='" + schemaName + "';";
+            String checkSQL = "SELECT u.datname FROM pg_catalog.pg_database u where u.datname='" + schemaName + "';";
             Statement statement = conn.createStatement();
             ResultSet resultSet = statement.executeQuery(checkSQL);
             if (resultSet.next()) {
                 logger.info("Schema " + schemaName + " is already created.");
             } else {
                 logger.info("Schema " + schemaName + " not created. Creating ......");
-                String initSQL = "CREATE DATABASE " + schemaName + " ENCODING 'UTF8';COMMENT ON DATABASE " + schemaName + " IS '" + schemaDesc + "';";
+                String property = System.getProperty("user.dir");
+                String filePath = property.contains("kunlun-service") ? (property + "/kunlun-basedata-service/src/main/resources/BaseDataSQL.sql") : (property + "/src/main/resources");
+                logger.info("SchemaUtil checkAndInitSchema filePath ===>>> " + filePath);
+                String initSQL = FileUtil.readFile(filePath);
                 statement.execute(initSQL);
             }
 
