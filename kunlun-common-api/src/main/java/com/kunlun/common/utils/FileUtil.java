@@ -6,7 +6,6 @@ import org.apache.logging.log4j.Logger;
 import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 
 /**
  * 文件操作工具类

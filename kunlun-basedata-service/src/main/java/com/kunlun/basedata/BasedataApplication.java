@@ -27,7 +27,7 @@ public class BasedataApplication implements CommandLineRunner {
 
     public static void main(String[] args) {
         // 初始化数据库
-        SchemaUtil.checkAndInitSchema("kunlun_home", "系统基础数据数据库");
+        SchemaUtil.checkAndInitSchema("kunlun_home", "kunlun-basedata-service", "BaseDataSQL.sql");
 
         SpringApplication.run(BasedataApplication.class, args);
     }

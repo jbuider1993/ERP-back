@@ -45,8 +45,8 @@ public class SystemApplication implements CommandLineRunner {
 
     public static void main( String[] args ) {
         // 初始化数据库
-        SchemaUtil.checkAndInitSchema("kunlun_system", "系统业务数据数据库");
-        SchemaUtil.checkAndInitSchema("kunlun_activiti", "系统Activiti流程数据库");
+        SchemaUtil.checkAndInitSchema("kunlun_system", "kunlun-system-service", "SystemSQL.sql");
+        SchemaUtil.checkAndInitSchema("kunlun_activiti", "kunlun-system-service", "ActivitiSQL.sql");
 
         SpringApplication.run(SystemApplication.class, args);
     }
