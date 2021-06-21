@@ -1,5 +1,6 @@
 package com.kunlun.system;
 
+import com.kunlun.common.utils.SchemaUtil;
 import com.kunlun.system.task.ScheduleTaskService;
 import org.mybatis.spring.annotation.MapperScan;
 import org.slf4j.Logger;
@@ -43,6 +44,10 @@ public class SystemApplication implements CommandLineRunner {
     private ScheduleTaskService scheduleTaskService;
 
     public static void main( String[] args ) {
+        // 初始化数据库
+        SchemaUtil.checkAndInitSchema("kunlun_system", "kunlun-system-service", "SystemSQL.sql");
+        SchemaUtil.checkAndInitSchema("kunlun_activiti", "kunlun-system-service", "ActivitiSQL.sql");
+
         SpringApplication.run(SystemApplication.class, args);
     }
 

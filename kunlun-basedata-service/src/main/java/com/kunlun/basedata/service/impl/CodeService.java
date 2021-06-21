@@ -2,6 +2,7 @@ package com.kunlun.basedata.service.impl;
 
 import com.kunlun.basedata.model.CodeModel;
 import com.kunlun.basedata.service.ICodeService;
+import com.kunlun.basedata.utils.CommonUtil;
 import com.thoughtworks.xstream.core.util.Base64Encoder;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -64,7 +65,7 @@ public class CodeService implements ICodeService {
 
         // 设置验证码模型
         CodeModel codeModel = new CodeModel();
-        codeModel.setId((int) (Math.random() + 100));
+        codeModel.setId(CommonUtil.generateUUID());
         codeModel.setCode(map.get("code").toString());
         codeModel.setBinary(code);
         codeModel.setCreateTime(new Date());

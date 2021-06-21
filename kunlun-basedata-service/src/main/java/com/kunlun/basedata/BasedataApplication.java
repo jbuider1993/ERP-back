@@ -1,6 +1,7 @@
 package com.kunlun.basedata;
 
 import com.kunlun.basedata.task.ScheduleTaskService;
+import com.kunlun.common.utils.SchemaUtil;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -25,6 +26,9 @@ public class BasedataApplication implements CommandLineRunner {
     private ScheduleTaskService scheduleTaskService;
 
     public static void main(String[] args) {
+        // 初始化数据库
+        SchemaUtil.checkAndInitSchema("kunlun_home", "kunlun-basedata-service", "BaseDataSQL.sql");
+
         SpringApplication.run(BasedataApplication.class, args);
     }
 

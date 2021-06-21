@@ -1,15 +1,18 @@
-package com.kunlun.gateway.utils;
+package com.kunlun.common.utils;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTDecodeException;
+import com.auth0.jwt.interfaces.Claim;
 import com.auth0.jwt.interfaces.DecodedJWT;
-import com.kunlun.gateway.model.SignTokenModel;
+import com.kunlun.common.model.ClientToken;
+import com.kunlun.common.model.SignTokenModel;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.util.Date;
+import java.util.Map;
 
 /**
  * 签名和效验Token
@@ -56,6 +59,47 @@ public class JwtTokenUtil {
         } catch (JWTDecodeException e) {
             log.error("JwtTokenUtil getTokenInfo Error: ", e);
             return null;
+        }
+    }
+
+    /**
+     * 解析ClientToken
+     *
+     * @param token
+     * @return
+     */
+    public static ClientToken getClientToken(String token) {
+        ClientToken clientToken = new ClientToken();
+        try {
+            DecodedJWT jwt = JWT.decode(token);
+            Map<String, Claim> claimsMap = jwt.getClaims();
+            for (Map.Entry map : claimsMap.entrySet()) {
+                String key = map.getKey().toString();
+                String value = ((Claim) map.getValue()).asString();
+                switch (key) {
+                    case "onlineUserId": {
+                        clientToken.setUserId(value);
+                        break;
+                    }
+                    case "userName": {
+                        clientToken.setUserName(value);
+                        break;
+                    }
+                    case "password": {
+                        clientToken.setPassword(value);
+                        break;
+                    }
+                    case "loginTime": {
+                        clientToken.setLoginTime(value);
+                        break;
+                    }
+                }
+            }
+            clientToken.setClientToken(token);
+            return clientToken;
+        } catch (JWTDecodeException e) {
+            log.error("JwtTokenUtil getTokenInfo Error: ", e);
+            return clientToken;
         }
     }
 

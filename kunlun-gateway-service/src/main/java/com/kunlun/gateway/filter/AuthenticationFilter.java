@@ -1,10 +1,11 @@
 package com.kunlun.gateway.filter;
 
+import com.kunlun.common.model.ClientToken;
+import com.kunlun.common.model.SignTokenModel;
+import com.kunlun.common.utils.JwtTokenUtil;
 import com.kunlun.gateway.config.BeanUtil;
 import com.kunlun.gateway.model.ShiroConfigModel;
-import com.kunlun.gateway.model.SignTokenModel;
 import com.kunlun.gateway.service.IBasedataService;
-import com.kunlun.gateway.utils.JwtTokenUtil;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.shiro.web.filter.authc.BasicHttpAuthenticationFilter;
@@ -48,7 +49,6 @@ public class AuthenticationFilter extends BasicHttpAuthenticationFilter {
     @Override
     protected boolean executeLogin(ServletRequest request, ServletResponse response) throws Exception {
         log.info("Start ShiroFilter executeLogin");
-
         HttpServletRequest httpServletRequest = (HttpServletRequest) request;
         HttpServletResponse httpServletResponse = (HttpServletResponse) response;
         ShiroConfigModel shiroConfigModel = BeanUtil.getBean(ShiroConfigModel.class);
@@ -56,19 +56,16 @@ public class AuthenticationFilter extends BasicHttpAuthenticationFilter {
 
         // Token校验
         String token = httpServletRequest.getHeader(shiroConfigModel.getTokenHeader());
-        String userName = JwtTokenUtil.getTokenInfo(token, "userName");
-        String password = JwtTokenUtil.getTokenInfo(token, "password");
-        String loginTime = JwtTokenUtil.getTokenInfo(token, "loginTime");
-        String redisKey = userName + "_" + loginTime;
+        ClientToken clientToken = JwtTokenUtil.getClientToken(token);
+        String redisKey = clientToken.getUserName() + "_" + clientToken.getLoginTime();
         Map<String, Object> map = (Map<String, Object>) basedataService.get(redisKey, 1);
         String refreshedToken = (String) map.get("data");
-        boolean jwt = JwtTokenUtil.verify(refreshedToken, userName, password, shiroConfigModel.getSecret());
+        boolean jwt = JwtTokenUtil.verify(refreshedToken, clientToken.getUserName(), clientToken.getPassword(), shiroConfigModel.getSecret());
         if (jwt) {
             // 用户在线操作，Token续期
             // 此处不能刷新即续期token，否则新的token无法传递到前台，无法保持全局一致；此处不能校验token是否有效，因刷新或续期token无法处理
             log.info("token ===>>> " + token);
-            String onlineUserId = JwtTokenUtil.getTokenInfo(token, "onlineUserId");
-            SignTokenModel signToken = new SignTokenModel(onlineUserId, userName, password, loginTime, shiroConfigModel.getSecret(), shiroConfigModel.getExpireTime());
+            SignTokenModel signToken = new SignTokenModel(clientToken, shiroConfigModel.getSecret(), shiroConfigModel.getExpireTime());
             String shiroToken = JwtTokenUtil.sign(signToken);
             log.info("update token ===>>> " + shiroToken);
             basedataService.set(redisKey, shiroToken, shiroConfigModel.getExpireTime(), 1);

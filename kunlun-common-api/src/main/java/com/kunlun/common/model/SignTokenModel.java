@@ -1,4 +1,4 @@
-package com.kunlun.gateway.model;
+package com.kunlun.common.model;
 
 public class SignTokenModel {
 
@@ -21,6 +21,15 @@ public class SignTokenModel {
         this.userName = userName;
         this.password = password;
         this.loginTime = loginTime;
+        this.secret = secret;
+        this.expireTime = expireTime;
+    }
+
+    public SignTokenModel(ClientToken clientToken, String secret, Integer expireTime) {
+        this.id = id;
+        this.userName = clientToken.getUserName();
+        this.password = clientToken.getPassword();
+        this.loginTime = clientToken.getLoginTime();
         this.secret = secret;
         this.expireTime = expireTime;
     }
